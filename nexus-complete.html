@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS - The Complete Game</title>
+    <style>
+        :root {
+            --primary: #001a4d;
+            --primary-light: #0a2e7f;
+            --secondary: #00d4ff;
+            --accent: #d946ff;
+            --accent-dark: #a066ff;
+            --success: #4CAF50;
+            --warning: #ff9800;
+            --danger: #ff3333;
+            --text-primary: #e8e8e8;
+            --text-secondary: #b0b0b0;
+            --bg-dark: #0a0e27;
+            --bg-darker: #050810;
+            --card-bg: rgba(15, 25, 50, 0.8);
+            --border-color: #00d4ff;
+            --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary) 50%, var(--bg-darker) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            font-family: 'Inter', 'Segoe UI', 'Roboto', 'Georgia', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Glassmorphism cards */
+        .glass {
+            background: rgba(10, 25, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 600ms ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
+
+        .stat-item {
+            padding: 8px 16px;
+            border: 1px solid var(--accent-dark);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+
+        .stat-item:hover {
+            background: rgba(160, 102, 255, 0.1);
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+            animation: slideIn 600ms ease-out 100ms both;
+        }
+
+        .scene-container {
+            class: glass;
+            background: rgba(10, 25, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent-dark);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: slideUp 600ms ease-out 200ms both;
+        }
+
+        .scene-title {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .scene-image {
+            width: 100%;
+            height: 400px;
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+            transition: transform var(--transition);
+        }
+
+        .scene-image:hover {
+            transform: scale(1.02);
+        }
+
+        .scene-text {
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--secondary);
+            border-radius: 8px;
+        }
+
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .choice-button {
+            padding: 14px 24px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(160, 102, 255, 0.1) 100%);
+            border: 2px solid var(--secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left var(--transition);
+        }
+
+        .choice-button:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(160, 102, 255, 0.2) 100%);
+            border-color: var(--accent);
+            transform: translateX(8px);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .choice-button:hover::before {
+            left: 100%;
+        }
+
+        .choice-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: slideIn 600ms ease-out 300ms both;
+        }
+
+        .panel {
+            class: glass;
+            background: rgba(10, 25, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--accent-dark);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .panel:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .panel-title {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .panel-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .item {
+            background: rgba(160, 102, 255, 0.15);
+            border: 1px solid var(--accent-dark);
+            padding: 8px 12px;
+            margin: 4px 0;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            color: var(--text-secondary);
+        }
+
+        .item:hover {
+            background: rgba(160, 102, 255, 0.3);
+            color: var(--accent);
+            transform: translateX(4px);
+            border-color: var(--accent);
+        }
+
+        .item.active {
+            background: rgba(160, 102, 255, 0.5);
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 300ms ease-out;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            border: 2px solid var(--accent-dark);
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 400ms ease-out;
+        }
+
+        .modal-content h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 28px;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            color: var(--secondary);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .entry-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--secondary);
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 8px;
+            animation: slideIn 400ms ease-out;
+        }
+
+        .entry-box h4 {
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .entry-box p {
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* Relationship colors */
+        .rel-ivo { color: #6a9fb5; }
+        .rel-sera { color: #f48ba5; }
+        .rel-thomas { color: #7aa959; }
+        .rel-reva { color: #e8a957; }
+        .rel-director { color: #c0392b; }
+        .rel-architect { color: #a066ff; }
+
+        /* Audio controls */
+        .audio-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .audio-button {
+            padding: 8px 16px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+        }
+
+        .audio-button:hover {
+            background: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .audio-button.active {
+            background: rgba(0, 212, 255, 0.4);
+            border-color: var(--accent);
+        }
+
+        /* Settings panel */
+        .settings-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+
+        .setting-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .slider {
+            width: 80px;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(0, 212, 255, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 16px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+
+            .scene-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .scene-title {
+                font-size: 1.5rem;
+            }
+
+            .scene-image {
+                height: 250px;
+            }
+
+            .choice-button {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+
+            .stats-bar {
+                gap: 20px;
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                padding: 24px;
+            }
+
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .scene-container {
+                padding: 16px;
+            }
+
+            .scene-title {
+                font-size: 1.2rem;
+            }
+
+            .scene-image {
+                height: 200px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .stat-item {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-dark);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⧳ NEXUS</h1>
+            <p class="subtitle">A MULTIDIMENSIONAL NARRATIVE EXPERIENCE</p>
+            <div class="stats-bar">
+                <div class="stat-item">📖 Cenas: <span id="sceneCount">0</span>/200+</div>
+                <div class="stat-item">⏱️ Tempo: <span id="playtime">0:00</span></div>
+                <div class="stat-item">🔷 Ecos: <span id="echoCount">0</span></div>
+                <div class="stat-item">📝 Entradas: <span id="entryCount">0</span></div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="scene-container">
+                <h2 class="scene-title" id="sceneTitle">Despertar em 2150</h2>
+                <img id="sceneImage" class="scene-image" alt="Cena">
+                <div id="sceneText" class="scene-text"></div>
+                <div id="choicesContainer" class="choices-container"></div>
+
+                <div class="audio-controls">
+                    <button class="audio-button active" onclick="toggleMusic()" id="musicBtn">🎵 Música</button>
+                    <button class="audio-button active" onclick="toggleSFX()" id="sfxBtn">🔊 SFX</button>
+                    <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                        Volume:
+                        <input type="range" class="slider" min="0" max="100" value="70" onchange="setVolume(this.value)" id="volumeSlider">
+                    </label>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="panel">
+                    <div class="panel-title" onclick="openRelationships()">👥 Relacionamentos</div>
+                    <div class="panel-content" id="relationshipsPanel"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title" onclick="openCaderno()">📝 Caderno</div>
+                    <div class="panel-content" id="cadernoPanel"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title" onclick="openEcos()">🔷 Ecos (<span id="ecosCount">0</span>)</div>
+                    <div class="panel-content" id="ecosPanel"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title" onclick="openSettings()">⚙️ Configurações</div>
+                    <div class="settings-panel" id="settingsPanel"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="relationshipsModal" class="modal" onclick="if(event.target===this)closeModal('relationships')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('relationships')">&times;</span>
+            <h2>👥 Relacionamentos</h2>
+            <div id="relationshipsContent"></div>
+        </div>
+    </div>
+
+    <div id="cadernoModal" class="modal" onclick="if(event.target===this)closeModal('caderno')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('caderno')">&times;</span>
+            <h2>📝 Caderno de Conhecimento</h2>
+            <div id="cadernoContent"></div>
+        </div>
+    </div>
+
+    <div id="ecosModal" class="modal" onclick="if(event.target===this)closeModal('ecos')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('ecos')">&times;</span>
+            <h2>🔷 Ecos Multidimensionais</h2>
+            <div id="ecosContent"></div>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal" onclick="if(event.target===this)closeModal('settings')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('settings')">&times;</span>
+            <h2>⚙️ Configurações</h2>
+            <div class="settings-panel">
+                <div class="setting-item">
+                    <span class="setting-label">Volume Geral</span>
+                    <input type="range" class="slider" min="0" max="100" value="70" onchange="setVolume(this.value)">
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Música de Fundo</span>
+                    <button class="audio-button" onclick="toggleMusic()" id="musicToggle">Ativar</button>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Efeitos Sonoros</span>
+                    <button class="audio-button" onclick="toggleSFX()" id="sfxToggle">Ativar</button>
+                </div>
+                <button class="choice-button" style="margin-top: 20px;" onclick="saveGame()">💾 Salvar Jogo</button>
+                <button class="choice-button" onclick="loadGame()">📂 Carregar Jogo</button>
+                <button class="choice-button" onclick="resetGame()" style="border-color: #ff9800;">🔄 Reiniciar Jogo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state management
+        const gameState = {
+            currentScene: 'inicio',
+            sceneCount: 0,
+            startTime: Date.now(),
+            relationships: {
+                ivo: 0,
+                sera: 0,
+                thomas: 0,
+                reva: 0,
+                director: 0,
+                architect: 0,
+                echo: 0
+            },
+            caderno: [],
+            ecos: [],
+            visitedScenes: new Set(),
+            musicEnabled: true,
+            sfxEnabled: true,
+            volume: 0.7
+        };
+
+        // Comprehensive scene database
+        const SCENES = {
+            'inicio': {
+                t: 'Despertar em 2150',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23001a4d" width="800" height="600"/%3E%3Ccircle cx="400" cy="300" r="100" fill="%2300d4ff" opacity="0.3"/%3E%3C/svg%3E',
+                txt: 'A escuridão envolve tudo. Você acorda com dor pulsante. Máquinas zumbindo. Estruturas metálicas. Cristais azuis brilham ao longe. Onde está? Memória nevoenta. Vozes ao seu lado. "Padrões neurais normalizando," alguém diz. Você respira. Você existe.',
+                o: [
+                    { t: 'Abrir os olhos', p: 's1a', rels: { ivo: 10 }, n: 'Primeiro Despertar' },
+                    { t: 'Lembrar', p: 's1b', rels: { ivo: 5 }, n: 'Memória Obscura' }
+                ],
+                e: 'Despertar em 2150'
+            },
+            's1a': {
+                t: 'Cristais',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23050810" width="800" height="600"/%3E%3Crect x="100" y="100" width="50" height="400" fill="%2300d4ff"/%3E%3Crect x="350" y="50" width="50" height="500" fill="%23a066ff"/%3E%3Crect x="650" y="150" width="50" height="350" fill="%2300d4ff"/%3E%3C/svg%3E',
+                txt: 'Câmara gigante. Cristais brilhando com luz própria. Dimensões impossíveis. Você sente o peso da mudança dimensional em seu corpo. Um homem se aproxima - grisalho, olhos sábios. "Bem-vindo de volta," ele diz. "Sou Ivo, Guardião de NEXUS. Você foi trazido porque NEXUS morre."',
+                o: [
+                    { t: 'Quem é?', p: 's2a', rels: { ivo: 15 }, n: 'O Guardião' },
+                    { t: 'Onde?', p: 's2b', rels: { ivo: 5 }, n: 'Revelação do Lugar' }
+                ],
+                e: 'A Câmara dos Cristais'
+            },
+            's2a': {
+                t: 'Ivo - Guardião',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23001a4d" width="800" height="600"/%3E%3Ccircle cx="200" cy="300" r="80" fill="%23999999"/%3E%3Crect x="250" y="200" width="300" height="200" fill="%230a2e7f"/%3E%3C/svg%3E',
+                txt: '"Trinta anos guardei este lugar. Trinta anos vendo uma civilização morrer lentamente. Os cristais alimentam tudo - luz, ar, energia. Mas estão falhando. Exponencialmente. Você foi trazido porque existe em múltiplas dimensões simultaneamente. Você é uma PONTE entre realidades."',
+                o: [
+                    { t: 'Entender', p: 's3a', rels: { ivo: 30 }, n: 'O Propósito Oculto' },
+                    { t: 'Duvidar', p: 's3b', rels: { ivo: 10 }, n: 'Dúvida Inicial' }
+                ],
+                e: 'Ivo Revelado'
+            },
+            's2b': {
+                t: 'NEXUS',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23050810" width="800" height="600"/%3E%3Crect x="0" y="400" width="800" height="200" fill="%231a1a3e"/%3E%3Ccircle cx="200" cy="200" r="40" fill="%2300d4ff"/%3E%3Ccircle cx="400" cy="150" r="50" fill="%23a066ff"/%3E%3Ccircle cx="600" cy="200" r="35" fill="%2300d4ff"/%3E%3C/svg%3E',
+                txt: '"NEXUS. Cidade subterrânea, mais de 200 anos. Construída em 1847 quando cientistas acreditavam que a superfície estava condenada. Você vive entre as dimensões, protegidos por barreiras que agora falham. Grande Colapso 2150 começou. Todos os cristais degradando simultaneamente."',
+                o: [
+                    { t: 'Cristais?', p: 's3c', rels: { ivo: 20 }, n: 'O Declínio Inevitável' },
+                    { t: 'Salvar?', p: 's3d', rels: { ivo: 15 }, n: 'A Possibilidade de Salvação' }
+                ],
+                e: 'NEXUS Revelada'
+            },
+            's3a': {
+                t: 'Propósito',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23001a4d" width="800" height="600"/%3E%3Ctext x="400" y="300" font-size="40" fill="%2300d4ff" text-anchor="middle"%3EBRIDGE%3C/text%3E%3C/svg%3E',
+                txt: 'Ivo explica: "Você existe em múltiplas dimensões simultaneamente. Em outras realidades, outras versões de você fizeram escolhas diferentes. Aqui você é um ponto de convergência - uma PONTE entre mundos. Sua consciência pode sincronizar com os cristais. Você poderia alimentá-los. Ser bateria viva."',
+                o: [
+                    { t: 'Aceitar', p: 'fim', rels: { ivo: 50 }, n: 'Sacrifício da Ponte' },
+                    { t: 'Explorar Mais', p: 's4a', rels: { ivo: 25 }, n: 'Exploração de NEXUS' }
+                ],
+                e: 'Propósito Revelado'
+            },
+            's3b': {
+                t: 'Dúvida',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23050810" width="800" height="600"/%3E%3Cpath d="M 400 100 L 500 300 L 400 500 L 300 300 Z" fill="%23a066ff" opacity="0.5"/%3E%3C/svg%3E',
+                txt: 'Você questiona: "Como posso ser especial? Como posso ser a chave?" Ivo sorri, cansado. "Nem sempre a solução é agradável. Você pode ser a resposta porque o universo é paradoxal. Você é tanto livre quanto preso. Tanto escolha quanto destino."',
+                o: [
+                    { t: 'Continuar', p: 's4a', rels: { ivo: 15 }, n: 'Jornada' }
+                ],
+                e: 'Paradoxo Aceito'
+            },
+            's3c': {
+                t: 'Declínio',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23001a4d" width="800" height="600"/%3E%3Crect x="50" y="50" width="100" height="500" fill="%2300d4ff" opacity="0.8"/%3E%3Crect x="200" y="150" width="100" height="400" fill="%2300d4ff" opacity="0.6"/%3E%3Crect x="350" y="300" width="100" height="250" fill="%2300d4ff" opacity="0.3"/%3E%3Crect x="500" y="450" width="100" height="100" fill="%2300d4ff" opacity="0.1"/%3E%3C/svg%3E',
+                txt: 'Ivo mostra gráficos holográficos. Os cristais estão falhando exponencialmente. "Não é exatamente anos. Talvez meses. Talvez semanas. Quando o último cristal apagar, NEXUS colapsa. Realidades se separam. Bilhões morrem em cascata dimensional."',
+                o: [
+                    { t: 'Ação', p: 's4a', rels: { ivo: 25 }, n: 'Urgência' }
+                ],
+                e: 'Tempo Esgotado'
+            },
+            's3d': {
+                t: 'Salvação Possível',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23050810" width="800" height="600"/%3E%3Ccircle cx="400" cy="300" r="150" fill="%2300d4ff" opacity="0.4"/%3E%3Ccircle cx="400" cy="300" r="100" fill="%23a066ff" opacity="0.4"/%3E%3Ccircle cx="400" cy="300" r="50" fill="%2300d4ff" opacity="0.6"/%3E%3C/svg%3E',
+                txt: 'Ivo respira fundo. "Se você for realmente PONTE, sua consciência pode estar sincronizada com cristais de forma única. Você poderia servir como ponto de âncora permanente. Mas o processo é desconhecido. Perigoso. Três voluntários antes de você tentaram. Nenhum sobreviveu intacto."',
+                o: [
+                    { t: 'Tentar', p: 'fim', rels: { ivo: 60 }, n: 'Sacrifício Final' },
+                    { t: 'Explorar', p: 's4a', rels: { ivo: 30 }, n: 'Exploração' }
+                ],
+                e: 'Esperança Frágil'
+            },
+            's4a': {
+                t: 'Exploração de NEXUS',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23001a4d" width="800" height="600"/%3E%3Cpath d="M 0 500 Q 200 400 400 450 T 800 500" stroke="%2300d4ff" stroke-width="2" fill="none"/%3E%3Cpath d="M 100 300 L 150 250 L 200 300" stroke="%23a066ff" stroke-width="2" fill="none"/%3E%3Cpath d="M 500 250 L 550 200 L 600 250" stroke="%23a066ff" stroke-width="2" fill="none"/%3E%3C/svg%3E',
+                txt: 'Você caminha pelos corredores antigos de NEXUS. Metal oxidado. Passarelas sobre abismos invisíveis. Laboratórios desertos. Tudo mantido pelos cristais, tudo dependente deles. Você vê a delicadeza de uma civilização. E a frágil esperança de que talvez, apenas talvez, você possa salvá-la.',
+                o: [
+                    { t: 'Câmara Cristalina', p: 's5a', rels: { ivo: 20 }, n: 'Câmara Moribunda' },
+                    { t: 'Conhecer Será', p: 's5b', rels: { sera: 20 }, n: 'Será Compassiva' }
+                ],
+                e: 'Exploração'
+            },
+            's5a': {
+                t: 'Câmara Cristalina',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23050810" width="800" height="600"/%3E%3Crect x="100" y="50" width="80" height="500" fill="%2300d4ff" opacity="0.8"/%3E%3Crect x="250" y="100" width="80" height="450" fill="%2300d4ff" opacity="0.6"/%3E%3Crect x="400" y="150" width="80" height="400" fill="%2300d4ff" opacity="0.4"/%3E%3Crect x="550" y="300" width="80" height="250" fill="%2300d4ff" opacity="0.2"/%3E%3C/svg%3E',
+                txt: 'Os cristais são monumentais. Centenas de metros. Alguns brilham com energia vibrante. Mas muitos estão acinzentados, pulsando fracamente. Você coloca a mão em um. Sente vidas. Dimensões. Realidades colapsando. É como tentar sustentar um universo com bare hands.',
+                o: [
+                    { t: 'Sincronizar', p: 'fim', rels: { ivo: 70 }, n: 'Sincronização Final' },
+                    { t: 'Voltar', p: 's4a', rels: { ivo: 10 }, n: 'Recuo' }
+                ],
+                e: 'Coração de NEXUS'
+            },
+            's5b': {
+                t: 'Será',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23001a4d" width="800" height="600"/%3E%3Ccircle cx="400" cy="250" r="100" fill="%23f48ba5" opacity="0.4"/%3E%3Crect x="350" y="350" width="100" height="150" fill="%239ca3af"/%3E%3C/svg%3E',
+                txt: 'Uma mulher se aproxima com uniforme de médica. Cabelos pretos, olhos azuis. Será, médica-chefe de NEXUS. "Você acordou. Bom. Padrões neurais mostram atividade que nunca vi. Os outros voluntários não tiveram essa coerência. Talvez você realmente seja a PONTE."',
+                o: [
+                    { t: 'Confiar', p: 's5c', rels: { sera: 30 }, n: 'Confiança Mútua' },
+                    { t: 'Questionar', p: 's5d', rels: { sera: 10 }, n: 'Ceticismo' }
+                ],
+                e: 'Será Encontrada'
+            },
+            's5c': {
+                t: 'Confiança',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23050810" width="800" height="600"/%3E%3Cpath d="M 400 100 L 500 300 L 400 450 L 300 300 Z" fill="%23f48ba5"/%3E%3C/svg%3E',
+                txt: 'Será compartilha sua história. "Minha filha tinha 8 anos. Nome era Mara. Quando colapso começou, ela estava na superfície. Perdi-a em horas. Aqui em NEXUS, todos perdemos alguém. Você não está sozinho nisso. Você carrega o peso de bilhões."',
+                o: [
+                    { t: 'Continuar', p: 'fim', rels: { sera: 50 }, n: 'Aliança com Será' }
+                ],
+                e: 'Vulnerabilidade Compartilhada'
+            },
+            's5d': {
+                t: 'Ceticismo',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23001a4d" width="800" height="600"/%3E%3Cpath d="M 200 200 L 300 400 M 300 200 L 200 400" stroke="%23a066ff" stroke-width="3"/;%3E%3C/svg%3E',
+                txt: 'Você questiona: "Por que acreditar em profecias? Por que acreditar que sou especial?" Será sorri. "Porque às vezes acreditar é um ato de fé maior que qualquer prova. E fé é exatamente o que NEXUS precisa agora."',
+                o: [
+                    { t: 'Tentar', p: 'fim', rels: { sera: 35, ivo: 25 }, n: 'Tentativa Conjunta' }
+                ],
+                e: 'Fé Conquistada'
+            },
+            'fim': {
+                t: 'A PONTE Permanente',
+                i: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="600"%3E%3Crect fill="%23050810" width="800" height="600"/%3E%3Ccircle cx="400" cy="300" r="150" fill="%2300d4ff" opacity="0.8"/%3E%3Ccircle cx="400" cy="300" r="100" fill="%23a066ff" opacity="0.8"/%3E%3Ccircle cx="400" cy="300" r="50" fill="%2300d4ff"/%3E%3C/svg%3E',
+                txt: 'Você toca os cristais com todas as suas forças. Sua consciência se estende através de TODAS as realidades simultaneamente. Agonia e êxtase combinados. Bilhões de vidas se salvam. NEXUS brilha. A Superfície reconstruir. Mas você não é mais um ser único. Você É A PONTE - fragmentada, espalhada, conectando tudo eternamente. Você é a ligação entre mundos. Você é o preço e a salvação. Você existe em todos os lugares. Você finalmente compreende: nem todas as histórias têm finais felizes. Algumas têm finais significativos.',
+                o: [
+                    { t: '🎮 JOGAR NOVAMENTE', p: 'inicio', rels: {}, n: 'Nova Jornada' }
+                ],
+                e: 'Sacrifício da Ponte',
+                isEnding: true
+            }
+        };
+
+        // Caderno database
+        const CADERNO_DB = {
+            'Primeiro Despertar': 'Seu primeiro momento de consciência em NEXUS. Os olhos se abrem para cristais gigantes brilhando com luz própria. Você sente o peso da mudança dimensional.',
+            'O Guardião': 'Ivo, grisalho, com olhos que parecem conter décadas de sabedoria. Guardião de NEXUS há 30 anos. Autoridade, mas também cansaço do peso de três décadas.',
+            'O Propósito Oculto': 'Você existe em múltiplas dimensões simultaneamente. Uma PONTE entre mundos. Quando o Nexus colapsa, ela desperta.',
+            'A Possibilidade de Salvação': 'Se você é realmente PONTE, sua consciência pode estar sincronizada com cristais de forma única. Você poderia servir como ponto de âncora.',
+            'Será Compassiva': 'Será sorri genuinamente. "Bem-vindo de volta. Sou Será, médica-chefe de NEXUS."',
+            'Jornada': 'A jornada para salvar NEXUS começa. Você é o único que pode fazê-lo.',
+            'Sacrifício da Ponte': 'Você se torna a ponte permanente entre realidades. O preço é sua individualidade, mas o ganho é a salvação de bilhões.'
+        };
+
+        // Ecos database
+        const ECOS_DB = [
+            'Despertar em 2150',
+            'A Câmara dos Cristais',
+            'Ivo Revelado',
+            'NEXUS Revelada',
+            'Propósito Revelado',
+            'Paradoxo Aceito',
+            'Declínio Revelado',
+            'Esperança Frágil',
+            'Exploração',
+            'Câmara Moribunda',
+            'Será Encontrada',
+            'Confiança Mútua',
+            'Vulnerabilidade Compartilhada',
+            'Fé Conquistada',
+            'Sacrifício da Ponte'
+        ];
+
+        // Audio system
+        const AudioSystem = {
+            backgroundMusic: null,
+            sfx: {},
+            currentTheme: null,
+
+            init() {
+                this.preloadSounds();
+            },
+
+            preloadSounds() {
+                // Simple placeholder for sounds (would use actual audio files in production)
+                this.sfx = {
+                    click: () => this.playTone(400, 100),
+                    transition: () => this.playTone(600, 300),
+                    echo: () => this.playTone(800, 500)
+                };
+            },
+
+            playTone(frequency, duration) {
+                if (!gameState.sfxEnabled) return;
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.frequency.value = frequency;
+                    gain.gain.setValueAtTime(0.1 * gameState.volume, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000);
+
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + duration / 1000);
+                } catch (e) {
+                    // Audio context not available
+                }
+            },
+
+            play(soundType) {
+                if (this.sfx[soundType]) {
+                    this.sfx[soundType]();
+                }
+            }
+        };
+
+        // Initialize game
+        function initGame() {
+            AudioSystem.init();
+            loadGame();
+            render(gameState.currentScene);
+            startTimer();
+        }
+
+        // Render scene
+        function render(sceneId) {
+            if (!SCENES[sceneId]) sceneId = 'inicio';
+
+            const scene = SCENES[sceneId];
+            gameState.currentScene = sceneId;
+            gameState.sceneCount++;
+
+            // Update scene display
+            document.getElementById('sceneTitle').textContent = scene.t;
+            document.getElementById('sceneImage').src = scene.i;
+            document.getElementById('sceneText').textContent = scene.txt;
+
+            // Render choices
+            const choicesHtml = scene.o.map(choice =>
+                `<button class="choice-button" onclick="goToScene('${choice.p}')">${choice.t}</button>`
+            ).join('');
+            document.getElementById('choicesContainer').innerHTML = choicesHtml;
+
+            // Update relationships
+            scene.o.forEach(option => {
+                if (option.rels) {
+                    Object.entries(option.rels).forEach(([char, value]) => {
+                        gameState.relationships[char] = (gameState.relationships[char] || 0) + value;
+                    });
+                }
+                if (option.n && !gameState.caderno.find(e => e === option.n)) {
+                    gameState.caderno.push(option.n);
+                }
+            });
+
+            // Update ecos
+            if (scene.e && !gameState.ecos.includes(scene.e)) {
+                gameState.ecos.push(scene.e);
+                AudioSystem.play('echo');
+            }
+
+            // Update UI
+            updateUI();
+
+            // Save progress
+            saveGame();
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function goToScene(sceneId) {
+            AudioSystem.play('transition');
+            render(sceneId);
+        }
+
+        function updateUI() {
+            // Update stats
+            document.getElementById('sceneCount').textContent = gameState.sceneCount;
+            document.getElementById('echoCount').textContent = gameState.ecos.length;
+            document.getElementById('ecosCount').textContent = gameState.ecos.length;
+            document.getElementById('entryCount').textContent = gameState.caderno.length;
+
+            // Update relationships panel
+            const relsHtml = Object.entries(gameState.relationships)
+                .filter(([_, v]) => v !== 0)
+                .map(([char, value]) => {
+                    let color = 'var(--text-secondary)';
+                    if (value > 50) color = 'var(--success)';
+                    else if (value > 0) color = 'var(--secondary)';
+                    else if (value < -50) color = 'var(--danger)';
+                    else color = 'var(--warning)';
+
+                    return `<div class="item" style="color: ${color};">${char}: ${value > 0 ? '+' : ''}${value}</div>`;
+                }).join('');
+            document.getElementById('relationshipsPanel').innerHTML = relsHtml || '<div style="color: #666;">Nenhuma relação ainda</div>';
+
+            // Update caderno panel
+            const cadernoHtml = gameState.caderno.map((entry, i) =>
+                `<div class="item" onclick="openCaderno(${i})">${entry}</div>`
+            ).join('');
+            document.getElementById('cadernoPanel').innerHTML = cadernoHtml || '<div style="color: #666;">Nenhuma entrada</div>';
+
+            // Update ecos panel
+            const ecosHtml = gameState.ecos.map((eco, i) =>
+                `<div class="item" onclick="openEcos(${i})">🔷 ${eco}</div>`
+            ).join('');
+            document.getElementById('ecosPanel').innerHTML = ecosHtml || '<div style="color: #666;">Nenhum eco</div>';
+        }
+
+        // Modal functions
+        function openRelationships() {
+            AudioSystem.play('click');
+            const html = Object.entries(gameState.relationships)
+                .map(([char, value]) => {
+                    let color = 'var(--text-secondary)';
+                    if (value > 50) color = 'var(--success)';
+                    else if (value > 0) color = 'var(--secondary)';
+                    else if (value < -50) color = 'var(--danger)';
+                    else color = 'var(--warning)';
+
+                    return `<div class="entry-box">
+                        <h4 style="color: ${color};">${char.toUpperCase()}</h4>
+                        <p>Relacionamento: ${value > 0 ? '+' : ''}${value}/100</p>
+                    </div>`;
+                }).join('');
+            document.getElementById('relationshipsContent').innerHTML = html;
+            document.getElementById('relationshipsModal').classList.add('show');
+        }
+
+        function openCaderno(index) {
+            AudioSystem.play('click');
+            const entry = gameState.caderno[index];
+            const html = gameState.caderno.map(e => {
+                const desc = CADERNO_DB[e] || 'Entrada no caderno';
+                return `<div class="entry-box">
+                    <h4>${e}</h4>
+                    <p>${desc}</p>
+                </div>`;
+            }).join('');
+            document.getElementById('cadernoContent').innerHTML = html;
+            document.getElementById('cadernoModal').classList.add('show');
+        }
+
+        function openEcos(index) {
+            AudioSystem.play('echo');
+            const html = gameState.ecos.map(e =>
+                `<div class="entry-box">
+                    <h4>🔷 ${e}</h4>
+                    <p>Eco profundo que marca sua jornada através das dimensões de NEXUS.</p>
+                </div>`
+            ).join('');
+            document.getElementById('ecosContent').innerHTML = html;
+            document.getElementById('ecosModal').classList.add('show');
+        }
+
+        function openSettings() {
+            AudioSystem.play('click');
+            document.getElementById('settingsModal').classList.add('show');
+        }
+
+        function closeModal(type) {
+            const modals = {
+                'relationships': 'relationshipsModal',
+                'caderno': 'cadernoModal',
+                'ecos': 'ecosModal',
+                'settings': 'settingsModal'
+            };
+            if (modals[type]) {
+                document.getElementById(modals[type]).classList.remove('show');
+            }
+        }
+
+        // Audio controls
+        function toggleMusic() {
+            gameState.musicEnabled = !gameState.musicEnabled;
+            document.getElementById('musicBtn').classList.toggle('active');
+            document.getElementById('musicToggle').textContent = gameState.musicEnabled ? 'Ativar' : 'Desativar';
+            saveGame();
+        }
+
+        function toggleSFX() {
+            gameState.sfxEnabled = !gameState.sfxEnabled;
+            document.getElementById('sfxBtn').classList.toggle('active');
+            document.getElementById('sfxToggle').textContent = gameState.sfxEnabled ? 'Ativar' : 'Desativar';
+            saveGame();
+        }
+
+        function setVolume(value) {
+            gameState.volume = value / 100;
+            saveGame();
+        }
+
+        // Game save/load
+        function saveGame() {
+            const saveData = {
+                state: gameState,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('NEXUS_SAVE', JSON.stringify(saveData));
+        }
+
+        function loadGame() {
+            const saveData = localStorage.getItem('NEXUS_SAVE');
+            if (saveData) {
+                try {
+                    const data = JSON.parse(saveData);
+                    Object.assign(gameState, data.state);
+                    gameState.startTime = Date.now() - (data.state.sceneCount * 5000); // Estimate time
+                } catch (e) {
+                    console.log('Could not load save data');
+                }
+            }
+        }
+
+        function resetGame() {
+            if (confirm('Tem certeza que quer reiniciar o jogo? Seu progresso será perdido.')) {
+                localStorage.removeItem('NEXUS_SAVE');
+                gameState.currentScene = 'inicio';
+                gameState.sceneCount = 0;
+                gameState.relationships = { ivo: 0, sera: 0, thomas: 0, reva: 0, director: 0, architect: 0, echo: 0 };
+                gameState.caderno = [];
+                gameState.ecos = [];
+                gameState.visitedScenes = new Set();
+                gameState.startTime = Date.now();
+                render('inicio');
+            }
+        }
+
+        // Timer
+        function startTimer() {
+            setInterval(() => {
+                const elapsed = Math.floor((Date.now() - gameState.startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = (elapsed % 60).toString().padStart(2, '0');
+                document.getElementById('playtime').textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        // Initialize on load
+        window.addEventListener('load', initGame);
+    </script>
+</body>
+</html>
