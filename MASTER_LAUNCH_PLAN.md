@@ -12,8 +12,8 @@
 
 ### WEEK 1: Social Media Blitz
 
-**INSTAGRAM** (Daily posts + Stories)
-- [ ] Day 1: POST 1 (Launch) + Create account
+**INSTAGRAM @nexus_2150** (Daily posts + Stories)
+- [ ] Day 1: POST 1 (Launch) + Create @nexus_2150 account (linked to @whatsneyven)
 - [ ] Day 2: POST 2 (Story) + Instagram Stories
 - [ ] Day 3: POST 3 (Mechanics) + Stories
 - [ ] Day 4: Reel (15-30 sec video)

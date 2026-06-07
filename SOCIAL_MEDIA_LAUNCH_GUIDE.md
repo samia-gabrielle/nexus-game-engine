@@ -9,9 +9,10 @@ Publicar NEXUS em **Instagram, Facebook, Twitter/X** para alcançar máximo de j
 ## 📋 PRÉ-REQUISITOS
 
 ### Contas a Criar/Usar:
-- ✅ Instagram: `@samia-gabrielle` ou similar
+- ✅ Instagram: `@nexus_2150` (NOVO perfil dedicado ao game)
 - ✅ Facebook: Página de desenvolvedor ou perfil pessoal
 - ✅ Twitter/X: `@whatsn_games` ou similar (se novo, crie)
+- 🔗 Cross-link: @whatsneyven → @nexus_2150 (seu perfil pessoal → game)
 
 ### Conteúdo a Preparar:
 - 📸 **3-5 screenshots** bonitos do jogo
@@ -60,8 +61,8 @@ Publicar NEXUS em **Instagram, Facebook, Twitter/X** para alcançar máximo de j
 
 ### PASSO 1: Criar/Acessar Conta
 - Vá para Instagram.com
-- Crie conta ou use existente
-- Username: `samia-gabrielle` ou similar
+- Crie conta NOVA (vinculada a @whatsneyven)
+- Username: `@nexus_2150`
 - Bio (copie de INSTAGRAM_POSTS.md):
 ```
 🎮 NEXUS - Narrative Game

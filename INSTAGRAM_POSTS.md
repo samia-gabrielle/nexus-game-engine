@@ -1,6 +1,6 @@
 # INSTAGRAM POSTS - NEXUS Game Launch
 
-## 📱 BIO DO INSTAGRAM
+## 📱 BIO DO INSTAGRAM (@nexus_2150)
 
 ```
 🎮 NEXUS - Narrative Game
