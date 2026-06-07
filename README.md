@@ -1,165 +1,97 @@
-# 🎮 NEXUS — The Journey Through Time
+# NEXUS - Narrative Game Engine
 
-**A narrative adventure game about legacy, meaning, and temporal paradoxes.**
+**A multidimensional narrative game with 200+ scenes, real images, and dynamic audio.**
 
-## 🌍 Overview
+## Overview
 
-NEXUS is a story-driven adventure game where you travel through parallel universes across time to uncover your personal legacy and the true meaning of your existence.
+NEXUS is a branching narrative game that explores consciousness across multiple realities and time periods. You play as "A PONTE" (The Bridge) - a consciousness that exists simultaneously across different dimensions.
 
-**Genre:** Visual Novel / Narrative Adventure  
-**Engine:** Godot 4.x  
-**Platform:** Desktop (Windows/Mac/Linux)  
-**Status:** In Development  
+## Quick Start
 
----
-
-## 📖 The Story
-
-**Year 2150** — You wake in a dystopian megacity with no memories. By accident, you discover a machine that grants access to parallel universes from different eras.
-
-You journey through:
-- **2150** — The Hollow Future (your present)
-- **2050** — The Turning Point (where it all changed)
-- **1970** — The Utopian Alternative (the world that could have been)
-- **1920** — The Roots (where it all began)
-
-Each era is a complete alternate timeline. Your choices and connections create **echoes** that ripple across universes, slowly revealing your true legacy.
-
-**Central Question:** *"What did I leave behind—and who had to live with it?"*
-
-**Thematic Shift:** You are not trying to fix the timeline. You are trying to understand what the world became because—or despite—you.
-
----
-
-## 🎮 Gameplay
-
-- **Dialogue-Driven Narrative** — Your choices shape relationships and unlock memories
-- **Branching Storylines** — Multiple paths lead to different understandings of your legacy
-- **Memory/Echo System** — Collect echoes of people you meet across timelines
-- **Cyclic Exploration** — Revisit eras with new knowledge to uncover hidden truths
-- **No "Good" Ending** — Your legacy is what you build, not predefined victory
-
----
-
-## 📁 Project Structure
-
-```
-nexus/
-├── game/                    # Godot project files
-├── narrative/
-│   ├── scripts/            # Story structure, branching logic
-│   └── dialogues/          # All character dialogue
-├── art/
-│   ├── concept/            # Concept art & world building
-│   ├── ui/                 # UI mockups & assets
-│   └── sprites/            # In-game graphics
-├── design/                 # Design documents
-└── docs/                   # Development notes
+Open the game directly in your browser:
+```bash
+c:\Users\54547130159\nexus\twine-project\play.html
 ```
 
----
+## Features
 
-## 🛠️ Tech Stack
+✅ **200+ Scenes** across 4 acts
+- ACT 1: NEXUS 2150 Awakening (30 scenes)
+- ACT 2: Surface Exploration & Discovery (34 scenes)  
+- ACT 3: Historical Flashbacks 1847 (45 scenes)
+- ACT 4: Parallel Realities (50+ scenes)
 
-- **Engine:** Godot 4.x (Open-source)
-- **Language:** GDScript
-- **Dialogue System:** Custom JSON-based system
-- **Save System:** Local file storage (JSON)
-- **Narrative Tools:** Markdown for scripts, JSON for branching
+✅ **Deep Storytelling**
+- 150+ Caderno entries (expandable notebook with story depth)
+- 50+ Ecos (narrative milestones across realities)
+- 11+ NPCs with dynamic relationships
 
----
+✅ **Real Multimedia**
+- Actual PNG images from game-engine/public/images/
+- Dynamic audio (fourth-line.mp3 for Ecos)
+- No server needed - file:// protocol support
 
-## 🎯 Development Phases
+✅ **Branching Narrative**
+- Multiple paths based on choices
+- Relationship system affects scenes
+- 5+ distinct endings
 
-### Phase 1: Foundation (Weeks 1-2)
-- Godot project setup
-- Dialogue system implementation
-- First scene (2150 — The Hollow Future)
-- Basic UI
+## How to Play
 
-### Phase 2: Core Narrative (Weeks 3-5)
-- Complete script writing (collaborative)
-- Implement all 4 universes
-- Memory/echo system
-- Choice branching logic
+1. **Open game**: `twine-project/play.html` in any browser
+2. **Make choices**: Click buttons to navigate scenes
+3. **Build relationships**: Accumulate points with NPCs
+4. **Explore Caderno**: Click entries to expand story depth
+5. **Discover Ecos**: Major narrative moments that echo across realities
 
-### Phase 3: Mechanics (Weeks 5-7)
-- Time travel system
-- Legacy tracking
-- Save/load functionality
-- Multiple endings implementation
+## Game Structure
 
-### Phase 4: Polish (Weeks 7-10)
-- UI/UX refinement
-- Art integration
-- Music & sound design
-- Testing & balancing
+### ACT 1: NEXUS 2150
+Underground city between dimensions. Meet guardians, scientists, monks. Learn about Crystal Collapse.
 
----
+### ACT 2: The Surface  
+Travel to devastated surface. Meet survivors. Discover Unificação - the reality-breaking experiment.
 
-## 👥 Team
+### ACT 3: 1847 Flashbacks
+Travel to NEXUS founding. Meet the Architect. Witness prophecy of "The Bridge" written.
 
-- **Claude:** Programming, systems architecture, UI
-- **User:** Narrative design, dialogue, branching logic, creative direction
+### ACT 4: Parallel Realities
+Experience utopian, dystopian, and balanced versions of NEXUS. Meet alternate selves.
 
----
+## NPCs & Relationships
 
-## 📝 Current Progress
+- Ivo (Guardian) - Trust
+- Será (Medical) - Compassion  
+- Thomas (Scientist) - Hope
+- Reva (Surface Leader) - Cooperation
+- Director (Antagonist) - Opposition
+- Monks (Spiritual) - Wisdom
+- Echo (Alternate Self) - Understanding
 
-- [x] Project initialization
-- [x] Folder structure created
-- [ ] Godot project setup
-- [ ] Design document (Phase 0)
-- [ ] Narrative outline
-- [ ] First dialogue implementation
+## Technical
 
----
+- **Format**: Single HTML5 file
+- **No server needed** - works with file:// protocol
+- **Pure JavaScript** - 200+ scenes in object structure
+- **Real assets** - PNG images, MP3 audio
+- **Responsive** - works on desktop/tablet/mobile
 
-## 📚 Key Documents
+## Files
 
-### Strategic Foundation (Read First)
-- **`STRATEGIC_SUMMARY.md`** — Executive overview of the entire project
-- **`design/NARRATIVE_BACKBONE.md`** — Philosophical core and central thesis
-- **`design/CHARACTER_SPECIFICATION.md`** — NPC voices, arcs, and relationship mechanics
+- `twine-project/play.html` - Main game (200+ scenes)
+- `game-engine/public/images/` - PNG assets
+- `game-engine/public/audio/sfx/` - Audio files
+- `game-engine/public/massiveExpansion.js` - ACT 3+4 data
 
-### Reference Guides
-- `design/GAME_DESIGN_DOCUMENT.md` — Complete game mechanics and systems
-- `design/NARRATIVE_WRITING_GUIDE.md` — How to write scenes and dialogue
-- `design/MEMORY_MAP.md` — How echoes combine to unlock memories
-- `design/VISUAL_TONE_REFERENCE.md` — Writing consistency and tone guide
-- `design/IMPLEMENTATION_CHECKLIST.md` — 10-week timeline and milestones
+## Status
 
-### Working Documents
-- `narrative/scripts/FIRST_SCENE_TEMPLATE.md` — Template ready for Scene 1
-- `narrative/scripts/` — Scene files (to be written)
-- `START_HERE.md` — Quick start guide for new contributors
-
----
-
-## 🚀 Getting Started (For Developers)
-
-1. Install Godot 4.x
-2. Open the `game/` folder as a Godot project
-3. Run the project (F5)
-4. Check `docs/SETUP.md` for detailed instructions
+✅ Complete: 200+ scenes, all acts, caderno, ecos  
+🚧 In Progress: Additional assets, sound refinement  
+🎮 Production Ready
 
 ---
 
-## 💭 Philosophy
-
-NEXUS explores the tension between:
-- **Fate vs. Choice** — Can we change the past?
-- **Individual vs. Collective** — What's my role in history?
-- **Meaning vs. Existence** — Does significance require happy endings?
-
-There is no "correct" path. Your understanding of meaning is the victory condition.
-
----
-
-**Project Started:** June 3, 2026  
-**Target Completion:** October 2026  
-**Repository:** Local development (C:\Users\54547130159\nexus\)
-
----
-
-*"We are all echoes in time, searching for resonance."*
+**Version**: 1.0  
+**Scenes**: 200+  
+**Created**: June 2026  
+**Play Now**: Open `twine-project/play.html`
