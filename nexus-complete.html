@@ -891,37 +891,21 @@
             },
 
             preloadSounds() {
-                // Simple placeholder for sounds (would use actual audio files in production)
                 this.sfx = {
-                    click: () => this.playTone(400, 100),
-                    transition: () => this.playTone(600, 300),
-                    echo: () => this.playTone(800, 500)
+                    click: 'file:///C:/Users/54547130159/nexus/game-engine/public/audio/sfx/click.mp3',
+                    transition: 'file:///C:/Users/54547130159/nexus/game-engine/public/audio/sfx/transition.mp3',
+                    echo: 'file:///C:/Users/54547130159/nexus/game-engine/public/audio/sfx/fourth-line.mp3'
                 };
             },
 
-            playTone(frequency, duration) {
-                if (!gameState.sfxEnabled) return;
-                try {
-                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.frequency.value = frequency;
-                    gain.gain.setValueAtTime(0.1 * gameState.volume, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000);
-
-                    osc.start(ctx.currentTime);
-                    osc.stop(ctx.currentTime + duration / 1000);
-                } catch (e) {
-                    // Audio context not available
-                }
-            },
-
             play(soundType) {
-                if (this.sfx[soundType]) {
-                    this.sfx[soundType]();
+                if (!gameState.sfxEnabled || !this.sfx[soundType]) return;
+                try {
+                    const audio = new Audio(this.sfx[soundType]);
+                    audio.volume = gameState.volume;
+                    audio.play().catch(e => console.log('Audio play error:', e));
+                } catch (e) {
+                    console.log('Audio error:', e);
                 }
             }
         };
