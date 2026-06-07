@@ -1,0 +1,8 @@
+// Inky project metadata file
+// Used by Inky editor to manage compilation
+
+projectName: NEXUS
+mainStory: nexus-main.ink
+includePaths: .
+outputFormat: JSON
+playDefaultSpeed: 0

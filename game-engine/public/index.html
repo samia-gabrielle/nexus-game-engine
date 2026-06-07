@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS - A Narrative Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="game-container">
+      <header class="game-header">
+        <h1>NEXUS</h1>
+        <div class="game-meta">
+          <span class="version">v0.1.0-beta</span>
+          <span class="playtime">Playtime: <span id="playtime">0:00</span></span>
+        </div>
+      </header>
+
+      <main class="game-main">
+        <section class="scene-display">
+          <div class="scene-title" id="sceneTitle"></div>
+          <img id="sceneImage" class="scene-image" alt="Scene illustration">
+          <div class="scene-narrative" id="sceneNarrative"></div>
+        </section>
+
+        <section class="choices-panel">
+          <div class="choices-container" id="choicesContainer"></div>
+        </section>
+      </main>
+
+      <aside class="game-sidebar">
+        <div class="fourth-line-indicator">
+          <div class="fourth-line-icon" id="fourthLineIcon"></div>
+          <div class="fourth-line-status" id="fourthLineStatus">Loading...</div>
+        </div>
+
+        <div class="notebook-panel">
+          <h3>Caderno</h3>
+          <div class="notebook-entries" id="notebookEntries">
+            <p class="placeholder">Nenhuma entrada ainda...</p>
+          </div>
+        </div>
+
+        <div class="echoes-panel">
+          <h3>Ecos (<span id="echoCount">0</span>/30)</h3>
+          <div class="echoes-list" id="echoesList">
+            <p class="placeholder">Nenhum eco desbloqueado ainda...</p>
+          </div>
+        </div>
+      </aside>
+
+      <footer class="game-footer">
+        <button id="saveBtn" class="btn btn-save">Salvar</button>
+        <button id="loadBtn" class="btn btn-load">Carregar</button>
+        <button id="menuBtn" class="btn btn-menu">Menu</button>
+      </footer>
+    </div>
+
+    <div id="mainMenuModal" class="modal">
+      <div class="modal-content">
+        <h2>NEXUS</h2>
+        <div class="menu-buttons">
+          <button id="newGameBtn" class="btn btn-large">Novo Jogo</button>
+          <button id="continueBtn" class="btn btn-large">Continuar</button>
+          <button id="settingsBtn" class="btn btn-large">Configurações</button>
+          <button id="creditsBtn" class="btn btn-large">Créditos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="sfxClick" preload="auto">
+    <source src="audio/sfx/click.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sfxTransition" preload="auto">
+    <source src="audio/sfx/transition.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const API_BASE = 'http://localhost:3000/api';
+    let gameState = null;
+    let playtimeSeconds = 0;
+
+    const newGameBtn = document.getElementById('newGameBtn');
+    const mainMenuModal = document.getElementById('mainMenuModal');
+    const saveBtn = document.getElementById('saveBtn');
+    const loadBtn = document.getElementById('loadBtn');
+    const menuBtn = document.getElementById('menuBtn');
+    const sceneTitle = document.getElementById('sceneTitle');
+    const sceneImage = document.getElementById('sceneImage');
+    const sceneNarrative = document.getElementById('sceneNarrative');
+    const choicesContainer = document.getElementById('choicesContainer');
+    const notebookEntries = document.getElementById('notebookEntries');
+    const echoesList = document.getElementById('echoesList');
+    const echoCount = document.getElementById('echoCount');
+    const playtimeDisplay = document.getElementById('playtime');
+
+    const sfxClick = document.getElementById('sfxClick');
+    const sfxTransition = document.getElementById('sfxTransition');
+
+    function playSound(audio) {
+      try {
+        if (audio) {
+          audio.currentTime = 0;
+          audio.play().catch(() => {});
+        }
+      } catch (e) {}
+    }
+
+    async function initGame() {
+      playSound(sfxClick);
+      try {
+        const response = await fetch(`${API_BASE}/game/new`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const data = await response.json();
+        if (data.success && data.state) {
+          gameState = data.state;
+          playtimeSeconds = 0;
+          mainMenuModal.classList.add('hidden');
+          loadScene();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    async function loadScene() {
+      try {
+        const response = await fetch(`${API_BASE}/game/scene`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ state: gameState })
+        });
+
+        const data = await response.json();
+        if (data.success && data.scene) {
+          const scene = data.scene;
+
+          sceneTitle.textContent = scene.title || '';
+
+          if (scene.image) {
+            let imagePath = scene.image;
+            if (!imagePath.startsWith('images/')) {
+              imagePath = 'images/' + imagePath;
+            }
+            sceneImage.src = imagePath;
+            sceneImage.style.display = 'block';
+          } else {
+            sceneImage.style.display = 'none';
+          }
+
+          sceneNarrative.innerHTML = '';
+          if (scene.narrative && Array.isArray(scene.narrative)) {
+            scene.narrative.forEach(line => {
+              const p = document.createElement('p');
+              p.textContent = line;
+              sceneNarrative.appendChild(p);
+            });
+          }
+
+          choicesContainer.innerHTML = '';
+          if (scene.choices && Array.isArray(scene.choices)) {
+            scene.choices.forEach((choice, index) => {
+              const btn = document.createElement('button');
+              btn.className = 'choice-button';
+              btn.textContent = choice.text;
+              btn.onclick = () => makeChoice(index, choice);
+              choicesContainer.appendChild(btn);
+            });
+          }
+
+          updateUI();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    async function makeChoice(choiceIndex, choice) {
+      playSound(sfxTransition);
+      try {
+        const response = await fetch(`${API_BASE}/game/choice`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            state: gameState,
+            choiceIndex: choiceIndex,
+            choice: choice
+          })
+        });
+
+        const data = await response.json();
+        if (data.success && data.state) {
+          gameState = data.state;
+          loadScene();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    function updateUI() {
+      // Update Notebook
+      const scenes = gameState.scenesVisited || [];
+      if (scenes.length === 0) {
+        notebookEntries.innerHTML = '<p class="placeholder">Nenhuma entrada ainda...</p>';
+      } else {
+        notebookEntries.innerHTML = scenes.map(s => `<div style="padding: 5px; margin: 3px 0; font-size: 11px;">✓ ${s}</div>`).join('');
+      }
+
+      // Update Echoes
+      const echoes = gameState.unlockedEchoes || [];
+      echoCount.textContent = echoes.length;
+      if (echoes.length === 0) {
+        echoesList.innerHTML = '<p class="placeholder">Nenhum eco desbloqueado ainda...</p>';
+      } else {
+        echoesList.innerHTML = echoes.map(e => `<div style="padding: 5px; margin: 3px 0; font-size: 11px;">🔷 ${e}</div>`).join('');
+      }
+    }
+
+    function saveGame() {
+      if (!gameState) return;
+      localStorage.setItem('nexus_save', JSON.stringify(gameState));
+      alert('✅ Jogo salvo!');
+    }
+
+    function loadGame() {
+      const save = localStorage.getItem('nexus_save');
+      if (!save) {
+        alert('❌ Nenhum save encontrado');
+        return;
+      }
+      gameState = JSON.parse(save);
+      mainMenuModal.classList.add('hidden');
+      loadScene();
+      alert('✅ Jogo carregado!');
+    }
+
+    function toggleMenu() {
+      if (mainMenuModal.classList.contains('hidden')) {
+        mainMenuModal.classList.remove('hidden');
+      } else {
+        mainMenuModal.classList.add('hidden');
+      }
+    }
+
+    function resumeGame() {
+      mainMenuModal.classList.add('hidden');
+    }
+
+    // Event Listeners
+    if (newGameBtn) {
+      newGameBtn.addEventListener('click', () => {
+        initGame();
+      });
+    }
+
+    const continueBtn = document.getElementById('continueBtn');
+    if (continueBtn) continueBtn.addEventListener('click', resumeGame);
+    if (saveBtn) saveBtn.addEventListener('click', saveGame);
+    if (loadBtn) loadBtn.addEventListener('click', loadGame);
+    if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+
+    // Playtime Timer
+    setInterval(() => {
+      playtimeSeconds++;
+      const mins = Math.floor(playtimeSeconds / 60);
+      const secs = playtimeSeconds % 60;
+      if (playtimeDisplay) {
+        playtimeDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+      }
+    }, 1000);
+
+    // ESC to close menu
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mainMenuModal.classList.contains('hidden')) {
+        mainMenuModal.classList.add('hidden');
+      }
+    });
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('✅ NEXUS Loaded');
+    });
+  </script>
+</body>
+</html>

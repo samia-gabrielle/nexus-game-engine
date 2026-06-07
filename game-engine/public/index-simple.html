@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS - A Narrative Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="game-container">
+      <!-- Header -->
+      <header class="game-header">
+        <h1>NEXUS</h1>
+        <div class="game-meta">
+          <span class="version">v0.1.0-beta</span>
+          <span class="playtime">Playtime: <span id="playtime">0:00</span></span>
+        </div>
+      </header>
+
+      <!-- Main Game Area -->
+      <main class="game-main">
+        <!-- Scene Display -->
+        <section class="scene-display">
+          <div class="scene-title" id="sceneTitle"></div>
+          <img id="sceneImage" class="scene-image" alt="Scene illustration">
+          <div class="scene-narrative" id="sceneNarrative"></div>
+        </section>
+
+        <!-- Choices Panel -->
+        <section class="choices-panel">
+          <div class="choices-container" id="choicesContainer"></div>
+        </section>
+      </main>
+
+      <!-- Sidebar: Fourth Line & Notebook -->
+      <aside class="game-sidebar">
+        <!-- Fourth Line Indicator -->
+        <div class="fourth-line-indicator">
+          <div class="fourth-line-icon" id="fourthLineIcon"></div>
+          <div class="fourth-line-status" id="fourthLineStatus">Loading...</div>
+        </div>
+
+        <!-- Notebook Panel -->
+        <div class="notebook-panel">
+          <h3>Caderno</h3>
+          <div class="notebook-entries" id="notebookEntries">
+            <p class="placeholder">Nenhuma entrada ainda...</p>
+          </div>
+        </div>
+
+        <!-- Echoes Library -->
+        <div class="echoes-panel">
+          <h3>Ecos (<span id="echoCount">0</span>/30)</h3>
+          <div class="echoes-list" id="echoesList">
+            <p class="placeholder">Nenhum eco desbloqueado ainda...</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Footer with Controls -->
+      <footer class="game-footer">
+        <button id="saveBtn" class="btn btn-save">Salvar</button>
+        <button id="loadBtn" class="btn btn-load">Carregar</button>
+        <button id="menuBtn" class="btn btn-menu">Menu</button>
+      </footer>
+    </div>
+
+    <!-- Modal: Main Menu -->
+    <div id="mainMenuModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>NEXUS</h2>
+        <div class="menu-buttons">
+          <button id="newGameBtn" class="btn btn-large">Novo Jogo</button>
+          <button id="continueBtn" class="btn btn-large">Continuar</button>
+          <button id="settingsBtn" class="btn btn-large">Configurações</button>
+          <button id="creditsBtn" class="btn btn-large">Créditos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="sfxClick" preload="auto">
+    <source src="audio/sfx/click.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="game-simple.js"></script>
+</body>
+</html>

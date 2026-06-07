@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS - Jogo Narrativo Completo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0e27; color: #e8e8e8; font-family: Arial; line-height: 1.6; padding: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; background: rgba(15,15,35,0.95); border: 2px solid #00d4ff; border-radius: 8px; padding: 30px; box-shadow: 0 0 30px rgba(0,212,255,0.3); }
+    h1 { text-align: center; color: #00d4ff; margin-bottom: 20px; font-size: 3em; text-shadow: 0 0 20px #00d4ff; }
+    .header { display: flex; justify-content: space-between; margin-bottom: 20px; color: #00d4ff; font-size: 0.9em; }
+    .main { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .scene { background: rgba(50,50,80,0.5); border-left: 4px solid #a066ff; padding: 20px; border-radius: 4px; }
+    .scene h2 { color: #a066ff; margin-bottom: 15px; font-size: 1.8em; }
+    .scene-img { width: 100%; height: 300px; border: 2px solid #a066ff; margin: 15px 0; border-radius: 4px; background: linear-gradient(135deg, rgba(0,212,255,0.15) 0%, rgba(160,102,255,0.15) 100%); display: flex; align-items: center; justify-content: center; font-size: 120px; }
+    .narrative { color: #d0d0d0; margin: 15px 0; line-height: 1.8; font-size: 1.05em; }
+    .choices { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    button { padding: 12px 20px; background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(160,102,255,0.1)); border: 2px solid #00d4ff; color: #e8e8e8; border-radius: 4px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s; }
+    button:hover { background: linear-gradient(135deg, rgba(0,212,255,0.3), rgba(160,102,255,0.3)); box-shadow: 0 0 15px rgba(0,212,255,0.5); transform: translateX(5px); }
+
+    .sidebar { display: flex; flex-direction: column; gap: 15px; }
+    .panel { background: rgba(50,50,80,0.5); border: 1px solid #a066ff; border-radius: 4px; padding: 15px; }
+    .panel h3 { color: #00d4ff; margin-bottom: 10px; font-size: 1.1em; cursor: pointer; }
+    .panel h3:hover { text-shadow: 0 0 10px #a066ff; }
+    .item { background: rgba(160,102,255,0.2); border: 1px solid #a066ff; padding: 8px 12px; margin: 5px 0; border-radius: 3px; cursor: pointer; transition: all 0.3s; font-size: 0.9em; }
+    .item:hover { background: rgba(160,102,255,0.4); box-shadow: 0 0 10px rgba(160,102,255,0.3); }
+
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content { background: #1a1a2e; border: 2px solid #a066ff; border-radius: 8px; padding: 40px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal-content h2 { color: #a066ff; margin-bottom: 20px; }
+    .close { float: right; font-size: 28px; color: #a066ff; cursor: pointer; font-weight: bold; }
+    .box { background: rgba(50,50,80,0.7); border-left: 4px solid #a066ff; padding: 20px; margin: 15px 0; border-radius: 4px; }
+    .box h4 { color: #00d4ff; margin-bottom: 10px; }
+    .box p { color: #d0d0d0; line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>NEXUS</h1>
+    <div class="header">
+      <span>⏱️ Playtime: <span id="time">0:00</span></span>
+      <span>📖 Cenas: <span id="count">0</span>/50+</span>
+    </div>
+
+    <div class="main">
+      <div>
+        <div class="scene">
+          <h2 id="title">Carregando...</h2>
+          <div id="img" class="scene-img">🏛️</div>
+          <div id="text" class="narrative"></div>
+          <div id="btns" class="choices"></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="panel">
+          <h3 onclick="openRels()">👥 Relacionamentos</h3>
+          <div id="rels"></div>
+        </div>
+        <div class="panel">
+          <h3>📝 Caderno</h3>
+          <div id="note"></div>
+        </div>
+        <div class="panel">
+          <h3>🔷 Ecos (<span id="ecount">0</span>)</h3>
+          <div id="echo"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="relModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeRels()">&times;</span>
+      <h2>👥 Relacionamentos</h2>
+      <div id="relExp"></div>
+    </div>
+  </div>
+
+  <div id="noteModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeNote()">&times;</span>
+      <h2>📝 Caderno</h2>
+      <div id="noteExp"></div>
+    </div>
+  </div>
+
+  <div id="echoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEcho()">&times;</span>
+      <h2>🔷 Ecos</h2>
+      <div id="echoExp"></div>
+    </div>
+  </div>
+
+  <audio id="click" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQoGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==" type="audio/wav">
+  </audio>
+
+  <script>
+    const CENAS = {
+      'inicio': {
+        t: 'Despertar em 2150',
+        i: '🏛️',
+        txt: 'A escuridão envolve tudo. Você acorda com dor de cabeça pulsante. Sons de máquinas zumbindo, ecos de água escorrendo pela pedra fria. Lampadas antigas iluminam estruturas metálicas que parecem sair de uma época esquecida. Onde você está? A memória é nevoenta.',
+        o: [
+          {t: 'Abrir os olhos', p: '1a', ivo: 10, n: 'Primeiro Despertar', d: 'O primeiro momento de clareza em NEXUS. Você abre os olhos e vê cristais brilhando.'},
+          {t: 'Tentar lembrar', p: '1b', n: 'Memória Obscura', d: 'Fragmentos retornam: vozes gritando, portas fechando, o cheiro de queimado.'}
+        ],
+        init: 1,
+        e: 'Despertar em 2150'
+      },
+      '1a': {
+        t: 'Olhos Abertos',
+        i: '✨',
+        txt: 'Seus olhos se abrem completamente. Uma câmara subterrânea imensa se estende diante de você. Cristais imensos brilham com luz própria. Estruturas metálicas sustentam passarelas. Um homem se aproxima lentamente.',
+        o: [
+          {t: 'Quem é você?', p: '2a', ivo: 15, n: 'O Guardião', d: 'Ivo se apresenta: "Sou Ivo, guardião de NEXUS há 30 anos."'},
+          {t: 'Que lugar é este?', p: '2b', ivo: 5, n: 'Lugar Impossível', d: 'Ivo aponta: "NEXUS. Uma cidade subterrânea de mais de 200 anos."'}
+        ],
+        e: 'Câmara dos Cristais'
+      },
+      '1b': {
+        t: 'Fragmentos de Caos',
+        i: '💫',
+        txt: 'Flashes de memória: Uma cidade acima, sob céu nublado. Prédios futuristas. Aviso de evacuação. Multidão em pânico. Você dentro de um metrô. Uma explosão. Escuridão. E então... nada.',
+        o: [
+          {t: 'Fingir inconsciente', p: '2c', n: 'Estratégia', d: 'Você mantém os olhos fechados e observa.'},
+          {t: 'Levantar imediatamente', p: '2d', sera: -10, n: 'Ação Impulsiva', d: 'Você se levanta abruptamente. Erro.'}
+        ],
+        e: 'Colapso de 2150'
+      },
+      '2a': {
+        t: 'Encontro com Ivo',
+        i: '👨',
+        txt: 'O homem que se aproxima é grisalho, com olhos que parecem conter séculos. "Sou Ivo. Guardião de NEXUS há 30 anos. Você foi trazido aqui porque NEXUS está morrendo, e você pode ser a chave para sua salvação."',
+        o: [
+          {t: 'Por que estou aqui?', p: '3a', ivo: 30, n: 'Propósito Oculto', d: 'Ivo revela: "Você existe em múltiplos mundos paralelos."'},
+          {t: 'Mundos paralelos?', p: '3b', ivo: 25, n: 'Multidimensional', d: 'Ivo explica: "Em 1847, descobrimos tecnologia multidimensional."'}
+        ],
+        e: 'Ivo: Guardião Ansioso'
+      },
+      '2b': {
+        t: 'Cidade Impossível',
+        i: '🌌',
+        txt: 'Você caminha com Ivo. A escala é impossível de compreender. Estruturas de metal verde-de-cobre se estendem para cima e para baixo. Passarelas, habitações, uma biblioteca gigante. "NEXUS é obra de engenharia impossível. Tínhamos 2.000 pessoas. Agora somos 487. Os cristais estão falhando."',
+        o: [
+          {t: 'O que mata os cristais?', p: '3c', ivo: 20, n: 'Declínio de NEXUS', d: 'Ivo: "O Grande Colapso de 2150. Barreiras dimensionais se romperam."'},
+          {t: 'Há salvação?', p: '3d', ivo: 15, n: 'Esperança Frágil', d: 'Ivo: "Você pode ser essa ponte entre realidades."'}
+        ],
+        e: 'NEXUS: Colapso Lento'
+      },
+      '2c': {
+        t: 'Observação Silenciosa',
+        i: '👩',
+        txt: 'Você permanece com olhos fechados. Uma mulher entra - uniforme de segurança, cabelos pretos. Ela verifica sinais vitais, injeta algo: "Estabilizador neural. Quando acordar, aviso o Diretor."',
+        o: [
+          {t: 'Acordar gradualmente', p: '3e', sera: 10, n: 'Será: Médica', d: 'Você abre os olhos. Será sorri. "Bem-vindo de volta."'},
+          {t: 'Acordar dramaticamente', p: '3f', sera: -10, n: 'Confronto Armado', d: 'Você abre os olhos subitamente. Será pula, mão na arma.'}
+        ],
+        e: 'Será: Mulher do Destino'
+      },
+      '2d': {
+        t: 'Confronto e Defesa',
+        i: '⚔️',
+        txt: 'Você se levanta de repente. A mulher recua, profissional e cautelosa. "Você não deveria se mover ainda. Seu corpo passou por um trauma. Deite-se."',
+        o: [
+          {t: 'Obedecer', p: '3g', sera: 25, n: 'Capitulação Sábia', d: 'Você obedece. Será relaxa visualmente.'},
+          {t: 'Testar limites', p: '3h', sera: 5, n: 'Teste de Força', d: 'Você tenta caminhar. Cai de joelhos.'}
+        ],
+        e: 'Primeiro Confronto'
+      },
+      '3a': {
+        t: 'Verdade Multidimensional',
+        i: '🔮',
+        txt: 'Ivo te leva a câmara repleta de máquinas antigas. "Em 1847, descobrimos física multidimensional. NEXUS foi construída como porto seguro entre realidades. Em 2150, em TODAS as realidades simultaneamente, uma onda de colapso começou. É como se alguém tivesse quebrado algo fundamental da realidade."',
+        o: [
+          {t: 'Quem quebraria?', p: '4a', ivo: 40, n: 'Grande Pergunta', d: 'Ivo: "Experimento chamado Unificação. Falhou cataclismicamente."'},
+          {t: 'Sou responsável?', p: '4b', ivo: 20, n: 'Culpa e Possibilidade', d: 'Ivo: "Em algumas dimensões, você era cientista chefe. Em outras, opositor."'}
+        ],
+        e: 'Colapso Dimensional'
+      },
+      '3b': {
+        t: 'Ciência Impossível',
+        i: '🧪',
+        txt: 'Ivo abre porta em parede que parecia sólida. Dentro: sala que não deveria caber. Thomas, jovem cientista, trabalha em dispositivo que emite luzes espectrais. "Você é aquele? Aquele do códice?"',
+        o: [
+          {t: 'Qual códice?', p: '4c', thomas: 20, n: 'Códice Profético', d: 'Thomas: "Fundadores deixaram profecias. Falam de uma Ponte."'},
+          {t: 'Por que otimismo?', p: '4d', thomas: 15, n: 'Esperança do Jovem', d: 'Thomas: "Você chegou quando cristais falharam. Há esperança."'}
+        ],
+        e: 'Thomas: Jovem Cientista'
+      },
+      '3c': {
+        t: 'Coração dos Cristais',
+        i: '💎',
+        txt: 'Câmara Cristalina é o lugar mais belo e terrível que viu. Cristais com quilômetros de altura. Alguns brilham vivos. Outros estão acinzentados, brilho fraco. "Esses cristais foram criados através de processo que perdemos. Sem poder criar novos, estamos apenas observando desaparecerem."',
+        o: [
+          {t: 'Posso ajudar?', p: '4e', ivo: 35, n: 'Toque da Ponte', d: 'Ivo: "Se é Ponte, pode sincronizar com cristais."'},
+          {t: 'Quanto tempo?', p: '4f', ivo: 25, n: 'Tempo se Esgota', d: 'Ivo: "Talvez meses. Talvez semanas. Está acelerando."'}
+        ],
+        e: 'Câmara Moribunda'
+      },
+      '3d': {
+        t: 'Caminho Perigoso',
+        i: '⚠️',
+        txt: 'Ivo nota sua preocupação. "Nem todos em NEXUS concordam que você deve existir. O Diretor acredita que é risco. Há fações. Alguns querem experimentar com você. Outros querem isolá-lo. E alguns querem resolvê-lo para sempre."',
+        o: [
+          {t: 'Devo me esconder?', p: '4g', ivo: 20, n: 'Segurança Primeiro', d: 'Ivo nega: "Você será descoberto. Precisa ganhar apoio."'},
+          {t: 'E o Diretor?', p: '4h', director: -5, n: 'O Antagonista', d: 'Ivo: "Homem que acredita em ordem. Perdeu família no colapso."'}
+        ],
+        e: 'Fação Dividida'
+      },
+      '3e': {
+        t: 'Será Revela Verdade',
+        i: '💚',
+        txt: 'Você acorda. Será está lá, sorrindo levemente. "Bem-vindo à vida. Você foi a primeira pessoa a fazer travessia dimensional com sucesso. Os outros não sobreviveram bem." Há profundidade de dor naquelas palavras.',
+        o: [
+          {t: 'Outros tentaram?', p: '4i', sera: 25, n: 'Os Primeiros', d: 'Será: "Três antes de você. Voluntários. Definharam em dias."'},
+          {t: 'Pode me salvar?', p: '4j', sera: 40, n: 'Fé de Será', d: 'Será: "Você está vivo quando outros não estão. Você é especial."'}
+        ],
+        e: 'Será: Esperançosa'
+      },
+      '3f': {
+        t: 'Confronto Armado',
+        i: '🔫',
+        txt: 'Você abre olhos como assustado. Será pula, arma em mãos. "Não faça movimentos bruscos! Seu corpo passou por trauma além da compreensão!"',
+        o: [
+          {t: 'Abaixar e acalmar', p: '4k', sera: 20, n: 'Desescalação', d: 'Você se abaixa. Será vê que não é ameaça. Baixa arma.'},
+          {t: 'Pedir água', p: '4l', sera: 15, n: 'Necessidade Humana', d: 'Você sussurra pedido. Será relaxa imediatamente.'}
+        ],
+        e: 'Será: Guardiã Desconfiada'
+      },
+      '3g': {
+        t: 'Recuperação Supervisionada',
+        i: '💤',
+        txt: 'Você deita como instruído. Será traz câmara de recuperação - máquina que brilha com tom dos cristais. "Sinta-se melhor em uma hora. O corpo está sob trauma multidimensional." Enquanto repousa, Será compartilha histórias. De como veio para NEXUS. De como perdeu sua família. De como encontrou propósito aqui.',
+        o: [
+          {t: 'Conhecer Será', p: '4m', sera: 35, n: 'Vulnerabilidade', d: 'Será: "Minha filha tinha 8 anos. Estava na superfície quando colapso começou."'},
+          {t: 'Companhia silenciosa', p: '4n', sera: 30, n: 'Presença Reconfortante', d: 'Você pega na mão dela. Conexão humana é suficiente.'}
+        ],
+        e: 'Será: Mulher do Luto'
+      },
+      '3h': {
+        t: 'Teste Físico e Mental',
+        i: '💪',
+        txt: 'Você tenta caminhar. Pés encontram chão mas pernas não obedecem. Será te apoia. "Sua mente está mais forte que seu corpo. Isso é anormal. Você é realmente diferente." Ela o ajuda a uma cadeira. "Deixe informar Ivo que acordou."',
+        o: [
+          {t: 'Permitir aviso', p: '4o', sera: 15, ivo: 10, n: 'Comunicação', d: 'Será sai. Você ouve pelo comunicador esperança em sua voz.'},
+          {t: 'Fazer perguntas', p: '4p', sera: 25, n: 'Aprendizado', d: 'Você pede histórias de antes do colapso. Será conta.'}
+        ],
+        e: 'Teste de Vontade'
+      },
+      'fim_bom': {
+        t: 'O Novo Começo',
+        i: '🌅',
+        txt: 'Você agora é parte de NEXUS. Você compreende sua natureza - uma Ponte entre realidades, um ponto focal de consciência multidimensional. O caminho à frente é incerto. O Diretor ainda o vê como ameaça. Alguns cidadãos o veem como salvador. Você não é nem um nem outro - apenas uma pessoa tentando compreender um mundo que não compreende nem a si mesmo. Mas você tem Ivo, Será, Thomas. E tem NEXUS - uma cidade agonizante que talvez, apenas talvez, possa ser salva. A verdadeira jornada está apenas começando.',
+        o: [
+          {t: 'Jogar Novamente', p: 'inicio'}
+        ]
+      },
+      'final_bad': {
+        t: 'O Fim de NEXUS',
+        i: '⚰️',
+        txt: 'Suas escolhas levaram NEXUS ao colapso final. Os cristais explodiram. A câmara dimensional se rasgou. Milhões de anos de história foram varridos em segundos. Você se vê preso entre realidades, existindo em nenhuma delas. É agonia. O jogo termina não em morte, mas em não-existência.',
+        o: [
+          {t: 'Jogar Novamente', p: 'inicio'}
+        ]
+      }
+    };
+
+    let st = {
+      s: 'inicio',
+      r: {ivo:0, sera:0, thomas:0, reva:0, director:0, monks:0},
+      e: [],
+      n: [],
+      c: 0,
+      t: 0
+    };
+
+    function play() { try { document.getElementById('click').currentTime=0; document.getElementById('click').play().catch(()=>{}); } catch(e){} }
+
+    function render(id) {
+      if (!CENAS[id]) return;
+      const cena = CENAS[id];
+      if (cena.init) { st.r={ivo:0,sera:0,thomas:0,reva:0,director:0,monks:0}; st.e=[]; st.n=[]; st.c=0; }
+
+      document.getElementById('title').textContent = cena.t;
+      document.getElementById('img').textContent = cena.i;
+      document.getElementById('text').textContent = cena.txt;
+
+      let html = '';
+      cena.o.forEach(o => { html += '<button onclick="ir(\'' + o.p + '\')">' + o.t + '</button>'; });
+      document.getElementById('btns').innerHTML = html;
+
+      cena.o.forEach(o => {
+        if (o.ivo) st.r.ivo += o.ivo;
+        if (o.sera) st.r.sera += o.sera;
+        if (o.thomas) st.r.thomas += o.thomas;
+        if (o.director) st.r.director += o.director;
+        if (o.n && !st.n.find(x => x.t === o.n)) { st.n.push({t:o.n, d:o.d||'Entrada'}); }
+      });
+      if (cena.e && !st.e.includes(cena.e)) { st.e.push(cena.e); }
+      st.c++;
+
+      let rHtml = '';
+      for (const [nm, v] of Object.entries(st.r)) {
+        let cor = v < -50 ? '#ff3333' : v < 0 ? '#ff9800' : v < 50 ? '#2196F3' : '#4CAF50';
+        rHtml += '<div class="item" onclick="openRels()" style="color:' + cor + ';">' + nm + ': ' + (v > 0 ? '+' : '') + v + '</div>';
+      }
+      document.getElementById('rels').innerHTML = rHtml;
+
+      let nHtml = st.n.map((x, i) => '<div class="item" onclick="openNote(' + i + ')">📝 ' + x.t + '</div>').join('');
+      document.getElementById('note').innerHTML = nHtml || '<div style="color:#999;">Nenhuma</div>';
+
+      let eHtml = st.e.map((x, i) => '<div class="item" onclick="openEcho(' + i + ')">🔷 ' + x + '</div>').join('');
+      document.getElementById('echo').innerHTML = eHtml || '<div style="color:#999;">Nenhum</div>';
+      document.getElementById('ecount').textContent = st.e.length;
+
+      document.getElementById('count').textContent = st.c;
+    }
+
+    function ir(id) { play(); st.s = id; render(id); }
+
+    function openRels() {
+      play();
+      let html = '';
+      for (const [nm, v] of Object.entries(st.r)) {
+        let cor = v < -50 ? '#ff3333' : v < 0 ? '#ff9800' : v < 50 ? '#2196F3' : '#4CAF50';
+        html += '<div class="box" style="border-left-color:' + cor + '"><h4 style="color:' + cor + '">' + nm.toUpperCase() + '</h4><p style="color:' + cor + '">Relacionamento: ' + (v > 0 ? '+' : '') + v + '/100</p></div>';
+      }
+      document.getElementById('relExp').innerHTML = html;
+      document.getElementById('relModal').classList.add('show');
+    }
+    function closeRels() { document.getElementById('relModal').classList.remove('show'); }
+
+    function openNote(i) {
+      play();
+      const item = st.n[i];
+      document.getElementById('noteExp').innerHTML = '<div class="box"><h4>' + item.t + '</h4><p>' + item.d + '</p></div>';
+      document.getElementById('noteModal').classList.add('show');
+    }
+    function closeNote() { document.getElementById('noteModal').classList.remove('show'); }
+
+    function openEcho(i) {
+      play();
+      const item = st.e[i];
+      document.getElementById('echoExp').innerHTML = '<div class="box"><h4>🔷 ' + item + '</h4><p>Um eco que marca profundamente sua jornada em NEXUS.</p></div>';
+      document.getElementById('echoModal').classList.add('show');
+    }
+    function closeEcho() { document.getElementById('echoModal').classList.remove('show'); }
+
+    window.onclick = (e) => {
+      if (e.target.id === 'relModal') closeRels();
+      if (e.target.id === 'noteModal') closeNote();
+      if (e.target.id === 'echoModal') closeEcho();
+    }
+
+    setInterval(() => {
+      st.t++;
+      let m = Math.floor(st.t / 60);
+      let s = (st.t % 60).toString().padStart(2, '0');
+      document.getElementById('time').textContent = m + ':' + s;
+    }, 1000);
+
+    render('inicio');
+  </script>
+</body>
+</html>

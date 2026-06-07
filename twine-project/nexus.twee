@@ -1,0 +1,1541 @@
+:: StoryTitle
+NEXUS - A Narrative Game
+
+:: StoryData
+{
+  "ifid": "6C45C2CC-7AFF-4055-92AB-D33FF627F2F0",
+  "format": "Harlowe",
+  "format-version": "3.3.0"
+}
+
+:: Start [scene]
+# Despertar em 2150
+
+A escuridão envolve tudo. Sons de máquinas zumbindo, ecos de agua escorrendo pela pedra fria. Você acorda com dor de cabeça pulsante.
+
+Onde você está? A memória é nevoenta. Vê lampadas antigas e cabeamento retorcido que parece sair de uma época esquecida.
+
+[img[images/scene-2150.png]]
+
+(set: $relationships to (a: "Ivo" -> 0, "Será" -> 0, "Thomas" -> 0, "Reva" -> 0, "Director" -> 0, "Monks" -> 0))
+(set: $scenesVisited to (a:))
+(set: $unlockedEchoes to (a:))
+(set: $playtimeSeconds to 0)
+
+[[Abrir os olhos completamente->Scene 1A]]
+[[Tentar lembrar o que aconteceu->Scene 1B]]
+
+:: Scene 1A [scene]
+# Olhos Abertos
+
+Você vê uma câmara subterrânea imensa. Cristais que brilham com luz própria iluminam estruturas metálicas antigas.
+
+No canto há uma figura - um homem com trajes estranhos, característicos de outro tempo.
+
+[img[images/scene-1a.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Olhos Abertos"))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Primeira visão dos cristais"))
+
+"Você acordou", diz ele com voz calma. "Bem-vindo à NEXUS."
+
+[[Quem é você?->Scene 2A]]
+[[Onde estou?->Scene 2B]]
+
+:: Scene 1B [scene]
+# Memória Obscura
+
+Fragmentos de memória: uma multidão, vozes gritando, uma porta fechando...
+
+Você tenta se mover, mas sente dor. Algo aconteceu. Algo ruim.
+
+[img[images/scene-1b.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Memória Obscura"))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Fragmentos de trauma"))
+
+De repente, ouve passos. Alguém se aproxima.
+
+[[Fingir que ainda está inconsciente->Scene 2C]]
+[[Levantar e confrontar->Scene 2D]]
+
+:: Scene 2A [scene]
+# Encontro com o Guardião
+
+O homem se aproxima. Seus olhos são penetrantes.
+
+"Sou Ivo. Guardião da NEXUS há 30 anos. Você foi trazido aqui por uma razão."
+
+Você sente uma conexão estranha com ele. Há algo familiar naquela voz.
+
+[img[images/scene-2a.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Encontro com Ivo"))
+(set: $relationships to $relationships + (a: "Ivo" -> 10))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Ivo: o guardião misterioso"))
+
+"Você tem muitas perguntas. Mas primeiro, você precisa entender o que é a NEXUS."
+
+[[Escutar tudo que ele tem a dizer->Scene 3A]]
+[[Questionar sua autoridade->Scene 3B]]
+
+:: Scene 2B [scene]
+# A Câmara Revelada
+
+"Você está em NEXUS", diz o homem. "Uma cidade subterrânea que existe a mais de 200 anos."
+
+Você olha ao redor. Vê estruturas impossíveis, tecnologia que parece saída de ficção científica, mas com acabamento antigo.
+
+[img[images/scene-2b.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "A Câmara Revelada"))
+(set: $relationships to $relationships + (a: "Ivo" -> 5))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "NEXUS: cidade perdida"))
+
+"É real. E agora você é parte dela."
+
+[[Aceitar a realidade->Scene 3C]]
+[[Recusar acreditar->Scene 3D]]
+
+:: Scene 2C [scene]
+# A Estratégia do Silêncio
+
+Você mantém os olhos fechados e observa através das pestanas.
+
+Uma mulher entra na câmara. Cabelos pretos, movimento ágil. Ela examina você com cuidado clínico.
+
+[img[images/scene-2c.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "A Estratégia do Silêncio"))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Será: a médica enigmática"))
+
+"Ele ainda está inconsciente", murmura ela para alguém fora de vista.
+
+[[Continuar fingindo->Scene 3E]]
+[[Abrir os olhos subitamente->Scene 3F]]
+
+:: Scene 2D [scene]
+# Confronto Direto
+
+Você se levanta bruscamente, apesar da dor.
+
+A pessoa que se aproximava recua um passo. É uma mulher com uniforme de segurança, mão perto da arma.
+
+[img[images/scene-2d.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Confronto Direto"))
+(set: $relationships to $relationships + (a: "Será" -> -10))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Primeira hostilidade"))
+
+"Calma!", ela grita. "Você está em um lugar seguro!"
+
+Mas sua mão permanece na arma.
+
+[[Atacar->Scene 3G]]
+[[Levantar as mãos->Scene 3H]]
+
+:: Scene 3A [scene]
+# A História da NEXUS
+
+Ivo te leva por corredores de pedra e metal. A história dele é longa e complexa.
+
+"NEXUS foi fundada em 1847 por cientistas que acreditavam que a superfície estava condenada. Construímos uma civilização aqui abaixo."
+
+[img[images/scene-3a.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "A História da NEXUS"))
+(set: $relationships to $relationships + (a: "Ivo" -> 20))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "NEXUS: origem e propósito"))
+
+Você sente que está aprendendo a verdade. Ou pelo menos, a versão de Ivo dela.
+
+[[Confiar nele completamente->Scene 4A]]
+[[Manter ceticismo->Scene 4B]]
+
+:: Scene 3B [scene]
+# Desafio ao Autoridade
+
+"E por que devo acreditar em você?", você questiona.
+
+Ivo sorri levemente. "Porque não tem escolha. Mas também porque sou honesto. Aqui embaixo, a honestidade é moeda rara."
+
+[img[images/scene-3b.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Desafio à Autoridade"))
+(set: $relationships to $relationships + (a: "Ivo" -> 0))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Primeira desconfiança"))
+
+Ele aponta para uma porta. "Vem. Há pessoas que você precisa conhecer."
+
+[[Seguir->Scene 4C]]
+[[Recusar->Scene 4D]]
+
+:: Scene 3C [scene]
+# Abraço da Realidade
+
+Você respira fundo e aceita. Tudo isso é real.
+
+Você está em NEXUS. Tudo mudou.
+
+[img[images/scene-3c.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Abraço da Realidade"))
+(set: $relationships to $relationships + (a: "Ivo" -> 15))
+
+"Bem-vindo," diz Ivo, estendendo a mão.
+
+Você a aperta.
+
+[[Explorar NEXUS->Scene 4E]]
+[[Fazer perguntas->Scene 4F]]
+
+:: Scene 3D [scene]
+# Rejeição da Realidade
+
+"Isso é loucura," você grita. "Estou em algum tipo de simulação ou alucinação!"
+
+Ivo não parece surpreso. "Muitos dizem isso no início. Alguns nunca acreditam."
+
+[img[images/scene-3d.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Rejeição da Realidade"))
+(set: $relationships to $relationships + (a: "Ivo" -> -5))
+
+"Eventualmente, você aceitará. Ou irá enlouquecer."
+
+[[Insistir que é tudo falso->Scene 4G]]
+[[Começar a questionar->Scene 4H]]
+
+:: Scene 3E [scene]
+# Silêncio Estratégico
+
+Você continua com os olhos fechados enquanto a mulher trabalha.
+
+Ela injeta algo em seu braço. A sensação é fria.
+
+[img[images/scene-3e.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Silêncio Estratégico"))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Serão e seus mistérios médicos"))
+
+"Injeção de estabilizador neural," ela murmura. "Vai ajudá-lo a se ajustar."
+
+[[Manter silêncio->Scene 4I]]
+[[Abrir os olhos->Scene 4J]]
+
+:: Scene 3F [scene]
+# O Despertar Dramático
+
+Você abre os olhos subitamente, pegando a mulher desprevenida.
+
+Ela grita e você vê que ela está alcançando uma arma.
+
+[img[images/scene-3f.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "O Despertar Dramático"))
+(set: $relationships to $relationships + (a: "Será" -> -15))
+
+"Calma! Você está seguro!"
+
+Mas o medo está em seus olhos.
+
+[[Pedir desculpas->Scene 4K]]
+[[Exigir explicações->Scene 4L]]
+
+:: Scene 3G [scene]
+# Violência Precipitada
+
+Você avança contra ela com toda força.
+
+Ela reage rapidamente, usando técnicas de defesa pessoal para te derrotar.
+
+[img[images/scene-3g.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Violência Precipitada"))
+(set: $relationships to $relationships + (a: "Será" -> -30))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Primeiro conflito físico"))
+
+Você cai no chão, ofegante. Ela coloca uma arma apontada para você.
+
+"Não force minha mão," ela diz fria.
+
+[[Render-se->Scene 4M]]
+[[Continuar lutando->Scene 4N]]
+
+:: Scene 3H [scene]
+# Diplomacia Instintiva
+
+Você levanta as mãos imediatamente, mostrando que não é uma ameaça.
+
+A mulher respira fundo, relaxando um pouco.
+
+[img[images/scene-3h.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Diplomacia Instintiva"))
+(set: $relationships to $relationships + (a: "Será" -> 10))
+
+"Bom," ela diz. "Você é racional. Isso é bom."
+
+Ela abaixa a arma.
+
+"Meu nome é Será. Bem-vindo a NEXUS."
+
+[[Confiar nela->Scene 4O]]
+[[Manter distância->Scene 4P]]
+
+:: Scene 4A [scene]
+# Lealdade Primitiva
+
+Você segue Ivo com confiança cega.
+
+Ele te leva por câmaras que brilham com cristais luminescentes. A beleza é quase hipnotizante.
+
+[img[images/scene-4a.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Lealdade Primitiva"))
+(set: $relationships to $relationships + (a: "Ivo" -> 30))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Cristais luminosos"))
+
+"Você tem o espírito certo," diz Ivo. "Muitos que chegam aqui são impulsionados pela desconfiança."
+
+[[Continuar com Ivo->Scene 5A]]
+[[Pedir para explorar sozinho->Scene 5B]]
+
+:: Scene 4B [scene]
+# Dúvida Constante
+
+Você escuta Ivo, mas questiona cada palavra.
+
+Ele parece apreciar sua resistência.
+
+[img[images/scene-4b.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Dúvida Constante"))
+(set: $relationships to $relationships + (a: "Ivo" -> 10))
+
+"A ceticismo é saudável," ele admite. "Aqui embaixo, a ceticismo pode te manter vivo."
+
+[[Aprofundar questões->Scene 5C]]
+[[Aceitar sua explicação por enquanto->Scene 5D]]
+
+:: Scene 4C [scene]
+# Marcha pela Caverna
+
+Você segue Ivo através de corredores que parecem ser esculpidos naturalmente, mas com precisão artificial.
+
+O ar é úmido e cheira a metal oxidado.
+
+[img[images/scene-4c.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Marcha pela Caverna"))
+(set: $relationships to $relationships + (a: "Ivo" -> 5))
+
+"Você será recebido pelo Conselho em breve. Eles terão muitas perguntas."
+
+[[Preparar respostas->Scene 5E]]
+[[Improvisar->Scene 5F]]
+
+:: Scene 4D [scene]
+# Isolamento Voluntário
+
+Você recusa seguir Ivo.
+
+Ele levanta as mãos, aceitando sua decisão.
+
+[img[images/scene-4d.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Isolamento Voluntário"))
+(set: $relationships to $relationships + (a: "Ivo" -> -10))
+
+"Está bem. Fique aqui então. Alguém virá para cuidar de você eventualmente."
+
+Ele sai, deixando você sozinho em uma câmara espaçosa.
+
+[[Explorar a câmara->Scene 5G]]
+[[Descansar e pensar->Scene 5H]]
+
+:: Scene 4E [scene]
+# Explorador Entusiasmado
+
+Você começa a explorar NEXUS imediatamente.
+
+Cada canto oferece algo novo. Tecnologia que você nunca viu antes, arquitetura impossível.
+
+[img[images/scene-4e.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Explorador Entusiasmado"))
+(set: $relationships to $relationships + (a: "Ivo" -> 20))
+
+Você encontra um jardim subterrâneo. Plantas crescem sob luz de cristal. É quase mágico.
+
+[[Permanecer no jardim->Scene 5I]]
+[[Continuar explorando->Scene 5J]]
+
+:: Scene 4F [scene]
+# Sedento de Conhecimento
+
+Você bombardeia Ivo com perguntas.
+
+Ele responde pacientemente, revelando camadas de NEXUS que você nunca teria descoberto sozinho.
+
+[img[images/scene-4f.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Sedento de Conhecimento"))
+(set: $relationships to $relationships + (a: "Ivo" -> 25))
+
+"Você é diferente," ele diz. "A maioria das pessoas quer fugir da verdade. Você a busca."
+
+[[Aprofundar relacionamento com Ivo->Scene 5K]]
+[[Conhecer outras pessoas->Scene 5L]]
+
+:: Scene 4G [scene]
+# Negação Total
+
+Você continua negando tudo.
+
+Ivo finalmente desiste de tentar convencê-lo e o deixa sozinho.
+
+[img[images/scene-4g.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Negação Total"))
+(set: $relationships to $relationships + (a: "Ivo" -> -20))
+
+Você está isolado em seu desespero, recusando aceitar a realidade que te cerca.
+
+[[Continuar negando->Scene 5M]]
+[[Finalmente aceitar->Scene 5N]]
+
+:: Scene 4H [scene]
+# Questionamento Lento
+
+Aos poucos, você começa a questionar sua negação.
+
+As evidências ao seu redor são irrefutáveis.
+
+[img[images/scene-4h.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Questionamento Lento"))
+(set: $relationships to $relationships + (a: "Ivo" -> 5))
+
+"Talvez você esteja certo," você finalmente diz a Ivo.
+
+[[Trabalhar com Ivo para entender->Scene 5O]]
+[[Explorar por conta própria->Scene 5P]]
+
+:: Scene 4I [scene]
+# Vigilância Silenciosa
+
+Você continua fingindo estar inconsciente enquanto Será executa mais procedimentos.
+
+Você aprende muito simplesmente escutando.
+
+[img[images/scene-4i.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Vigilância Silenciosa"))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Sera: observações médicas"))
+
+Ela sussurra para alguém ao telefone: "Ele será um interessante."
+
+[[Abrir os olhos->Scene 5Q]]
+[[Permanecer dormindo->Scene 5R]]
+
+:: Scene 4J [scene]
+# Revelação Parcial
+
+Você abre os olhos lentamente, sem dramaticidade.
+
+Será não se assusta desta vez. Ela apenas sorri.
+
+[img[images/scene-4j.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Revelação Parcial"))
+(set: $relationships to $relationships + (a: "Será" -> 5))
+
+"Bem-vindo de volta," ela diz. "Como se sente?"
+
+[[Conversar com ela->Scene 5S]]
+[[Tentar se mover->Scene 5T]]
+
+:: Scene 4K [scene]
+# Reconciliação Rápida
+
+Você pede desculpas imediatamente.
+
+Será lowera a arma, surpresa.
+
+[img[images/scene-4k.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Reconciliação Rápida"))
+(set: $relationships to $relationships + (a: "Será" -> 20))
+
+"Desculpe," você respira. "Eu tava assustado."
+
+"Tudo bem," ela diz gentilmente. "Aqui, todos estamos assustados no início."
+
+[[Confiar em Será->Scene 5U]]
+[[Manter cautela->Scene 5V]]
+
+:: Scene 4L [scene]
+# Exigências Agressivas
+
+Você exige explicações com agressividade.
+
+Será fica tensa, mas não dispara.
+
+[img[images/scene-4l.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Exigências Agressivas"))
+(set: $relationships to $relationships + (a: "Será" -> -10))
+
+"Você está em NEXUS. Está seguro. Por enquanto, isso é tudo que precisa saber."
+
+[[Lutar contra ela->Scene 5W]]
+[[Aceitar sua resposta->Scene 5X]]
+
+:: Scene 4M [scene]
+# Submissão
+
+Você se rende, ofegante no chão.
+
+Será mantém você contida enquanto chama reforços pelo rádio.
+
+[img[images/scene-4m.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Submissão"))
+(set: $relationships to $relationships + (a: "Será" -> -20))
+
+"Você vai para custódia," ela diz friamente.
+
+[[Aceitar custódia->Scene 5Y]]
+[[Tentar escapar->Scene 5Z]]
+
+:: Scene 4N [scene]
+# Luta Desesperada
+
+Você continua lutando, alimentado pelo pânico.
+
+Será finalmente dispara seu tranquilizante.
+
+[img[images/scene-4n.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Luta Desesperada"))
+(set: $relationships to $relationships + (a: "Será" -> -40))
+
+Tudo desaparece em escuridão.
+
+[[Acordar em cela->Cena Final 1]]
+
+:: Scene 4O [scene]
+# Confiança Instintiva
+
+Você decide confiar em Será.
+
+Ela parece genuinamente preocupada com seu bem-estar.
+
+[img[images/scene-4o.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Confiança Instintiva"))
+(set: $relationships to $relationships + (a: "Será" -> 20))
+
+"Venha," ela diz, estendendo a mão. "Preciso levá-lo ao médico para um check-up adequado."
+
+[[Seguir Será->Scene 5AA]]
+[[Pedir mais tempo->Scene 5AB]]
+
+:: Scene 4P [scene]
+# Cautela Apropriada
+
+Você mantém distância emocional de Será, apesar de sua gentileza.
+
+Ela nota, mas não protesta.
+
+[img[images/scene-4p.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Cautela Apropriada"))
+(set: $relationships to $relationships + (a: "Será" -> 5))
+
+"Entendo," ela diz. "Confiança é difícil aqui. Vou levá-lo ao médico mesmo assim."
+
+[[Concordar->Scene 5AC]]
+[[Recusar->Scene 5AD]]
+
+:: Cena Final 1 [scene]
+# Cela
+
+Você acorda em uma cela de segurança.
+
+As paredes são lisas e impenetráveis.
+
+[img[images/scene-final-1.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Cela"))
+
+Você sabe que cometeu um erro grave.
+
+[[FIM: Você se tornou um prisioneiro de NEXUS]]
+
+:: Scene 5A [scene]
+# Câmara de Cristal
+
+Ivo o leva a uma câmara repleta de cristais luminescentes de todos os tamanhos.
+
+É hipnotizante.
+
+[img[images/scene-5a.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Câmara de Cristal"))
+(set: $relationships to $relationships + (a: "Ivo" -> 40))
+
+"Esses cristais alimentam NEXUS," explica Ivo. "Eles são a razão de nossa existência."
+
+[[Querer aprender mais sobre os cristais->Scene 6A]]
+[[Explorar a câmara->Scene 6B]]
+
+:: Scene 5B [scene]
+# Independência Inicial
+
+Você pede para explorar sozinho.
+
+Ivo aceita relutantemente.
+
+[img[images/scene-5b.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Independência Inicial"))
+(set: $relationships to $relationships + (a: "Ivo" -> 20))
+
+"Cuidado," ele avisa. "Nem tudo em NEXUS é seguro para um forasteiro."
+
+[[Explorar despreocupadamente->Scene 6C]]
+[[Explorar com cuidado->Scene 6D]]
+
+:: Scene 5C [scene]
+# Investigação Profunda
+
+Você aprofunda suas perguntas, testando a consistência de Ivo.
+
+Ele responde com paciência, admirando sua lógica.
+
+[img[images/scene-5c.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Investigação Profunda"))
+(set: $relationships to $relationships + (a: "Ivo" -> 15))
+
+"Você tem a mente de um investigador," ele observa. "NEXUS pode precisar de alguém como você."
+
+[[Oferecer seus serviços->Scene 6E]]
+[[Continuar investigando->Scene 6F]]
+
+:: Scene 5D [scene]
+# Aceitação Temporária
+
+Você decide aceitar sua explicação por enquanto.
+
+Há tempo para questionar mais tarde.
+
+[img[images/scene-5d.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Aceitação Temporária"))
+(set: $relationships to $relationships + (a: "Ivo" -> 10))
+
+"Sábio," aprova Ivo. "Vem, há muito a ver."
+
+[[Seguir Ivo->Scene 6G]]
+[[Pedir um guia->Scene 6H]]
+
+:: Scene 5E [scene]
+# Preparação Mental
+
+Você tenta se preparar mentalmente para o Conselho.
+
+Ivo observa seus esforços com interesse.
+
+[img[images/scene-5e.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Preparação Mental"))
+(set: $relationships to $relationships + (a: "Ivo" -> 10))
+
+"Você terá que ser honesto," aconselha Ivo. "O Conselho valoriza a verdade acima de tudo."
+
+[[Confiar nisso->Scene 6I]]
+[[Questionar a honestidade do Conselho->Scene 6J]]
+
+:: Scene 5F [scene]
+# Improvisação Confiante
+
+Você decide improvisar quando chegar a hora.
+
+Ivo sorri, apreciando sua confiança.
+
+[img[images/scene-5f.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Improvisação Confiante"))
+(set: $relationships to $relationships + (a: "Ivo" -> 15))
+
+"Você ou é muito corajoso ou muito tolo. O tempo dirá qual."
+
+[[Encontrar o Conselho->Scene 6K]]
+[[Pedir mais tempo para preparação->Scene 6L]]
+
+:: Scene 5G [scene]
+# Exploração Solitária
+
+Você explora a câmara sozinho, encontrando detalhes interessantes.
+
+Há símbolos nas paredes, inscrições em uma linguagem que você não compreende.
+
+[img[images/scene-5g.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Exploração Solitária"))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Inscrições misteriosas"))
+
+[[Tentar decifrar os símbolos->Scene 6M]]
+[[Esperar que alguém volte->Scene 6N]]
+
+:: Scene 5H [scene]
+# Meditação Forçada
+
+Você senta e pensa sobre tudo que aconteceu.
+
+A solidão é quase reconfortante.
+
+[img[images/scene-5h.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Meditação Forçada"))
+
+Você tem tempo para processar. Talvez isso seja bom.
+
+[[Dormir->Scene 6O]]
+[[Continuar acordado->Scene 6P]]
+
+:: Scene 5I [scene]
+# Paz no Jardim
+
+Você se senta no jardim subterrâneo, respirando profundamente.
+
+As plantas parecem irradiar uma sensação de calma.
+
+[img[images/scene-5i.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Paz no Jardim"))
+(set: $relationships to $relationships + (a: "Ivo" -> 25))
+
+Você toca uma das flores. É real. Tudo é real.
+
+[[Permanecer meditando->Scene 6Q]]
+[[Procurar por mais explorações->Scene 6R]]
+
+:: Scene 5J [scene]
+# Explorador Infatigável
+
+Você continua explorando, descobrindo mais e mais de NEXUS.
+
+Cada câmara é um novo mistério.
+
+[img[images/scene-5j.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Explorador Infatigável"))
+
+Eventualmente, você encontra uma porta fechada com símbolo de aviso.
+
+[[Tentar abrir->Scene 6S]]
+[[Respeitar o aviso->Scene 6T]]
+
+:: Scene 5K [scene]
+# Vínculo Crescente
+
+Seu relacionamento com Ivo se aprofunda através do conhecimento compartilhado.
+
+Ele começa a revelar coisas que ele normalmente não revelaria.
+
+[img[images/scene-5k.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Vínculo Crescente"))
+(set: $relationships to $relationships + (a: "Ivo" -> 40))
+
+"Você é diferente," ele confessa. "Talvez você seja o que NEXUS estava esperando."
+
+[[Perguntar o que isso significa->Scene 6U]]
+[[Aceitar o vínculo sem questionar->Scene 6V]]
+
+:: Scene 5L [scene]
+# Socialização em NEXUS
+
+Ivo o apresenta para outros habitantes de NEXUS.
+
+Há um jovem chamado Thomas que trabalha no sistema de cristais.
+
+[img[images/scene-5l.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Socialização em NEXUS"))
+(set: $relationships to $relationships + (a: "Thomas" -> 5))
+
+"Bem-vindo," diz Thomas timidamente. "Se você tiver perguntas sobre os cristais, posso ajudar."
+
+[[Conversar com Thomas->Scene 6W]]
+[[Conhecer mais pessoas->Scene 6X]]
+
+:: Scene 5M [scene]
+# Isolamento Mental
+
+Você continua recusando aceitar a realidade ao seu redor.
+
+Isso o isola cada vez mais dos outros.
+
+[img[images/scene-5m.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Isolamento Mental"))
+(set: $relationships to $relationships + (a: "Ivo" -> -40))
+
+Ninguém quer ficar perto de alguém que rejeita a realidade fundamental que todos compartilham.
+
+[[Eventualmente enlouquecer->Cena Final 2]]
+
+:: Scene 5N [scene]
+# Aceitação Finalmente
+
+Depois de semanas de negação, você finalmente aceita a verdade.
+
+NEXUS é real. Você está aqui.
+
+[img[images/scene-5n.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Aceitação Finalmente"))
+(set: $relationships to $relationships + (a: "Ivo" -> 20))
+
+Ivo o encontra e sorri. "Bem-vindo de volta à realidade," ele diz.
+
+[[Começar de novo->Scene 6Y]]
+[[Pedir desculpas->Scene 6Z]]
+
+:: Scene 5O [scene]
+# Parceria Forjada
+
+Você trabalha com Ivo para entender NEXUS.
+
+Ele aprecia sua disposição de aprender.
+
+[img[images/scene-5o.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Parceria Forjada"))
+(set: $relationships to $relationships + (a: "Ivo" -> 35))
+
+"Você e eu podemos fazer grandes coisas aqui," ele sugere.
+
+[[Concordar em trabalhar juntos->Scene 6AA]]
+[[Manter opções abertas->Scene 6AB]]
+
+:: Scene 5P [scene]
+# Explorador Independente
+
+Você prefere explorar NEXUS por sua conta.
+
+Ivo respeita isso, mas oferece um mapa básico.
+
+[img[images/scene-5p.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Explorador Independente"))
+(set: $relationships to $relationships + (a: "Ivo" -> 10))
+
+"Cuidado nas áreas marcadas com X," ele avisa. "Aqueles são territórios desconhecidos."
+
+[[Ignorar o aviso->Scene 6AC]]
+[[Seguir o mapa->Scene 6AD]]
+
+:: Scene 5Q [scene]
+# Despertar Gradual
+
+Você finalmente "acorda" completamente, como se tivesse saído de um sono profundo.
+
+Será está lá, sorrindo.
+
+[img[images/scene-5q.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Despertar Gradual"))
+(set: $relationships to $relationships + (a: "Será" -> 15))
+
+"Bem-vindo ao mundo real," ela diz. "Como se sente?"
+
+[[Conversar com ela->Scene 6AE]]
+[[Tentar se mover->Scene 6AF]]
+
+:: Scene 5R [scene]
+# Sono Continuado
+
+Você continua fingindo dormir por horas.
+
+Será executa mais testes enquanto você observa.
+
+[img[images/scene-5r.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Sono Continuado"))
+
+Eventualmente você tem que acordar. Ninguém pode dormir para sempre.
+
+[[Acordar naturalmente->Scene 6AG]]
+[[Acordar dramaticamente->Scene 6AH]]
+
+:: Scene 5S [scene]
+# Conversa Terapêutica
+
+Você conversa com Será sobre o que aconteceu.
+
+Ela é uma boa ouvinte.
+
+[img[images/scene-5s.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Conversa Terapêutica"))
+(set: $relationships to $relationships + (a: "Será" -> 25))
+
+"Aqui em NEXUS, todos temos histórias de trauma," ela comenta. "O importante é aprender a viver com elas."
+
+[[Aprofundar o vínculo->Scene 6AI]]
+[[Manter profissionalismo->Scene 6AJ]]
+
+:: Scene 5T [scene]
+# Teste Físico
+
+Você tenta se mover, testando seu corpo.
+
+Será observa seus movimentos com interesse clínico.
+
+[img[images/scene-5t.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Teste Físico"))
+(set: $relationships to $relationships + (a: "Será" -> 10))
+
+"Boa," ela diz. "Seus reflexos estão intactos. A injeção funcionou bem."
+
+[[Perguntar sobre a injeção->Scene 6AK]]
+[[Ficar em silêncio->Scene 6AL]]
+
+:: Scene 5U [scene]
+# Confiança Aprofundada
+
+Você começa a confiar em Será após sua gentileza.
+
+Ela parece apreciar isso.
+
+[img[images/scene-5u.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Confiança Aprofundada"))
+(set: $relationships to $relationships + (a: "Será" -> 30))
+
+"Você é diferente," ela diz. "Muitas pessoas aqui são duras. Você é... suave."
+
+[[Aprofundar relacionamento->Scene 6AM]]
+[[Agradecer e seguir em frente->Scene 6AN]]
+
+:: Scene 5V [scene]
+# Distância Emocional Mantida
+
+Você aprecia a ajuda de Será, mas mantém distância.
+
+Ela respeita isso.
+
+[img[images/scene-5v.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Distância Emocional Mantida"))
+(set: $relationships to $relationships + (a: "Será" -> 15))
+
+"Quando você estiver pronto para confiar, estarei aqui," ela oferece.
+
+[[Oferecer um gesto de boa vontade->Scene 6AO]]
+[[Manter a distância->Scene 6AP]]
+
+:: Scene 5W [scene]
+# Luta Secundária
+
+Você tenta lutar contra Será novamente.
+
+Dessa vez, ela está preparada.
+
+[img[images/scene-5w.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Luta Secundária"))
+(set: $relationships to $relationships + (a: "Será" -> -40))
+
+Você é derrotado rapidamente e levado à custódia.
+
+[[Ir para a cela->Cena Final 3]]
+
+:: Scene 5X [scene]
+# Aceitação Relutante
+
+Você aceita sua resposta por agora, mesmo que não goste.
+
+Será o leva para o médico.
+
+[img[images/scene-5x.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Aceitação Relutante"))
+(set: $relationships to $relationships + (a: "Será" -> 5))
+
+Talvez você aprenda mais sobre NEXUS ao longo do tempo.
+
+[[Conhecer o médico->Scene 6AQ]]
+[[Fazer mais perguntas->Scene 6AR]]
+
+:: Scene 5Y [scene]
+# Custódia Aceita
+
+Você é levado a uma cela segura, mas confortável.
+
+Há comida e água. Você está vivo.
+
+[img[images/scene-5y.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Custódia Aceita"))
+
+É um fim temporário. Talvez você escape. Talvez você acabe gostando daqui.
+
+[[Tempo passa->Scene 6AS]]
+
+:: Scene 5Z [scene]
+# Tentativa de Fuga
+
+Você tenta escapar da custódia, mas as medidas de segurança são muito boas.
+
+Você é capturado rapidamente.
+
+[img[images/scene-5z.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Tentativa de Fuga"))
+(set: $relationships to $relationships + (a: "Será" -> -50))
+
+Será parece verdadeiramente decepcionada com você.
+
+[[Receber punição->Cena Final 4]]
+
+:: Scene 5AA [scene]
+# Lealdade de Será
+
+Você segue Será para o consultório médico.
+
+Ela te trata com gentileza durante todo o exame.
+
+[img[images/scene-5aa.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Lealdade de Será"))
+(set: $relationships to $relationships + (a: "Será" -> 35))
+
+"Você vai ficar bem," ela assegura. "Estou aqui para cuidar de você."
+
+[[Confiar plenamente->Scene 6AT]]
+[[Agradecer e partir->Scene 6AU]]
+
+:: Scene 5AB [scene]
+# Autonomia Respeitada
+
+Você pede mais tempo e Será o concede sem questionar.
+
+Ela senta, esperando pacientemente.
+
+[img[images/scene-5ab.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Autonomia Respeitada"))
+(set: $relationships to $relationships + (a: "Será" -> 20))
+
+"Tudo bem," ela diz. "Tome seu tempo. Estou aqui quando precisar."
+
+[[Depois de descansar, seguir->Scene 6AV]]
+[[Conversar enquanto descansa->Scene 6AW]]
+
+:: Scene 5AC [scene]
+# Check-up Profissional
+
+Você concorda em ir ao médico com Será.
+
+O exame é rápido e indolor.
+
+[img[images/scene-5ac.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Check-up Profissional"))
+(set: $relationships to $relationships + (a: "Será" -> 10))
+
+"Você está saudável," confirma o médico. "Bem-vindo a NEXUS."
+
+[[Explorar com Será->Scene 6AX]]
+[[Explorar sozinho->Scene 6AY]]
+
+:: Scene 5AD [scene]
+# Recusa Mantida
+
+Você recusa ir ao médico com Será.
+
+Ela não insiste, mas parece magoada.
+
+[img[images/scene-5ad.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Recusa Mantida"))
+(set: $relationships to $relationships + (a: "Será" -> -5))
+
+"Está bem," ela diz. "Mas se precisar de algo médico, me encontre."
+
+[[Seguir com cautela->Scene 6AZ]]
+[[Tentar se redimir->Scene 6BA]]
+
+:: Cena Final 2 [scene]
+# Loucura
+
+Você perdeu seu contato com a realidade.
+
+NEXUS ao seu redor, mas sua mente está em outro lugar.
+
+[img[images/scene-final-2.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Loucura"))
+
+[[FIM: Você se tornou insano em NEXUS]]
+
+:: Cena Final 3 [scene]
+# Cela Novamente
+
+Você retorna à cela.
+
+Dessa vez, a porta está fechada permanentemente.
+
+[img[images/scene-final-3.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Cela Novamente"))
+
+[[FIM: Você se tornou um prisioneiro permanente de NEXUS]]
+
+:: Cena Final 4 [scene]
+# Punição
+
+Você recebe punição por sua tentativa de fuga.
+
+Mas NEXUS também oferece reabilitação.
+
+[img[images/scene-final-4.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Punição"))
+
+Talvez você aprenda a amar este lugar apesar de tudo.
+
+[[FIM: Você foi reabilitado em NEXUS]]
+
+:: Scene 6A [scene]
+# Lições de Cristal
+
+Ivo te ensina sobre os cristais.
+
+Sua estrutura molecular é impossível pela ciência conhecida.
+
+[img[images/scene-6a.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Lições de Cristal"))
+(set: $relationships to $relationships + (a: "Ivo" -> 50))
+
+"Eles são a chave para tudo," ele explica. "Poder, conhecimento, até mesmo imortalidade potencial."
+
+[[Querer possuir um cristal->Scene 7A]]
+[[Ficar satisfeito com o conhecimento->Scene 7B]]
+
+:: Scene 6B [scene]
+# Exploração da Câmara
+
+Você explora a câmara de cristal, tocando em alguns deles.
+
+Eles emitem uma sensação estranha, quase como uma vibração.
+
+[img[images/scene-6b.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Exploração da Câmara"))
+
+[[Sentir conexão com os cristais->Scene 7C]]
+[[Manter distância respeitosa->Scene 7D]]
+
+:: Scene 6C [scene]
+# Exploração Despreocupada
+
+Você explora NEXUS sem cuidado particular.
+
+Eventualmente, você se depara com um grupo de pessoas que não parecem amigas.
+
+[img[images/scene-6c.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Exploração Despreocupada"))
+(set: $relationships to $relationships + (a: "Monks" -> -10))
+
+Eles parecem estar na sombra e você ouve murmúrios sobre você.
+
+[[Confrontar->Scene 7E]]
+[[Fingir não notar->Scene 7F]]
+
+:: Scene 6D [scene]
+# Exploração Cuidadosa
+
+Você explora NEXUS com cautela, observando tudo.
+
+Você evita áreas que parecem perigosas.
+
+[img[images/scene-6d.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Exploração Cuidadosa"))
+
+Eventualmente, você encontra um jardim escondido que ninguém mencionou.
+
+[[Explorar o jardim->Scene 7G]]
+[[Manter segredo->Scene 7H]]
+
+:: Scene 6E [scene]
+# Oferta de Serviço
+
+Você oferece seus serviços investigativos a Ivo.
+
+Ele fica intrigado.
+
+[img[images/scene-6e.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Oferta de Serviço"))
+(set: $relationships to $relationships + (a: "Ivo" -> 30))
+
+"Talvez eu tenha uso para você," ele admite. "Há mistérios em NEXUS que ninguém consegue resolver."
+
+[[Aceitar o trabalho->Scene 7I]]
+[[Pedir mais detalhes->Scene 7J]]
+
+:: Scene 6F [scene]
+# Investigação Contínua
+
+Você continua investigando Ivo, testando suas histórias contra fatos.
+
+Algumas coisas não se encaixam.
+
+[img[images/scene-6f.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Investigação Contínua"))
+(set: $relationships to $relationships + (a: "Ivo" -> 10))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Inconsistências na história de Ivo"))
+
+"Você é mais desconfiado que a maioria," observa Ivo. "É bom. Você vai precisar disso."
+
+[[Confrontar sobre as inconsistências->Scene 7K]]
+[[Deixar o assunto de lado->Scene 7L]]
+
+:: Scene 6G [scene]
+# Jornada Guiada
+
+Você segue Ivo por uma jornada através de NEXUS.
+
+Ele mostra os pontos de interesse, as histórias por trás de cada lugar.
+
+[img[images/scene-6g.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Jornada Guiada"))
+(set: $relationships to $relationships + (a: "Ivo" -> 20))
+
+É uma educação rápida sobre o lugar que você agora chama de lar.
+
+[[Apreciar o conhecimento->Scene 7M]]
+[[Pedir esclarecimentos->Scene 7N]]
+
+:: Scene 6H [scene]
+# Pedido de Guia
+
+Você pede um guia para explorar NEXUS.
+
+Ivo arranja Thomas para ser seu companheiro.
+
+[img[images/scene-6h.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Pedido de Guia"))
+(set: $relationships to $relationships + (a: "Thomas" -> 10))
+
+Thomas é nervoso, mas conhece bem o lugar.
+
+[[Confiar em Thomas->Scene 7O]]
+[[Questionar Thomas->Scene 7P]]
+
+:: Scene 6I [scene]
+# Confiança na Honestidade
+
+Você entra na sala do Conselho com confiança, determinado a ser honesto.
+
+Há cinco pessoas sentadas em uma semicírculo.
+
+[img[images/scene-6i.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Confiança na Honestidade"))
+
+Eles começam a fazer perguntas. Você responde com sinceridade.
+
+[[Impressioná-los->Scene 7Q]]
+[[Decepcionar->Scene 7R]]
+
+:: Scene 6J [scene]
+# Questionamento do Conselho
+
+Você questiona se o Conselho é realmente honesto.
+
+Um dos membros sorri.
+
+[img[images/scene-6j.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Questionamento do Conselho"))
+
+"Novo e desconfiado," ela observa. "Ambos bons traços aqui."
+
+[[Aprofundar o questionamento->Scene 7S]]
+[[Recuar->Scene 7T]]
+
+:: Scene 6K [scene]
+# Encontro com o Conselho
+
+Você é apresentado ao Conselho de NEXUS.
+
+São cinco pessoas com olhares penetrantes.
+
+[img[images/scene-6k.png]]
+
+(set: $scenesVisited to $scenesVisvisited + (a: "Encontro com o Conselho"))
+(set: $relationships to $relationships + (a: "Director" -> 10))
+
+"Bem-vindo," diz o diretor. "Você tem muito a nos contar."
+
+[[Contar tudo->Scene 7U]]
+[[Contar pouco->Scene 7V]]
+
+:: Scene 6L [scene]
+# Pedido de Adiamento
+
+Você pede mais tempo para se preparar.
+
+O Conselho concede uma semana.
+
+[img[images/scene-6l.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Pedido de Adiamento"))
+
+Você tem tempo para observar, aprender, planejar.
+
+[[Usar o tempo bem->Scene 7W]]
+[[Desperdiçar o tempo->Scene 7X]]
+
+:: Scene 6M [scene]
+# Decifrando Símbolos
+
+Você trabalha para decifrar os símbolos nas paredes.
+
+Alguns parecem ser uma linguagem antiga.
+
+[img[images/scene-6m.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Decifrando Símbolos"))
+(set: $unlockedEchoes to $unlockedEchoes + (a: "Linguagem antiga de NEXUS"))
+
+Você começa a entender fragmentos. Isto é antigo. Muito antigo.
+
+[[Procurar por mais símbolos->Scene 7Y]]
+[[Parar e pensar->Scene 7Z]]
+
+:: Scene 6N [scene]
+# Espera Paciente
+
+Você senta-se e espera que alguém volte.
+
+Eventualmente, Ivo reaparece.
+
+[img[images/scene-6n.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Espera Paciente"))
+(set: $relationships to $relationships + (a: "Ivo" -> 25))
+
+"Você ficou aqui," ele observa. "Muitas pessoas tentam explorar ou se rebelar."
+
+[[Explicar sua escolha->Scene 7AA]]
+[[Aceitar sua aprovação->Scene 7AB]]
+
+:: Scene 6O [scene]
+# Sono Restorador
+
+Você dorme profundamente, seu corpo e mente descansando da experiência.
+
+[img[images/scene-6o.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Sono Restorador"))
+
+Quando você acorda, sente-se muito melhor.
+
+[[Continuar explorando->Scene 7AC]]
+[[Ficar onde está->Scene 7AD]]
+
+:: Scene 6P [scene]
+# Pensamento Noturno
+
+Você permanece acordado a noite toda, pensando.
+
+Seu cérebro processa as implicações de estar em NEXUS.
+
+[img[images/scene-6p.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Pensamento Noturno"))
+
+Quando o dia vem, você tem mais questões que respostas.
+
+[[Buscar respostas->Scene 7AE]]
+[[Desistir de entender->Scene 7AF]]
+
+:: Scene 6Q [scene]
+# Meditação Profunda
+
+Você entra em um estado meditativo no jardim.
+
+As plantas parecem ressoar com sua paz.
+
+[img[images/scene-6q.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Meditação Profunda"))
+
+Você tem uma visão, embora não tenha certeza do que significa.
+
+[[Procurar interpretação->Scene 7AG]]
+[[Guardar a visão para si->Scene 7AH]]
+
+:: Scene 6R [scene]
+# Explorando Além do Jardim
+
+Você sai do jardim e continua explorando.
+
+NEXUS é maior do que você imaginou.
+
+[img[images/scene-6r.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Explorando Além do Jardim"))
+
+Você encontra uma biblioteca antiga, repleta de livros e registros.
+
+[[Estudar os registros->Scene 7AI]]
+[[Deixar para mais tarde->Scene 7AJ]]
+
+:: Scene 6S [scene]
+# Abrindo a Porta Proibida
+
+Você ignora o aviso e tenta abrir a porta.
+
+Ela se abre facilmente, revelando um corredor escuro.
+
+[img[images/scene-6s.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Abrindo a Porta Proibida"))
+
+Você ouve sons estranhos vindo de dentro.
+
+[[Entrar->Scene 7AK]]
+[[Recuar->Scene 7AL]]
+
+:: Scene 6T [scene]
+# Respeito ao Aviso
+
+Você respira a avaliação de Ivo e não abre a porta.
+
+Você continua sua exploração em outro lugar.
+
+[img[images/scene-6t.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Respeito ao Aviso"))
+(set: $relationships to $relationships + (a: "Ivo" -> 20))
+
+É uma decisão sábia. Nem tudo em NEXUS é seguro.
+
+[[Continuar explorando->Scene 7AM]]
+[[Voltar para Ivo->Scene 7AN]]
+
+:: Scene 6U [scene]
+# Pergunta Significante
+
+Você pergunta a Ivo o que ele quer dizer com você ser o que NEXUS esperava.
+
+Ele hesita, como se considerasse contar a verdade.
+
+[img[images/scene-6u.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Pergunta Significante"))
+
+"Talvez em breve," ele finalmente diz. "Quando você estiver pronto."
+
+[[Insistir->Scene 7AO]]
+[[Esperar->Scene 7AP]]
+
+:: Scene 6V [scene]
+# Aceitação do Vínculo
+
+Você aceita o vínculo com Ivo sem mais perguntas.
+
+Ele parece aliviado.
+
+[img[images/scene-6v.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Aceitação do Vínculo"))
+(set: $relationships to $relationships + (a: "Ivo" -> 50))
+
+"Você fará coisas grandes em NEXUS," ele promete.
+
+[[Começar novo capítulo->Scene 7AQ]]
+[[Ser cético->Scene 7AR]]
+
+:: Scene 6W [scene]
+# Conversa com Thomas
+
+Thomas te conta sobre seu trabalho com os cristais.
+
+Ele é apaixonado pelo que faz.
+
+[img[images/scene-6w.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Conversa com Thomas"))
+(set: $relationships to $relationships + (a: "Thomas" -> 15))
+
+"Os cristais são vivos," ele diz, seus olhos brilhando. "Eles sentem coisas."
+
+[[Aprender mais sobre os cristais->Scene 7AS]]
+[[Desconfiar de Thomas->Scene 7AT]]
+
+:: Scene 6X [scene]
+# Conhecendo Mais Pessoas
+
+Ivo o apresenta para Reva, uma engenheira que trabalha no sistema de ar.
+
+[img[images/scene-6x.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Conhecendo Mais Pessoas"))
+(set: $relationships to $relationships + (a: "Reva" -> 5))
+
+"Bem-vindo a NEXUS," ela diz, apertando sua mão. "Se precisar de anything, me procure."
+
+[[Conversar com Reva->Scene 7AU]]
+[[Continuar conhecendo->Scene 7AV]]
+
+::Scene 6Y [scene]
+# Novo Começo
+
+Você começa a vida em NEXUS com aceita um novo começo é sempre possível.
+
+[img[images/scene-6y.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Novo Começo"))
+(set: $relationships to $relationships + (a: "Ivo" -> 30))
+
+"Agora você realmente faz parte de NEXUS," diz Ivo.
+
+[[Construir relacionamentos->Scene 7AW]]
+[[Focar em sobrevivência->Scene 7AX]]
+
+:: Scene 6Z [scene]
+# Pedido de Desculpas
+
+Você pede desculpas a Ivo por sua negação.
+
+Ele o perdoa imediatamente.
+
+[img[images/scene-6z.png]]
+
+(set: $scenesVisited to $scenesVisited + (a: "Pedido de Desculpas"))
+(set: $relationships to $relationships + (a: "Ivo" -> 40))
+
+"Todos precisamos de tempo," ele diz com gentileza. "Você teve seu tempo."
+
+[[Trabalhar para redimir->Scene 7AY]]
+[[Focar no presente->Scene 7AZ]]
+

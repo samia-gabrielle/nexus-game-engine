@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0e27; color: #e8e8e8; font-family: Arial; line-height: 1.6; padding: 15px; }
+    .container { max-width: 1400px; margin: 0 auto; background: rgba(15,15,35,0.95); border: 2px solid #00d4ff; border-radius: 8px; padding: 20px; }
+    h1 { text-align: center; color: #00d4ff; margin-bottom: 15px; font-size: 2.5em; }
+    .header { display: flex; justify-content: space-between; margin-bottom: 15px; color: #00d4ff; font-size: 0.9em; }
+    .main { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; }
+    .scene { background: rgba(50,50,80,0.5); border-left: 4px solid #a066ff; padding: 15px; border-radius: 4px; }
+    .scene h2 { color: #a066ff; margin-bottom: 10px; font-size: 1.6em; }
+    svg { width: 100%; height: 280px; border: 2px solid #a066ff; margin: 10px 0; border-radius: 4px; }
+    .narrative { color: #d0d0d0; margin: 10px 0; line-height: 1.7; }
+    .choices { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
+    button { padding: 10px 15px; background: rgba(0,212,255,0.1); border: 2px solid #00d4ff; color: #e8e8e8; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+    button:hover { background: rgba(0,212,255,0.3); box-shadow: 0 0 15px rgba(0,212,255,0.5); transform: translateX(5px); }
+    .sidebar { display: flex; flex-direction: column; gap: 10px; }
+    .panel { background: rgba(50,50,80,0.5); border: 1px solid #a066ff; border-radius: 4px; padding: 10px; }
+    .panel h3 { color: #00d4ff; margin-bottom: 8px; cursor: pointer; user-select: none; }
+    .item { background: rgba(160,102,255,0.2); border: 1px solid #a066ff; padding: 6px; margin: 3px 0; border-radius: 3px; cursor: pointer; transition: all 0.3s; }
+    .item:hover { background: rgba(160,102,255,0.4); box-shadow: 0 0 10px rgba(160,102,255,0.3); }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: #1a1a2e; border: 2px solid #a066ff; border-radius: 8px; padding: 25px; max-width: 650px; max-height: 80vh; overflow-y: auto; box-shadow: 0 0 30px rgba(160,102,255,0.5); }
+    .modal-content h2 { color: #a066ff; margin-bottom: 15px; }
+    .close { float: right; cursor: pointer; color: #a066ff; font-size: 24px; font-weight: bold; user-select: none; }
+    .box { background: rgba(50,50,80,0.5); border-left: 4px solid #a066ff; padding: 12px; margin: 8px 0; border-radius: 4px; }
+    .box h4 { color: #00d4ff; margin-bottom: 5px; }
+    .box p { color: #d0d0d0; margin: 0; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>NEXUS</h1>
+    <div class="header">
+      <span>⏱️ Playtime: <span id="playtime">0:00</span></span>
+      <span>📖 Cenas: <span id="count">0</span>/13</span>
+    </div>
+
+    <div class="main">
+      <div>
+        <div class="scene">
+          <h2 id="title">Carregando...</h2>
+          <svg id="img" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#0a0e27"/></svg>
+          <div id="text" class="narrative"></div>
+          <div id="btns" class="choices"></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="panel">
+          <h3 onclick="showRels()">👥 Relacionamentos</h3>
+          <div id="rels"></div>
+        </div>
+        <div class="panel">
+          <h3 onclick="showNotebook()">📝 Caderno</h3>
+          <div id="note"></div>
+        </div>
+        <div class="panel">
+          <h3 onclick="showEchos()">🔷 Ecos (<span id="ecount">0</span>)</h3>
+          <div id="echo"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="relsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('relsModal')">&times;</span>
+      <h2>Relacionamentos</h2>
+      <div id="relsExp"></div>
+    </div>
+  </div>
+
+  <div id="noteModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('noteModal')">&times;</span>
+      <h2>Caderno</h2>
+      <div id="noteExp"></div>
+    </div>
+  </div>
+
+  <div id="echoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('echoModal')">&times;</span>
+      <h2>Ecos</h2>
+      <div id="echoExp"></div>
+    </div>
+  </div>
+
+  <audio id="snd"><source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav"></audio>
+
+  <script>
+    const S = {
+      'inicio': {
+        t: 'Despertar em 2150',
+        i: '<rect fill="#0a0e27"/><circle cx="20%" cy="30%" r="40" fill="#00d4ff" opacity="0.6"/><circle cx="80%" cy="40%" r="50" fill="#a066ff" opacity="0.5"/><circle cx="50%" cy="70%" r="35" fill="#00d4ff" opacity="0.4"/><rect x="10%" y="50%" width="20%" height="40%" fill="#666" opacity="0.3"/><rect x="70%" y="60%" width="25%" height="35%" fill="#888" opacity="0.3"/><text x="50%" y="50%" font-size="32" fill="#a066ff" text-anchor="middle" font-family="Arial" font-weight="bold">Câmara Subterrânea</text>',
+        txt: 'A escuridão envolve tudo. Você acorda com dor de cabeça pulsante. Sons de máquinas zumbindo, ecos de água escorrendo pela pedra fria. Lampadas antigas iluminam estruturas metálicas que parecem sair de uma época esquecida. Onde você está?',
+        o: [
+          {t: 'Abrir os olhos completamente', p: '1a', ivo: 10, n: 'Primeiro Despertar'},
+          {t: 'Tentar lembrar', p: '1b', n: 'Memória Obscura'}
+        ],
+        init: 1,
+        e: 'Despertar em 2150'
+      },
+      '1a': {
+        t: 'Olhos Abertos',
+        i: '<rect fill="#0a0e27"/><circle cx="20%" cy="30%" r="40" fill="#00d4ff" opacity="0.6"/><circle cx="80%" cy="40%" r="50" fill="#a066ff" opacity="0.5"/><circle cx="50%" cy="70%" r="35" fill="#00d4ff" opacity="0.4"/><text x="50%" y="80%" font-size="20" fill="#a066ff" text-anchor="middle">O Guardião</text>',
+        txt: 'Você vê uma câmara subterrânea imensa. Cristais que brilham com luz própria iluminam estruturas metálicas antigas. Um homem se aproxima. "Você acordou. Bem-vindo à NEXUS."',
+        o: [
+          {t: 'Quem é você?', p: '2a', ivo: 15, n: 'Encontro com Ivo'},
+          {t: 'Onde estou?', p: '2b', ivo: 5, n: 'Primeira Pergunta'}
+        ],
+        e: 'Cristais luminosos'
+      },
+      '1b': {
+        t: 'Memória Obscura',
+        i: '<rect fill="#0a0e27"/><circle cx="30%" cy="30%" r="20" fill="#ff3333" opacity="0.5"/><circle cx="70%" cy="40%" r="25" fill="#ff6b6b" opacity="0.5"/><text x="50%" y="80%" font-size="18" fill="#ff3333" text-anchor="middle">Fragmentos...</text>',
+        txt: 'Fragmentos de memória: uma multidão gritando, vozes em pânico, uma porta fechando abruptamente. Você sente dor. De repente, ouve passos se aproximando.',
+        o: [
+          {t: 'Fingir inconsciente', p: '2c', n: 'Estratégia'},
+          {t: 'Confrontar', p: '2d', sera: -10, n: 'Confronto'}
+        ],
+        e: 'Fragmentos de trauma'
+      },
+      '2a': {
+        t: 'Encontro com Ivo',
+        i: '<rect fill="#0a0e27"/><circle cx="50%" cy="35%" r="30" fill="#a066ff" opacity="0.7"/><rect x="35%" y="65%" width="30%" height="25%" fill="#888" opacity="0.4"/><text x="50%" y="90%" font-size="20" fill="#a066ff" text-anchor="middle">Ivo - 30 Anos</text>',
+        txt: 'O homem se aproxima. Seus olhos são penetrantes. "Sou Ivo. Guardião de NEXUS há 30 anos. Você foi trazido aqui por uma razão." Você sente uma conexão estranha com ele.',
+        o: [
+          {t: 'Escutar sua história', p: '3a', ivo: 30, n: 'História de Ivo'},
+          {t: 'Questionar', p: '3b', ivo: 5, n: 'Questionamento'}
+        ],
+        e: 'Ivo: o guardião misterioso'
+      },
+      '2b': {
+        t: 'A Câmara Revelada',
+        i: '<rect fill="#0a0e27"/><polygon points="20%,30% 25%,60% 15%,60%" fill="#00d4ff" opacity="0.8"/><polygon points="50%,20% 60%,70% 40%,70%" fill="#a066ff" opacity="0.8"/><polygon points="80%,40% 90%,75% 70%,75%" fill="#00d4ff" opacity="0.7"/><text x="50%" y="85%" font-size="24" fill="#00d4ff" text-anchor="middle">Cristais</text>',
+        txt: '"Você está em NEXUS. Uma cidade subterrânea que existe há mais de 200 anos, construída por cientistas." Você vê tecnologia impossível. "É real. E agora você é parte dela."',
+        o: [
+          {t: 'Aceitar realidade', p: '3c', ivo: 15, n: 'Aceitação'},
+          {t: 'Negar', p: '3d', ivo: -5, n: 'Negação'}
+        ],
+        e: 'NEXUS: cidade perdida'
+      },
+      '2c': {
+        t: 'Vigilância Silenciosa',
+        i: '<rect fill="#0a0e27"/><circle cx="50%" cy="40%" r="25" fill="#888" opacity="0.5"/><rect x="30%" y="60%" width="40%" height="20%" fill="#555" opacity="0.4"/><text x="50%" y="80%" font-size="18" fill="#888" text-anchor="middle">Observação</text>',
+        txt: 'Você observa. Uma mulher entra. Uniforme de segurança. Injeta algo em seu braço. "Estabilizador neural," murmura ela.',
+        o: [
+          {t: 'Silêncio', p: '3e', n: 'Observação Atenta'},
+          {t: 'Abrir olhos', p: '3f', sera: -15, n: 'Revelação'}
+        ],
+        e: 'Será: a médica'
+      },
+      '2d': {
+        t: 'Confronto Direto',
+        i: '<rect fill="#0a0e27"/><rect x="25%" y="30%" width="50%" height="50%" fill="#ff6b6b" opacity="0.3"/><text x="50%" y="60%" font-size="20" fill="#ff6b6b" text-anchor="middle" font-weight="bold">CONFRONTO!</text>',
+        txt: 'Você se levanta. A mulher recua. Uniforme de segurança. Mão perto da arma. "Calma! Você está em um lugar seguro!"',
+        o: [
+          {t: 'Atacar', p: '3g', sera: -30, n: 'Violência'},
+          {t: 'Mãos acima', p: '3h', sera: 20, n: 'Diplomacia'}
+        ],
+        e: 'Primeira hostilidade'
+      },
+      '3a': {
+        t: 'A História de NEXUS',
+        i: '<rect fill="#0a0e27"/><circle cx="50%" cy="40%" r="30" fill="#a066ff" opacity="0.7"/><text x="50%" y="80%" font-size="18" fill="#a066ff" text-anchor="middle">1847 - Fundação</text>',
+        txt: 'Ivo explica: "Fundada em 1847. Cientistas acreditavam que a superfície estava condenada. Os cristais alimentam tudo - luzes, ar, vida."',
+        o: [
+          {t: 'Confiar', p: 'fim_bom', ivo: 50, n: 'Confiança Total'},
+          {t: 'Duvidar', p: 'fim_bom', ivo: 10, n: 'Ceticismo'}
+        ],
+        e: 'NEXUS: origem'
+      },
+      '3b': {
+        t: 'Desafio à Autoridade',
+        i: '<rect fill="#0a0e27"/><circle cx="50%" cy="40%" r="25" fill="#ffaa00" opacity="0.6"/><text x="50%" y="80%" font-size="18" fill="#ffaa00" text-anchor="middle">Ceticismo</text>',
+        txt: '"Por que confiar?" Ivo sorri. "Porque sou honesto. Aqui, honestidade é moeda rara."',
+        o: [
+          {t: 'Seguir', p: 'fim_bom', ivo: 10, n: 'Seguimento'},
+          {t: 'Recusar', p: 'fim_bom', ivo: -10, n: 'Recusa'}
+        ],
+        e: 'Primeira desconfiança'
+      },
+      '3c': {
+        t: 'Abraço da Realidade',
+        i: '<rect fill="#0a0e27"/><circle cx="20%" cy="30%" r="40" fill="#00d4ff" opacity="0.6"/><circle cx="80%" cy="40%" r="50" fill="#a066ff" opacity="0.5"/><circle cx="50%" cy="70%" r="35" fill="#00d4ff" opacity="0.4"/><text x="50%" y="50%" font-size="20" fill="#a066ff" text-anchor="middle">Novo Mundo</text>',
+        txt: 'Você respira fundo. Aceita. Você está em NEXUS. Tudo mudou. Ivo estende a mão.',
+        o: [
+          {t: 'Explorar', p: 'fim_bom', ivo: 20, n: 'Exploração'},
+          {t: 'Perguntar', p: 'fim_bom', ivo: 30, n: 'Perguntas'}
+        ]
+      },
+      '3d': {
+        t: 'Rejeição da Realidade',
+        i: '<rect fill="#0a0e27"/><rect x="30%" y="30%" width="40%" height="40%" fill="#ff3333" opacity="0.2"/><text x="50%" y="60%" font-size="18" fill="#ff3333" text-anchor="middle">Negação</text>',
+        txt: '"Isso é loucura!" Ivo não parece surpreso. "Eventualmente, aceitará. Ou enlouquecerá aqui."',
+        o: [
+          {t: 'Negar mais', p: 'final_bad', ivo: -20, n: 'Negação Total'},
+          {t: 'Questionar', p: 'fim_bom', ivo: 5, n: 'Dúvida'}
+        ]
+      },
+      '3e': {
+        t: 'Vigilância Silenciosa',
+        i: '<rect fill="#0a0e27"/><circle cx="50%" cy="40%" r="25" fill="#888" opacity="0.5"/><text x="50%" y="80%" font-size="16" fill="#888" text-anchor="middle">Observação</text>',
+        txt: 'Você continua observando. Ela injeta algo. "Estabilizador neural. Vai ajudá-lo a se ajustar."',
+        o: [
+          {t: 'Silêncio', p: 'fim_bom', n: 'Observação'},
+          {t: 'Abrir olhos', p: 'fim_bom', sera: -10, n: 'Revelação'}
+        ],
+        e: 'Será e seus mistérios'
+      },
+      '3f': {
+        t: 'Despertar Dramático',
+        i: '<rect fill="#0a0e27"/><circle cx="50%" cy="40%" r="30" fill="#a066ff" opacity="0.7"/><text x="50%" y="80%" font-size="18" fill="#a066ff" text-anchor="middle">Susto</text>',
+        txt: 'Você abre os olhos subitamente. Ela se assusta! "Calma! Você está seguro!" Mas o medo está em seus olhos.',
+        o: [
+          {t: 'Desculpas', p: 'fim_bom', sera: 15, n: 'Desculpas'},
+          {t: 'Exigências', p: 'fim_bom', sera: -15, n: 'Agressividade'}
+        ]
+      },
+      '3g': {
+        t: 'Violência Precipitada',
+        i: '<rect fill="#0a0e27"/><rect x="25%" y="30%" width="50%" height="50%" fill="#ff3333" opacity="0.4"/><text x="50%" y="60%" font-size="18" fill="#ff3333" text-anchor="middle">Luta</text>',
+        txt: 'Você avança. Ela reage com defesa pessoal. Você cai. Arma apontada para seu rosto. "Não force."',
+        o: [
+          {t: 'Render-se', p: 'final_bad', sera: -50, n: 'Submissão'},
+          {t: 'Lutar', p: 'final_bad', sera: -60, n: 'Luta Final'}
+        ],
+        e: 'Primeiro conflito'
+      },
+      '3h': {
+        t: 'Diplomacia Instintiva',
+        i: '<rect fill="#0a0e27"/><circle cx="50%" cy="40%" r="30" fill="#a066ff" opacity="0.7"/><text x="50%" y="80%" font-size="18" fill="#a066ff" text-anchor="middle">Paz</text>',
+        txt: 'Você levanta as mãos. Ela relaxa. "Bom. Você é racional." Ela baixa a arma. "Sou Será."',
+        o: [
+          {t: 'Confiar', p: 'fim_bom', sera: 30, n: 'Confiança em Será'},
+          {t: 'Cautela', p: 'fim_bom', sera: 10, n: 'Cautela'}
+        ]
+      },
+      'fim_bom': {
+        t: 'FIM - Bem-vindo a NEXUS',
+        i: '<rect fill="#0a0e27"/><circle cx="20%" cy="30%" r="40" fill="#00d4ff" opacity="0.6"/><circle cx="80%" cy="40%" r="50" fill="#a066ff" opacity="0.5"/><circle cx="50%" cy="70%" r="35" fill="#00d4ff" opacity="0.4"/><text x="50%" y="50%" font-size="28" fill="#00ff88" text-anchor="middle" font-weight="bold">NEXUS</text>',
+        txt: 'Você é parte de NEXUS. O caminho à frente é incerto, mas você tem pessoas para confiar. Bem-vindo!',
+        o: [
+          {t: 'Jogar novamente', p: 'inicio'}
+        ]
+      },
+      'final_bad': {
+        t: 'FIM - Uma Tragédia',
+        i: '<rect fill="#0a0e27"/><rect x="25%" y="25%" width="50%" height="50%" fill="#ff3333" opacity="0.3"/><text x="50%" y="60%" font-size="20" fill="#ff3333" text-anchor="middle">FIM TRÁGICO</text>',
+        txt: 'Suas escolhas levaram a um fim desfavorável. Você está aprisionado ou perdido. O jogo termina aqui.',
+        o: [
+          {t: 'Jogar novamente', p: 'inicio'}
+        ]
+      }
+    };
+
+    let st = {
+      s: 'inicio',
+      r: {ivo:0, sera:0, thomas:0, reva:0, director:0, monks:0},
+      e: [],
+      n: [],
+      c: 0,
+      t: 0
+    };
+
+    function play() {
+      try { document.getElementById('snd').currentTime = 0; document.getElementById('snd').play().catch(() => {}); } catch (e) {}
+    }
+
+    function render(id) {
+      if (!S[id]) return;
+      const sc = S[id];
+      if (sc.init) {
+        st.r = {ivo:0, sera:0, thomas:0, reva:0, director:0, monks:0};
+        st.e = [];
+        st.n = [];
+        st.c = 0;
+      }
+      document.getElementById('title').textContent = sc.t;
+      document.getElementById('img').innerHTML = sc.i;
+      document.getElementById('text').textContent = sc.txt;
+
+      let html = '';
+      sc.o.forEach(o => {
+        html += '<button onclick="go(\'' + o.p + '\')">' + o.t + '</button>';
+      });
+      document.getElementById('btns').innerHTML = html;
+
+      sc.o.forEach(o => {
+        if (o.ivo) st.r.ivo += o.ivo;
+        if (o.sera) st.r.sera += o.sera;
+        if (o.thomas) st.r.thomas += o.thomas;
+        if (o.n && !st.n.includes(o.n)) st.n.push(o.n);
+      });
+      if (sc.e && !st.e.includes(sc.e)) st.e.push(sc.e);
+      st.c++;
+
+      let rhtml = '';
+      Object.entries(st.r).forEach(([nm, v]) => {
+        let col = v < -50 ? '#ff3333' : v < 0 ? '#ff9800' : v < 50 ? '#2196F3' : '#4CAF50';
+        rhtml += '<div class="item" onclick="showRels()" style="color:' + col + ';">' + nm + ': ' + (v > 0 ? '+' : '') + v + '</div>';
+      });
+      document.getElementById('rels').innerHTML = rhtml || '<div style="color:#999;">Nenhum</div>';
+
+      let nhtml = st.n.map(n => '<div class="item" onclick="showNotebook()">📝 ' + n + '</div>').join('') || '<div style="color:#999;">Nenhum</div>';
+      document.getElementById('note').innerHTML = nhtml;
+
+      let ehtml = st.e.map(e => '<div class="item" onclick="showEchos()">🔷 ' + e + '</div>').join('') || '<div style="color:#999;">Nenhum</div>';
+      document.getElementById('echo').innerHTML = ehtml;
+      document.getElementById('ecount').textContent = st.e.length;
+
+      document.getElementById('count').textContent = st.c;
+    }
+
+    function go(id) {
+      play();
+      st.s = id;
+      render(id);
+      window.scrollTo(0, 0);
+    }
+
+    function showNotebook() {
+      let html = '';
+      st.n.forEach((n, i) => {
+        html += '<div class="box"><h4>' + (i+1) + '. ' + n + '</h4><p>Entrada registrada em seu caderno.</p></div>';
+      });
+      document.getElementById('noteExp').innerHTML = html || '<div class="box"><p>Nada ainda</p></div>';
+      document.getElementById('noteModal').classList.add('active');
+    }
+
+    function showEchos() {
+      let html = '';
+      st.e.forEach(e => {
+        html += '<div class="box"><h4>🔷 ' + e + '</h4><p>Um eco de sua experiência em NEXUS.</p></div>';
+      });
+      document.getElementById('echoExp').innerHTML = html || '<div class="box"><p>Nada ainda</p></div>';
+      document.getElementById('echoModal').classList.add('active');
+    }
+
+    function showRels() {
+      let html = '';
+      Object.entries(st.r).forEach(([nm, v]) => {
+        let col = v < -50 ? '#ff3333' : v < 0 ? '#ff9800' : v < 50 ? '#2196F3' : '#4CAF50';
+        html += '<div class="box" style="border-left-color:' + col + '"><h4 style="color:' + col + '">' + nm.toUpperCase() + '</h4><p style="color:' + col + '">Relacionamento: ' + (v > 0 ? '+' : '') + v + '/100</p></div>';
+      });
+      document.getElementById('relsExp').innerHTML = html;
+      document.getElementById('relsModal').classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    window.onclick = (e) => {
+      ['relsModal', 'noteModal', 'echoModal'].forEach(m => {
+        let modal = document.getElementById(m);
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    }
+
+    setInterval(() => {
+      st.t++;
+      let m = Math.floor(st.t / 60);
+      let s = (st.t % 60).toString().padStart(2, '0');
+      document.getElementById('playtime').textContent = m + ':' + s;
+    }, 1000);
+
+    render('inicio');
+  </script>
+</body>
+</html>

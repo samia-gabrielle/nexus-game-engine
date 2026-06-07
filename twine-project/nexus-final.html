@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
+    body { background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%); color: #e8e8e8; font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; background: rgba(15, 15, 35, 0.95); border: 2px solid #00d4ff; border-radius: 8px; padding: 30px; box-shadow: 0 0 30px rgba(0, 212, 255, 0.3); }
+    h1 { text-align: center; color: #00d4ff; margin-bottom: 20px; font-size: 3em; text-shadow: 0 0 20px #00d4ff; }
+    .header { display: flex; justify-content: space-between; margin-bottom: 20px; color: #00d4ff; font-size: 0.9em; }
+    .main-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .scene-container { background: rgba(50, 50, 80, 0.5); border-left: 4px solid #a066ff; padding: 20px; border-radius: 4px; }
+    .scene-container h2 { color: #a066ff; margin-bottom: 15px; font-size: 1.8em; }
+    .scene-image { width: 100%; height: 350px; border: 2px solid #a066ff; margin: 15px 0; border-radius: 4px; object-fit: cover; }
+    .narrative { color: #d0d0d0; margin: 15px 0; line-height: 1.8; font-size: 1.05em; }
+    .choices { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    button { padding: 12px 20px; background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(160,102,255,0.1)); border: 2px solid #00d4ff; color: #e8e8e8; border-radius: 4px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s; }
+    button:hover { background: linear-gradient(135deg, rgba(0,212,255,0.3), rgba(160,102,255,0.3)); box-shadow: 0 0 15px rgba(0,212,255,0.5); transform: translateX(5px); }
+
+    .sidebar { display: flex; flex-direction: column; gap: 15px; }
+    .panel { background: rgba(50, 50, 80, 0.5); border: 1px solid #a066ff; border-radius: 4px; padding: 15px; }
+    .panel h3 { color: #00d4ff; margin-bottom: 10px; font-size: 1.1em; cursor: pointer; user-select: none; }
+    .panel h3:hover { text-shadow: 0 0 10px #a066ff; }
+    .panel-item { background: rgba(160, 102, 255, 0.2); border: 1px solid #a066ff; padding: 8px 12px; margin: 5px 0; border-radius: 3px; cursor: pointer; transition: all 0.3s; font-size: 0.9em; }
+    .panel-item:hover { background: rgba(160, 102, 255, 0.4); box-shadow: 0 0 10px rgba(160, 102, 255, 0.3); }
+
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content { background: #1a1a2e; border: 2px solid #a066ff; border-radius: 8px; padding: 40px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 40px rgba(160, 102, 255, 0.7); }
+    .modal-content h2 { color: #a066ff; margin-top: 0; margin-bottom: 25px; font-size: 2em; }
+    .close { float: right; font-size: 28px; font-weight: bold; color: #a066ff; cursor: pointer; user-select: none; }
+    .close:hover { color: #00d4ff; }
+
+    .entry-box { background: rgba(50, 50, 80, 0.7); border-left: 4px solid #a066ff; padding: 20px; margin: 15px 0; border-radius: 4px; }
+    .entry-box h4 { color: #00d4ff; margin-bottom: 12px; font-size: 1.2em; }
+    .entry-box p { color: #d0d0d0; line-height: 1.8; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>NEXUS</h1>
+    <div class="header">
+      <span>⏱️ Playtime: <span id="playtime">0:00</span></span>
+      <span>📖 Cenas: <span id="scenesCount">0</span>/50+</span>
+    </div>
+
+    <div class="main-layout">
+      <div>
+        <div class="scene-container">
+          <h2 id="sceneTitle">Carregando...</h2>
+          <img id="sceneImage" class="scene-image" alt="Scene">
+          <div id="narrative" class="narrative"></div>
+          <div id="choices" class="choices"></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="panel">
+          <h3 onclick="openRelsModal()">👥 Relacionamentos</h3>
+          <div id="relationships"></div>
+        </div>
+        <div class="panel">
+          <h3 onclick="openNotebookList()">📝 Caderno</h3>
+          <div id="notebook"></div>
+        </div>
+        <div class="panel">
+          <h3 onclick="openEchosList()">🔷 Ecos (<span id="echoCount">0</span>)</h3>
+          <div id="echoes"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CADERNO INDIVIDUAL -->
+  <div id="cadernoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCaderno()">&times;</span>
+      <h2 id="cadernoTitle">📝</h2>
+      <div id="cadernoContent"></div>
+    </div>
+  </div>
+
+  <!-- MODAL ECO INDIVIDUAL -->
+  <div id="ecoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEco()">&times;</span>
+      <h2 id="ecoTitle">🔷</h2>
+      <div id="ecoContent"></div>
+    </div>
+  </div>
+
+  <!-- MODAL RELACIONAMENTOS -->
+  <div id="relsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeRels()">&times;</span>
+      <h2>👥 Relacionamentos</h2>
+      <div id="relsContent"></div>
+    </div>
+  </div>
+
+  <!-- ÁUDIO: Sons de UI -->
+  <audio id="clickSound" preload="auto">
+    <source src="../game-engine/public/audio/ES_User Interface, Click, UI Buttons, Glassy, Touch - Epidemic Sound.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Dados robustos das cenas com descrições
+    const gameData = {
+      'inicio': {
+        titulo: 'Despertar em 2150',
+        imagem: '../game-engine/public/images/scene-2150.png',
+        texto: 'A escuridão envolve tudo. Você acorda com dor de cabeça pulsante. Sons de máquinas zumbindo, ecos de água escorrendo pela pedra fria. Lampadas antigas iluminam estruturas metálicas que parecem sair de uma época esquecida. Onde você está? A memória é nevoenta.',
+        opcoes: [
+          { texto: 'Abrir os olhos completamente', prox: 'cena1a', ivo: 10, caderno: 'Primeiro Despertar', descricao: 'O primeiro momento de clareza em NEXUS. Você abre os olhos e vê cristais brilhando no escuro.' },
+          { texto: 'Tentar lembrar o que aconteceu', prox: 'cena1b', caderno: 'Memória Obscura', descricao: 'Fragmentos de uma memória distante - vozes gritando, portas fechando, escuridão absoluta. Algo terrível aconteceu antes.' }
+        ],
+        init: true,
+        echo: 'Despertar em 2150'
+      },
+      'cena1a': {
+        titulo: 'Olhos Abertos',
+        imagem: '../game-engine/public/images/character_01_ivo_archive.png',
+        texto: 'Você vê uma câmara subterrânea imensa. Cristais que brilham com luz própria iluminam estruturas metálicas antigas. Um homem se aproxima. "Você acordou," diz ele com voz calma. "Bem-vindo à NEXUS."',
+        opcoes: [
+          { texto: 'Quem é você?', prox: 'cena2a', ivo: 15, caderno: 'Encontro com Ivo', descricao: 'O primeiro contato com Ivo, guardião de NEXUS há 30 anos. Seus olhos penetrantes sugerem conhecimento ancestral.' },
+          { texto: 'Onde estou?', prox: 'cena2b', ivo: 5, caderno: 'Primeira Pergunta', descricao: 'A pergunta essencial que abre a jornada. Uma cidade subterrânea que existe há 200 anos, oculta do mundo superior.' }
+        ],
+        echo: 'Cristais luminosos'
+      },
+      'cena1b': {
+        titulo: 'Memória Obscura',
+        imagem: '../game-engine/public/images/character_06_director_dilemma.png',
+        texto: 'Fragmentos de memória vêm à tona: uma multidão gritando em pânico, vozes ecoando nas sombras, uma porta fechando abruptamente, escuridão total engolindo tudo. Você sente dor. De repente, ouve passos se aproximando.',
+        opcoes: [
+          { texto: 'Fingir que está inconsciente', prox: 'cena2c', caderno: 'Estratégia Silenciosa', descricao: 'Uma escolha sábia. Observação antes de ação. Você mantém os olhos fechados e colhe informações.' },
+          { texto: 'Levantar e confrontar', prox: 'cena2d', sera: -10, caderno: 'Confronto Direto', descricao: 'Impulsividade. Você se levanta bruscamente, assustando quem quer que se aproxime. O primeiro erro já está feito.' }
+        ],
+        echo: 'Fragmentos de trauma'
+      },
+      'cena2a': {
+        titulo: 'Encontro com Ivo',
+        imagem: '../game-engine/public/images/character_01_ivo_archive.png',
+        texto: 'O homem se aproxima lentamente. Seus olhos são penetrantes, como se pudessem ler seus pensamentos. "Sou Ivo. Guardião da NEXUS há 30 anos. Você foi trazido aqui por uma razão muito específica que em breve você entenderá." Você sente uma conexão estranha com ele.',
+        opcoes: [
+          { texto: 'Escutar sua história', prox: 'cena3a', ivo: 30, caderno: 'História de Ivo', descricao: 'Ivo revela: NEXUS foi fundada em 1847 por cientistas que acreditavam que a superfície estava condenada. Os cristais alimentam toda a civilização. Você começa a entender.' },
+          { texto: 'Questionar sua autoridade', prox: 'cena3b', ivo: 5, caderno: 'Questionamento de Autoridade', descricao: 'Você desafia Ivo. Ele sorri. "Porque sou honesto. Aqui, honestidade é moeda rara e valiosa." Uma resposta que merece reflexão.' }
+        ],
+        echo: 'Ivo: o guardião misterioso'
+      },
+      'cena2b': {
+        titulo: 'A Câmara Revelada',
+        imagem: '../game-engine/public/images/scene-archive.png',
+        texto: '"Você está em NEXUS," diz o homem. "Uma cidade subterrânea que existe há mais de 200 anos, construída por cientistas que acreditavam que a superfície estava condenada." Você vê tecnologia impossível. "É real. E agora você é parte dela."',
+        opcoes: [
+          { texto: 'Aceitar a realidade', prox: 'cena3c', ivo: 15, caderno: 'Aceitação Inicial', descricao: 'Você respira fundo e aceita. O mundo mudou. Tudo que você conhecia não importa mais. Você está em NEXUS agora.' },
+          { texto: 'Recusar acreditar', prox: 'cena3d', ivo: -5, caderno: 'Negação da Realidade', descricao: 'Negação. "Isso é loucura!" você grita. Ivo observa pacientemente. "Eventualmente aceitará. Ou enlouquecerá aqui."' }
+        ],
+        echo: 'NEXUS: cidade perdida'
+      },
+      'cena2c': {
+        titulo: 'Vigilância Silenciosa',
+        imagem: '../game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você observa. Uma mulher entra com movimento ágil. Cabelos pretos, uniforme de segurança. Ela injeta algo em seu braço. "Estabilizador neural," murmura ela para alguém. Você aprende através do silêncio.',
+        opcoes: [
+          { texto: 'Continuar observando', prox: 'cena3e', caderno: 'Observação Silenciosa', descricao: 'Paciência. Você colhe mais informações enquanto permanece discreto. A mulher é Será, médica e guardiã de NEXUS.' },
+          { texto: 'Abrir os olhos', prox: 'cena3f', sera: -15, caderno: 'Revelação Dramática', descricao: 'Você se revela subitamente. Será se assusta. O momento de vantagem se foi. Agora vocês estão face a face, e ela controla a situação.' }
+        ],
+        echo: 'Será: a médica enigmática'
+      },
+      'cena2d': {
+        titulo: 'Confronto Direto',
+        imagem: '../game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você se levanta bruscamente. A mulher recua. Uniforme de segurança. Mão perto da arma. "Calma! Você está em um lugar seguro!" Mas a situação escalou rapidamente.',
+        opcoes: [
+          { texto: 'Atacar', prox: 'cena3g', sera: -30, caderno: 'Violência Precipitada', descricao: 'Erro fatal. Você avança agressivamente. Será reage com defesa profissional. Você cai no chão, derrotado. Arma apontada para seu rosto.' },
+          { texto: 'Levantar as mãos', prox: 'cena3h', sera: 20, caderno: 'Diplomacia Instintiva', descricao: 'Sabedoria. Você levanta as mãos imediatamente. Será relaxa. "Bom. Você é racional." A situação é salva pela diplomacia.' }
+        ],
+        echo: 'Primeira hostilidade'
+      },
+      'cena3a': {
+        titulo: 'A História de NEXUS',
+        imagem: '../game-engine/public/images/character_07_monks_council.png',
+        texto: 'Ivo explica: "Fundada em 1847 por cientistas que acreditavam que a superfície estava condenada. Os cristais alimentam tudo - luzes, ar, vida. Somos os últimos guardiões de uma civilização esquecida."',
+        opcoes: [
+          { texto: 'Confiar plenamente', prox: 'fim_bom', ivo: 50, caderno: 'Confiança Total em Ivo', descricao: 'Você aceita Ivo como seu guia. Há uma conexão profunda entre vocês, como se o destino os tivesse reunido para este momento.' },
+          { texto: 'Manter ceticismo', prox: 'fim_bom', ivo: 10, caderno: 'Ceticismo Racional', descricao: 'Você ouve, mas não confia cegamente. Ceticismo é saudável em NEXUS. Informação é poder.' }
+        ],
+        echo: 'NEXUS: origem'
+      },
+      'cena3b': {
+        titulo: 'Desafio à Autoridade',
+        imagem: '../game-engine/public/images/character_01_ivo_archive.png',
+        texto: '"Por que devo acreditar em você?" Ivo sorri levemente. "Porque sou honesto. Aqui embaixo, honestidade é moeda rara e valiosa. Compreenda: você já está aqui. A confiança é sua única opção."',
+        opcoes: [
+          { texto: 'Seguir', prox: 'fim_bom', ivo: 10, caderno: 'Seguimento Relutante', descricao: 'Você segue Ivo, ainda cético, mas reconhecendo que não tem alternativa. A desconfiança pode ser útil depois.' },
+          { texto: 'Recusar', prox: 'fim_bom', ivo: -10, caderno: 'Recusa Firme', descricao: 'Você recusa seguir. Ivo aceita com serenidade. "Fique aqui então. Alguém virá cuidar de você." A solidão começa.' }
+        ],
+        echo: 'Primeira desconfiança'
+      },
+      'cena3c': {
+        titulo: 'Abraço da Realidade',
+        imagem: '../game-engine/public/images/scene-2050.png',
+        texto: 'Você respira fundo e aceita. Tudo isso é real. Você está em NEXUS. Tudo na sua vida mudou. "Bem-vindo," diz Ivo, estendendo a mão. Você a aperta firmemente, lacrado a um novo destino.',
+        opcoes: [
+          { texto: 'Explorar NEXUS', prox: 'fim_bom', ivo: 20, caderno: 'Exploração Entusiasmada', descricao: 'Você começa a explorar. Cada câmara revela novos segredos. Jardins subterrâneos, sistemas de cristais, civilização inteira.' },
+          { texto: 'Fazer perguntas', prox: 'fim_bom', ivo: 30, caderno: 'Sedento de Conhecimento', descricao: 'Você bombardeia Ivo com perguntas. Ele responde pacientemente, revelando camadas de complexidade que você nunca imaginou.' }
+        ]
+      },
+      'cena3d': {
+        titulo: 'Rejeição da Realidade',
+        imagem: '../game-engine/public/images/character_06_director_dilemma.png',
+        texto: '"Isso é loucura!" Ivo não parece surpreso. "Muitos dizem isso no início. Alguns nunca acreditam completamente." Ele pausa. "Eventualmente, aceitará. Ou irá enlouquecer aqui."',
+        opcoes: [
+          { texto: 'Negar mais', prox: 'final_bad', ivo: -20, caderno: 'Negação Total', descricao: 'Você continua negando. Ivo desiste. Você fica isolado em seu desespero, questionando a própria sanidade.' },
+          { texto: 'Questionar sua negação', prox: 'fim_bom', ivo: 5, caderno: 'Dúvida da Dúvida', descricao: 'Você começa a questionar sua própria negação. As evidências são irrefutáveis. Aceitação lenta, mas inevitável.' }
+        ]
+      },
+      'cena3e': {
+        titulo: 'Vigilância Silenciosa',
+        imagem: '../game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você continua observando. Será trabalha meticulosamente. Você aprende através da observação calma. Ela sussurra: "Ele será interessante. Muito interessante mesmo."',
+        opcoes: [
+          { texto: 'Abrir olhos lentamente', prox: 'fim_bom', sera: 5, caderno: 'Revelação Gradual', descricao: 'Você abre os olhos lentamente, sem drama. Será não se assusta desta vez. Um momento de conexão verdadeira ocorre.' },
+          { texto: 'Continuar dormindo', prox: 'fim_bom', caderno: 'Sono Profundo', descricao: 'Você permanece dormindo. O descanso é essencial. Quando acordar, estará fortalecido.' }
+        ],
+        echo: 'Será e seus mistérios'
+      },
+      'cena3f': {
+        titulo: 'Despertar Dramático',
+        imagem: '../game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você abre os olhos subitamente, pegando Será desprevenida. Ela se assusta! "Calma! Você está seguro!" Mas o medo genuíno está refletido em seus olhos azuis.',
+        opcoes: [
+          { texto: 'Desculpas sinceras', prox: 'fim_bom', sera: 15, caderno: 'Pedido de Desculpas', descricao: 'Você pede desculpas imediatamente. Será baixa a arma, surpresa por sua prontidão em pedir perdão. Um momento humano em NEXUS.' },
+          { texto: 'Exigências agressivas', prox: 'fim_bom', sera: -15, caderno: 'Exigências Agressivas', descricao: 'Você exige explicações com raiva. Será fica tensa. O relacionamento começa em base frágil, repleta de desconfiança mútua.' }
+        ]
+      },
+      'cena3g': {
+        titulo: 'Violência Precipitada',
+        imagem: '../game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você avança contra ela com toda força. Será reage com defesa pessoal profissional, te derrotando facilmente. Você cai no chão, ofegante. Arma apontada para seu rosto. "Não force," ela diz friamente.',
+        opcoes: [
+          { texto: 'Render-se completamente', prox: 'final_bad', sera: -50, caderno: 'Submissão Total', descricao: 'Você se rende. Será chama reforços. Você é levado a uma cela de custódia. A primeira porta para NEXUS se fecha atrás de você.' },
+          { texto: 'Continuar lutando', prox: 'final_bad', sera: -60, caderno: 'Luta até o Fim', descricao: 'Você tenta lutar novamente, desesperadamente. Será não vacila. O jogo termina aqui, em escuridão e derrota.' }
+        ],
+        echo: 'Primeiro conflito físico'
+      },
+      'cena3h': {
+        titulo: 'Diplomacia Instintiva',
+        imagem: '../game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você levanta as mãos imediatamente, mostrando que não é uma ameaça. Será respira fundo, relaxando sua postura defensiva. "Bom," ela diz com alívio. "Você é racional." Ela baixa a arma. "Meu nome é Será."',
+        opcoes: [
+          { texto: 'Confiar nela', prox: 'fim_bom', sera: 30, caderno: 'Confiança em Será', descricao: 'Você escolhe confiar. Será parece genuinamente preocupada com seu bem-estar. Uma aliança começa a se formar.' },
+          { texto: 'Manter distância', prox: 'fim_bom', sera: 10, caderno: 'Cautela Apropriada', descricao: 'Você aprecia sua ajuda, mas mantém distância emocional. Sobrevivência em NEXUS exige vigilância constante.' }
+        ]
+      },
+      'fim_bom': {
+        titulo: 'NEXUS - Seu Novo Lar',
+        imagem: '../game-engine/public/images/scene-deepsea.png',
+        texto: 'Você agora é oficialmente parte de NEXUS. Talvez você nunca tenha escolhido estar aqui, mas agora você é. O caminho à frente é incerto e cheio de mistério. Você tem pessoas para confiar, amigos para fazer, mistérios para resolver. Talvez aqui você finalmente encontre o que procurava. Bem-vindo a NEXUS!',
+        opcoes: [
+          { texto: 'Jogar novamente', prox: 'inicio' }
+        ]
+      },
+      'final_bad': {
+        titulo: 'NEXUS - Um Fim Trágico',
+        imagem: '../game-engine/public/images/character_06_director_dilemma.png',
+        texto: 'Suas escolhas levaram a um fim desfavorável. Você está aprisionado em uma cela isolada, ou perdido nos corredores mais profundos de NEXUS, ou pior. O jogo termina aqui. Você nunca descobrirá os verdadeiros mistérios de NEXUS. O silêncio é absoluto.',
+        opcoes: [
+          { texto: 'Jogar novamente', prox: 'inicio' }
+        ]
+      }
+    };
+
+    let gameState = {
+      cenaAtual: 'inicio',
+      relacionamentos: { ivo: 0, sera: 0, thomas: 0, reva: 0, director: 0, monks: 0 },
+      ecos: [],
+      caderno: [],
+      cenas: 0,
+      tempo: 0
+    };
+
+    function playSound() {
+      try {
+        const audio = document.getElementById('clickSound');
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function render(id) {
+      if (!gameData[id]) return;
+      const cena = gameData[id];
+
+      if (cena.init) {
+        gameState.relacionamentos = { ivo: 0, sera: 0, thomas: 0, reva: 0, director: 0, monks: 0 };
+        gameState.ecos = [];
+        gameState.caderno = [];
+        gameState.cenas = 0;
+      }
+
+      document.getElementById('sceneTitle').textContent = cena.titulo;
+      document.getElementById('sceneImage').src = cena.imagem;
+      document.getElementById('narrative').textContent = cena.texto;
+
+      let html = '';
+      cena.opcoes.forEach(opt => {
+        html += '<button onclick="ir(\'' + opt.prox + '\')">' + opt.texto + '</button>';
+      });
+      document.getElementById('choices').innerHTML = html;
+
+      cena.opcoes.forEach(opt => {
+        if (opt.ivo) gameState.relacionamentos.ivo += opt.ivo;
+        if (opt.sera) gameState.relacionamentos.sera += opt.sera;
+        if (opt.thomas) gameState.relacionamentos.thomas += opt.thomas;
+        if (opt.caderno && !gameState.caderno.find(c => c.titulo === opt.caderno)) {
+          gameState.caderno.push({ titulo: opt.caderno, descricao: opt.descricao || 'Entrada do caderno.' });
+        }
+      });
+
+      if (cena.echo && !gameState.ecos.find(e => e === cena.echo)) {
+        gameState.ecos.push(cena.echo);
+      }
+
+      gameState.cenas++;
+
+      // Update sidebar
+      let relsHtml = '';
+      for (const [nome, valor] of Object.entries(gameState.relacionamentos)) {
+        let cor = valor < -50 ? '#ff3333' : valor < 0 ? '#ff9800' : valor < 50 ? '#2196F3' : '#4CAF50';
+        relsHtml += '<div class="panel-item" onclick="openRelsModal()" style="color:' + cor + ';">' + nome + ': ' + (valor > 0 ? '+' : '') + valor + '</div>';
+      }
+      document.getElementById('relationships').innerHTML = relsHtml;
+
+      let notebookHtml = gameState.caderno.map((n, idx) => '<div class="panel-item" onclick="openCaderno(' + idx + ')" style="cursor:pointer;">📝 ' + n.titulo + '</div>').join('');
+      document.getElementById('notebook').innerHTML = notebookHtml || '<div style="color:#999;">Nenhuma entrada</div>';
+
+      let echosHtml = gameState.ecos.map((e, idx) => '<div class="panel-item" onclick="openEco(' + idx + ')" style="cursor:pointer;">🔷 ' + e + '</div>').join('');
+      document.getElementById('echoes').innerHTML = echosHtml || '<div style="color:#999;">Nenhum eco</div>';
+      document.getElementById('echoCount').textContent = gameState.ecos.length;
+
+      document.getElementById('scenesCount').textContent = gameState.cenas;
+    }
+
+    function ir(id) {
+      playSound();
+      gameState.cenaAtual = id;
+      render(id);
+      window.scrollTo(0, 0);
+    }
+
+    function openCaderno(idx) {
+      playSound();
+      const item = gameState.caderno[idx];
+      document.getElementById('cadernoTitle').textContent = '📝 ' + item.titulo;
+      document.getElementById('cadernoContent').innerHTML = '<div class="entry-box"><h4>' + item.titulo + '</h4><p>' + item.descricao + '</p></div>';
+      document.getElementById('cadernoModal').classList.add('show');
+    }
+
+    function closeCaderno() {
+      document.getElementById('cadernoModal').classList.remove('show');
+    }
+
+    function openEco(idx) {
+      playSound();
+      const item = gameState.ecos[idx];
+      document.getElementById('ecoTitle').textContent = '🔷 ' + item;
+      document.getElementById('ecoContent').innerHTML = '<div class="entry-box"><h4>🔷 ' + item + '</h4><p>Um eco significativo de sua experiência em NEXUS. Esse momento marcou profundamente sua jornada.</p></div>';
+      document.getElementById('ecoModal').classList.add('show');
+    }
+
+    function closeEco() {
+      document.getElementById('ecoModal').classList.remove('show');
+    }
+
+    function openRelsModal() {
+      playSound();
+      let html = '';
+      for (const [nome, valor] of Object.entries(gameState.relacionamentos)) {
+        let cor = valor < -50 ? '#ff3333' : valor < 0 ? '#ff9800' : valor < 50 ? '#2196F3' : '#4CAF50';
+        html += '<div class="entry-box" style="border-left-color:' + cor + '"><h4 style="color:' + cor + '">' + nome.toUpperCase() + '</h4><p style="color:' + cor + '">Relacionamento: ' + (valor > 0 ? '+' : '') + valor + '/100</p></div>';
+      }
+      document.getElementById('relsContent').innerHTML = html;
+      document.getElementById('relsModal').classList.add('show');
+    }
+
+    function closeRels() {
+      document.getElementById('relsModal').classList.remove('show');
+    }
+
+    function openNotebookList() { playSound(); }
+    function openEchosList() { playSound(); }
+
+    window.onclick = function(e) {
+      if (e.target.id === 'cadernoModal') closeCaderno();
+      if (e.target.id === 'ecoModal') closeEco();
+      if (e.target.id === 'relsModal') closeRels();
+    }
+
+    setInterval(() => {
+      gameState.tempo++;
+      let m = Math.floor(gameState.tempo / 60);
+      let s = (gameState.tempo % 60).toString().padStart(2, '0');
+      document.getElementById('playtime').textContent = m + ':' + s;
+    }, 1000);
+
+    render('inicio');
+  </script>
+</body>
+</html>

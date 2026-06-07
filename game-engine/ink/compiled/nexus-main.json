@@ -1,0 +1,350 @@
+{
+  "inkVersion": 21,
+  "root": [
+    [
+      {
+        "^->": "0.s"
+      }
+    ],
+    "done",
+    {
+      "0": {
+        "s": [
+          "A primeira coisa que você sente é frio.\n",
+          "Não o frio do ar.\n",
+          "O frio de algo que esteve desligado por tempo demais.\n",
+          [
+            "^~",
+            "player_crossed_first_time",
+            true
+          ],
+          "Antes de abrir os olhos, você escuta água.\n",
+          "Gotas batendo contra vidro.\n",
+          "Lentas.\n",
+          "Ácidas.\n",
+          "Persistentes.\n",
+          "Por alguns segundos, esse som é a única prova de que o mundo ainda existe.\n",
+          [
+            "^B",
+            0
+          ],
+          {
+            "0": [
+              "Sua consciência retorna em camadas.\n",
+              "Primeiro, o peso do corpo.\n",
+              "Depois, a dor nas articulações.\n",
+              "Depois, o gosto metálico na boca.\n",
+              "Por último, o medo.\n",
+              [
+                "^->",
+                "1.s"
+              ]
+            ],
+            "1": [
+              "Você tenta entender o padrão da chuva.\n",
+              "Mas ela não tem padrão.\n",
+              "Só persistência.\n",
+              "Finalmente, você abre os olhos.\n",
+              [
+                "^->",
+                "1.s"
+              ]
+            ]
+          }
+        ]
+      },
+      "1": {
+        "s": [
+          "Seus olhos se abrem dentro de uma cápsula vertical.\n",
+          "O vidro está embaçado por dentro.\n",
+          "Do lado de fora, luzes brancas falham no teto de uma sala médica abandonada.\n",
+          "Algumas piscam como se estivessem tentando lembrar a própria função.\n",
+          "Além das janelas altas, uma megacidade se ergue em camadas infinitas de concreto, néon e chuva escura.\n",
+          "Na sua frente, um monitor mostra um corpo humano em linhas azuis.\n",
+          "O corpo é seu.\n",
+          "Ao lado dele, um campo vazio:\n",
+          "NOME: —\n",
+          [
+            "^B",
+            0
+          ],
+          {
+            "0": [
+              [
+                "^~",
+                "echo_identity_01",
+                true
+              ],
+              "Você pergunta para a máquina.\n",
+              "O monitor pisca.\n",
+              "Uma vez.\n",
+              "Processando.\n",
+              "Duas.\n",
+              "Buscando.\n",
+              "Na terceira, a tela fica preta.\n",
+              "O silêncio depois dura demais.\n",
+              "Longo o suficiente para parecer escolha.\n",
+              "Longo o suficiente para parecer medo.\n",
+              "Nome não encontrado.\n",
+              [
+                "^->",
+                "2.s"
+              ]
+            ],
+            "1": [
+              "Você tenta se mover.\n",
+              "A cápsula não responde.\n",
+              "Você está preso.\n",
+              "Ou contido.\n",
+              "Não há diferença óbvia.\n",
+              [
+                "^->",
+                "2.s"
+              ]
+            ]
+          }
+        ]
+      },
+      "2": {
+        "s": [
+          "Os arcos da Máquina Nexus giram diante de você.\n",
+          "Quatro estruturas metálicas, uma dentro da outra, suspensas sobre um núcleo escuro.\n",
+          "Nenhum motor.\n",
+          "Nenhum cabo.\n",
+          "Nenhum som mecânico comum.\n",
+          "Apenas rotação.\n",
+          "Apenas espera.\n",
+          "Os arcos desaceleram.\n",
+          "Por um instante, todos se alinham.\n",
+          "Um círculo.\n",
+          "Quatro linhas.\n",
+          "O símbolo do seu pulso.\n",
+          "Mas completo.\n",
+          "A quarta linha, aquela que ainda não acendeu em você, pulsa dentro da máquina.\n",
+          "Não como luz.\n",
+          "Como lembrança.\n",
+          [
+            "^B",
+            0
+          ],
+          {
+            "0": [
+              [
+                "^~",
+                "fourth_line_status",
+                "scarred_incomplete"
+              ],
+              "Você coloca a mão contra o vidro.\n",
+              "Está quente.\n",
+              "Pulsando.\n",
+              "Como se tivesse vida.\n",
+              "Como se reconhecesse você.\n",
+              "A quarta linha no seu pulso queima.\n",
+              "A primeira linha acende.\n",
+              "Depois a segunda.\n",
+              "Depois a terceira.\n",
+              "A quarta permanece escura.\n",
+              [
+                "^->",
+                "3.s"
+              ]
+            ],
+            "1": [
+              [
+                "^~",
+                "fourth_line_status",
+                "scarred_incomplete"
+              ],
+              "Você não toca nada.\n",
+              "Apenas observa.\n",
+              "Os arcos continuam girando.\n",
+              "Sem pressa.\n",
+              "Sem fim.\n",
+              [
+                "^->",
+                "3.s"
+              ]
+            ]
+          }
+        ]
+      },
+      "3": {
+        "s": [
+          "O chão deixa de existir.\n",
+          "Não literalmente.\n",
+          "Você simplesmente deixa de acreditar que ele está lá.\n",
+          "Seu corpo é lembrado em outro tempo.\n",
+          "Não transportado.\n",
+          "Lembrado.\n",
+          "Como se uma história que esqueceu de você está recontando sua entrada.\n",
+          "Você cai.\n",
+          "No piso de madeira de um laboratório que reconhece antes de reconhecer.\n",
+          "O caderno danificado cai junto.\n",
+          "Ambos chegam como objetos que precisavam estar aqui.\n",
+          "O ar é pesado.\n",
+          "Poeira de giz.\n",
+          "Carvão.\n",
+          "Tinta.\n",
+          "Papel molhado.\n",
+          "Chuva real batendo contra vidro fino.\n",
+          "Tudo diferente do ar filtrado de 2150.\n",
+          "Tudo mais denso.\n",
+          "Tudo mais verdadeiro.\n",
+          [
+            "^~",
+            "mara_encountered",
+            true
+          ],
+          "Quando você consegue ver sem o chão girar, está em um laboratório pequeno.\n",
+          "Não institucional.\n",
+          "Íntimo.\n",
+          "Perigoso.\n",
+          "As prateleiras estão cheias de objetos que fazem sentido junto: mapas celestes, diagramas cerebrais, bobinas de fio, metal aquecido ainda emanando calor.\n",
+          "Fotografias de soldados estão pregadas na parede.\n",
+          "Homens com os olhos em ângulos errados.\n",
+          "Homens que parecem ver em mais de uma direção de uma vez.\n",
+          "Na parede do fundo, um quadro negro carrega uma frase em escrita apressada:\n",
+          "MEMÓRIA NÃO VIAJA. ELA ECOA.\n",
+          "Sobre a mesa de madeira, dois cadernos.\n",
+          "Um original, inteiro, com anotações meticulosas e desenhos precisos.\n",
+          "Outro danificado, chegado com você, com a quarta linha arrancada junto com um pedaço da capa.\n",
+          [
+            "^B",
+            0
+          ],
+          {
+            "0": [
+              [
+                "^~",
+                "echo_name_01",
+                true
+              ],
+              "Tocando o caderno danificado, sentindo o peso dele.\n",
+              "Eu não tenho nome.\n",
+              "A porta ao fundo da sala se abre. Não completamente. O suficiente para alguém olhar através de um vão. Depois a porta se fecha novamente.\n",
+              "Passos. Calmos. Cansados. Como quem sabe exatamente que hora é.\n",
+              "Mara surge da sombra como se a escuridão a conhecesse.\n",
+              "Mara: Eu não esperava você. Eu me preparei para a possibilidade de você. Há uma diferença, e ela importa.\n",
+              [
+                "^->",
+                "4.s"
+              ]
+            ],
+            "1": [
+              "Tentando se levantar, desorientado.\n",
+              "Eu vim do futuro.\n",
+              "A voz é automática. Tipo resposta que você dá para explicar algo que não tem explicação.\n",
+              "A porta se abre de novo. Desta vez, Mara sai completamente.\n",
+              "Mara: Futuro. Você veio do futuro.\n",
+              [
+                "^->",
+                "4.s"
+              ]
+            ],
+            "2": [
+              [
+                "^~",
+                "mara_trust",
+                true
+              ],
+              "Lendo algo sem saber que está lendo.\n",
+              "Você me disse para não escolher sozinho.\n",
+              "Mara congela. Seu rosto muda.\n",
+              "Mara (muito quieto): Como você sabe disso?\n",
+              [
+                "^->",
+                "4.s"
+              ]
+            ]
+          }
+        ]
+      },
+      "4": {
+        "s": [
+          "Mara pega o caderno original de sua mesa. O compara com o danificado no chão.\n",
+          "A diferença é gritante. Inteiro versus ferida.\n",
+          "Mara: Você reconhece este lugar?\n",
+          [
+            "^B",
+            0
+          ],
+          {
+            "0": [
+              [
+                "^->",
+                "5.s"
+              ]
+            ],
+            "1": [
+              [
+                "^->",
+                "5.s"
+              ]
+            ]
+          }
+        ]
+      },
+      "5": {
+        "s": [
+          "A porta atrás dela permanece aberta.\n",
+          "Você ouve algo do outro lado. Respiração. Máquinas.\n",
+          "Som de chuva diferente—não ácida.\n",
+          "Apenas água antiga caindo.\n",
+          "Mara: Você precisa decidir agora. Antes que ele apareça.\n",
+          [
+            "^~",
+            "fourth_line_status",
+            "scarred_incomplete"
+          ],
+          [
+            "^B",
+            0
+          ],
+          {
+            "0": [
+              [
+                "^~",
+                "player_accepted_being_nobody",
+                true
+              ],
+              "A escolha é feita sem palavras. Apenas assentimento.\n",
+              [
+                "^->",
+                "6.s"
+              ]
+            ],
+            "1": [
+              "Você vira para a janela. A chuva ácida de 2150 está do outro lado, mas você não consegue alcançá-la de volta.\n",
+              [
+                "^->",
+                "6.s"
+              ]
+            ]
+          }
+        ]
+      },
+      "6": {
+        "s": [
+          "Você cai no piso de 2150.\n",
+          "Não como volta. Como consequência.\n",
+          "O ar é seco demais. Filtrado demais.\n",
+          "Depois da chuva de 1920, o ar de 2150 parece ausência de ar.\n",
+          "O caderno ainda está em suas mãos.\n",
+          "Mas agora é pesado de forma diferente.\n",
+          "Não é peso físico.\n",
+          "É peso de informação que não pediu para carregar.\n",
+          [
+            "^~",
+            "echo_obedience_01",
+            true
+          ],
+          "A quarta linha no seu pulso começa a tremeluzir.\n",
+          "Não como antes. Agora é irregular.\n",
+          "Como respiração de algo que não deveria respirar.\n",
+          "FIM DA DEMONSTRAÇÃO. Jogo em desenvolvimento!"
+        ]
+      }
+    }
+  ],
+  "listDefs": {}
+}

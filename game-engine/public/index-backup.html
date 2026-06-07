@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS - A Narrative Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="game-container">
+      <!-- Header -->
+      <header class="game-header">
+        <h1>NEXUS</h1>
+        <div class="game-meta">
+          <span class="version">v0.1.0-beta</span>
+          <span class="playtime">Playtime: <span id="playtime">0:00</span></span>
+        </div>
+      </header>
+
+      <!-- Main Game Area -->
+      <main class="game-main">
+        <!-- Scene Display -->
+        <section class="scene-display">
+          <div class="scene-title" id="sceneTitle"></div>
+          <img id="sceneImage" class="scene-image" alt="Scene illustration">
+          <div class="scene-narrative" id="sceneNarrative"></div>
+        </section>
+
+        <!-- Choices Panel -->
+        <section class="choices-panel">
+          <div class="choices-container" id="choicesContainer"></div>
+        </section>
+      </main>
+
+      <!-- Sidebar: Fourth Line & Notebook -->
+      <aside class="game-sidebar">
+        <!-- Fourth Line Indicator -->
+        <div class="fourth-line-indicator">
+          <div class="fourth-line-icon" id="fourthLineIcon"></div>
+          <div class="fourth-line-status" id="fourthLineStatus">Loading...</div>
+        </div>
+
+        <!-- Notebook Panel -->
+        <div class="notebook-panel">
+          <h3>Caderno</h3>
+          <div class="notebook-entries" id="notebookEntries">
+            <p class="placeholder">Nenhuma entrada ainda...</p>
+          </div>
+        </div>
+
+        <!-- Echoes Library -->
+        <div class="echoes-panel">
+          <h3>Ecos (<span id="echoCount">0</span>/30)</h3>
+          <div class="echoes-list" id="echoesList">
+            <p class="placeholder">Nenhum eco desbloqueado ainda...</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Footer with Controls -->
+      <footer class="game-footer">
+        <button id="saveBtn" class="btn btn-save">Salvar</button>
+        <button id="loadBtn" class="btn btn-load">Carregar</button>
+        <button id="menuBtn" class="btn btn-menu">Menu</button>
+      </footer>
+    </div>
+
+    <!-- Modal: Main Menu -->
+    <div id="mainMenuModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>NEXUS</h2>
+        <div class="menu-buttons">
+          <button id="newGameBtn" class="btn btn-large">Novo Jogo</button>
+          <button id="continueBtn" class="btn btn-large">Continuar</button>
+          <button id="settingsBtn" class="btn btn-large">Configurações</button>
+          <button id="creditsBtn" class="btn btn-large">Créditos</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Save/Load -->
+    <div id="saveLoadModal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="saveLoadTitle">Salvar Jogo</h2>
+        <div class="save-slots" id="saveSlots"></div>
+        <button id="closeModalBtn" class="btn btn-close">Fechar</button>
+      </div>
+    </div>
+
+    <!-- Modal: Continue Game -->
+    <div id="continueModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Continuar Jogo</h2>
+        <div id="lastGameInfo">
+          <p>Última Sessão: <span id="lastSessionDate">-</span></p>
+          <p>Tempo de Jogo: <span id="lastPlaytime">-</span></p>
+          <p>Cena Atual: <span id="lastScene">-</span></p>
+          <p>Progresso: <span id="lastProgress">0</span>%</p>
+        </div>
+        <div class="button-group">
+          <button id="confirmContinueBtn" class="btn btn-large">Continuar</button>
+          <button id="cancelContinueBtn" class="btn btn-large">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Settings -->
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-content settings-content">
+        <button id="closeSettingsBtn" class="btn-close-modal">✕</button>
+        <h2>Configurações</h2>
+
+        <div class="settings-section">
+          <h3>🔊 Áudio</h3>
+          <label>
+            Volume Mestre
+            <input type="range" id="masterVolume" min="0" max="100" value="30">
+            <span id="volumeValue">30%</span>
+          </label>
+          <label>
+            <input type="checkbox" id="musicToggle" checked>
+            Ativar Música
+          </label>
+        </div>
+
+        <div class="settings-section">
+          <h3>♿ Acessibilidade</h3>
+          <label>
+            <input type="checkbox" id="subtitlesToggle" checked>
+            Mostrar Legendas
+          </label>
+          <label>
+            <input type="checkbox" id="accessibilityMode">
+            Alto Contraste
+          </label>
+          <label>
+            Tamanho do Texto
+            <select id="textSize">
+              <option value="small">Pequeno</option>
+              <option value="normal" selected>Normal</option>
+              <option value="large">Grande</option>
+              <option value="xlarge">Extra Grande</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="settings-section">
+          <h3>🎮 Gameplay</h3>
+          <label>
+            <input type="checkbox" id="fastTransitions">
+            Transições Rápidas
+          </label>
+          <label>
+            <input type="checkbox" id="autoRead">
+            Narrativa Auto-Play
+          </label>
+        </div>
+
+        <button id="applySettingsBtn" class="btn btn-large">Aplicar</button>
+      </div>
+    </div>
+
+    <!-- Modal: Credits -->
+    <div id="creditsModal" class="modal hidden">
+      <div class="modal-content credits-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 style="margin: 0;">Créditos</h2>
+          <button id="closeCreditsBtn" class="btn-close-modal">✕</button>
+        </div>
+        <div id="creditsList" class="credits-list"></div>
+        <button id="backFromCreditsBtn" class="btn btn-large" style="margin-top: 20px; width: 100%;">Voltar ao Menu</button>
+      </div>
+    </div>
+
+    <!-- Modal: Echo/Notebook Expansion -->
+    <div id="contentModal" class="modal hidden">
+      <div class="modal-content modal-expanded">
+        <button id="closeContentModal" class="btn-close-modal">✕</button>
+        <h2 id="modalTitle">Echo Title</h2>
+        <div id="modalBody">
+          <p id="modalContent">Content...</p>
+          <div id="modalContext" class="modal-context"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio System - Layer 1: BGM (Background Music) -->
+  <audio id="bgmAudio" loop preload="auto">
+  </audio>
+
+  <!-- Audio System - Layer 2: Ambience (Atmospheric) -->
+  <audio id="ambienceAudio" loop preload="auto">
+  </audio>
+
+  <!-- Audio System - Layer 3: SFX (Interactive Sound Effects) -->
+  <audio id="sfxClick" preload="auto">
+    <source src="audio/sfx/click.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sfxTransition" preload="auto">
+    <source src="audio/sfx/transition.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sfxFourthLine" preload="auto">
+    <source src="audio/sfx/fourth-line.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sfxSuccess" preload="auto">
+    <source src="audio/sfx/success.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sfxError" preload="auto">
+    <source src="audio/sfx/error.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sfxEnding" preload="auto">
+    <source src="audio/sfx/ending-sting.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Audio Control Panel -->
+  <div id="audioControl" class="audio-control">
+    <label for="volumeSlider">🎵</label>
+    <input type="range" id="volumeSlider" min="0" max="100" value="30" title="Master Volume">
+    <button id="toggleMusicBtn" class="btn-small" title="Toggle Music">🔊</button>
+  </div>
+
+  <script src="audioManager.js"></script>
+  <script src="gameEngine.js"></script>
+  <script src="expansionContent.js"></script>
+  <script src="dynamicDialogue.js"></script>
+  <script src="expansionClient.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

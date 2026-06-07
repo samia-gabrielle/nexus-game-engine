@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS - A Jornada Completa</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
+    body { background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%); color: #e8e8e8; font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; background: rgba(15, 15, 35, 0.95); border: 2px solid #00d4ff; border-radius: 8px; padding: 30px; box-shadow: 0 0 30px rgba(0, 212, 255, 0.3); }
+    h1 { text-align: center; color: #00d4ff; margin-bottom: 20px; font-size: 3em; text-shadow: 0 0 20px #00d4ff; }
+    .header { display: flex; justify-content: space-between; margin-bottom: 20px; color: #00d4ff; font-size: 0.9em; }
+    .main-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .scene-container { background: rgba(50, 50, 80, 0.5); border-left: 4px solid #a066ff; padding: 20px; border-radius: 4px; }
+    .scene-container h2 { color: #a066ff; margin-bottom: 15px; font-size: 1.8em; }
+    .scene-image { width: 100%; height: 350px; border: 2px solid #a066ff; margin: 15px 0; border-radius: 4px; object-fit: contain; background: rgba(0,0,0,0.3); }
+    .narrative { color: #d0d0d0; margin: 15px 0; line-height: 1.8; font-size: 1.05em; }
+    .choices { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    button { padding: 12px 20px; background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(160,102,255,0.1)); border: 2px solid #00d4ff; color: #e8e8e8; border-radius: 4px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s; }
+    button:hover { background: linear-gradient(135deg, rgba(0,212,255,0.3), rgba(160,102,255,0.3)); box-shadow: 0 0 15px rgba(0,212,255,0.5); transform: translateX(5px); }
+
+    .sidebar { display: flex; flex-direction: column; gap: 15px; }
+    .panel { background: rgba(50, 50, 80, 0.5); border: 1px solid #a066ff; border-radius: 4px; padding: 15px; }
+    .panel h3 { color: #00d4ff; margin-bottom: 10px; font-size: 1.1em; cursor: pointer; user-select: none; }
+    .panel h3:hover { text-shadow: 0 0 10px #a066ff; }
+    .panel-item { background: rgba(160, 102, 255, 0.2); border: 1px solid #a066ff; padding: 8px 12px; margin: 5px 0; border-radius: 3px; cursor: pointer; transition: all 0.3s; font-size: 0.9em; }
+    .panel-item:hover { background: rgba(160, 102, 255, 0.4); box-shadow: 0 0 10px rgba(160, 102, 255, 0.3); }
+
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content { background: #1a1a2e; border: 2px solid #a066ff; border-radius: 8px; padding: 40px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 40px rgba(160, 102, 255, 0.7); }
+    .modal-content h2 { color: #a066ff; margin-top: 0; margin-bottom: 25px; font-size: 2em; }
+    .close { float: right; font-size: 28px; font-weight: bold; color: #a066ff; cursor: pointer; user-select: none; }
+    .close:hover { color: #00d4ff; }
+
+    .entry-box { background: rgba(50, 50, 80, 0.7); border-left: 4px solid #a066ff; padding: 20px; margin: 15px 0; border-radius: 4px; }
+    .entry-box h4 { color: #00d4ff; margin-bottom: 12px; font-size: 1.2em; }
+    .entry-box p { color: #d0d0d0; line-height: 1.8; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>NEXUS</h1>
+    <div class="header">
+      <span>⏱️ Playtime: <span id="playtime">0:00</span></span>
+      <span>📖 Cenas: <span id="scenesCount">0</span>/100+</span>
+    </div>
+
+    <div class="main-layout">
+      <div>
+        <div class="scene-container">
+          <h2 id="sceneTitle">Carregando...</h2>
+          <img id="sceneImage" class="scene-image" alt="Scene">
+          <div id="narrative" class="narrative"></div>
+          <div id="choices" class="choices"></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="panel">
+          <h3 onclick="openRelsModal()">👥 Relacionamentos</h3>
+          <div id="relationships"></div>
+        </div>
+        <div class="panel">
+          <h3>📝 Caderno</h3>
+          <div id="notebook"></div>
+        </div>
+        <div class="panel">
+          <h3>🔷 Ecos (<span id="echoCount">0</span>)</h3>
+          <div id="echoes"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CADERNO -->
+  <div id="cadernoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCaderno()">&times;</span>
+      <h2 id="cadernoTitle">📝</h2>
+      <div id="cadernoContent"></div>
+    </div>
+  </div>
+
+  <!-- MODAL ECO -->
+  <div id="ecoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEco()">&times;</span>
+      <h2 id="ecoTitle">🔷</h2>
+      <div id="ecoContent"></div>
+    </div>
+  </div>
+
+  <!-- MODAL RELACIONAMENTOS -->
+  <div id="relsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeRels()">&times;</span>
+      <h2>👥 Relacionamentos</h2>
+      <div id="relsContent"></div>
+    </div>
+  </div>
+
+  <!-- ÁUDIO: Sons -->
+  <audio id="clickSound" preload="auto">
+    <source src="game-engine/public/audio/sfx/click.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="transitionSound" preload="auto">
+    <source src="game-engine/public/audio/sfx/transition.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="echoSound" preload="auto">
+    <source src="game-engine/public/audio/sfx/success.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const gameData = {
+      'inicio': {
+        titulo: 'Despertar em 2150',
+        imagem: 'game-engine/public/images/scene-2150.png',
+        texto: 'A escuridão envolve tudo. Você acorda com dor de cabeça pulsante. Sons de máquinas zumbindo, ecos de água escorrendo pela pedra fria. Lampadas antigas iluminam estruturas metálicas que parecem sair de uma época esquecida. Onde você está? A memória é nevoenta. Você tenta se mover, mas sente o corpo pesado, como se tivesse dormido por séculos.',
+        opcoes: [
+          { texto: 'Abrir os olhos completamente', prox: 'cena1a', ivo: 10, caderno: 'Primeiro Despertar', descricao: 'O primeiro momento de lucidez. Você abre os olhos e vê cristais brilhando no escuro, fontes de luz que desafiam a própria realidade. Acima de você, uma abóbada de pedra entalhada com símbolos que parecem milenar.' },
+          { texto: 'Tentar lembrar o que aconteceu', prox: 'cena1b', caderno: 'Memória Obscura', descricao: 'Fragmentos retornam: vozes gritando em desespero, portas de metal se fechando, o cheiro de queimado. Algo terrível aconteceu. Você estava com alguém? A memória é como um espelho quebrado - imagens que não se conectam.' }
+        ],
+        init: true,
+        echo: 'Despertar em 2150'
+      },
+      'cena1a': {
+        titulo: 'Cristais de Luz',
+        imagem: 'game-engine/public/images/scene-archive.png',
+        texto: 'Seus olhos se abrem completamente. Uma câmara subterrânea imensa se estende diante de você. Cristais imensos, alguns com metros de altura, brilham com luz própria em tons de azul, verde e âmbar. A luz que emitem cria sombras dançantes nas paredes de pedra. Estruturas metálicas, oxidadas mas ainda intactas, sustentam passarelas e plataformas. Você está em um lugar que não deveria existir. Um homem se aproxima lentamente, seus passos ecoando na câmara.',
+        opcoes: [
+          { texto: 'Quem é você?', prox: 'cena2a', ivo: 15, caderno: 'O Guardião', descricao: 'Ivo se apresenta: "Sou Ivo, guardião de NEXUS há 30 anos. Você foi trazido aqui por razões que em breve compreenderá. NEXUS existe desde 1847, quando cientistas acreditavam que a superfície estava condenada. Somos os últimos herdeiros dessa civilização."' },
+          { texto: 'Que lugar é este?', prox: 'cena2b', ivo: 5, caderno: 'O Lugar Impossível', descricao: 'Ivo aponta para os cristais: "NEXUS. Uma cidade subterrânea de mais de 200 anos. Os cristais alimentam tudo - luz, ar, energia. Somos totalmente autossuficientes. Ninguém acima sabe que existimos."' }
+        ],
+        echo: 'A Câmara dos Cristais'
+      },
+      'cena1b': {
+        titulo: 'Fragmentos de Caos',
+        imagem: 'game-engine/public/images/character_06_director_dilemma.png',
+        texto: 'Flashes de memória assaltam sua mente: Uma cidade acima, sob um céu nublado. Prédios futuristas. Um aviso de evacuação sendo transmitido por alto-falantes. Multidão em pânico correndo pelas ruas. Você dentro de um metrô, as luzes piscando. Uma explosão. Escuridão total. Mãos agarrando você na escuridão. Vozes gritando. E então... nada. Apenas este despertar. Você tenta se mover e ouve passos se aproximando. Alguém vem.',
+        opcoes: [
+          { texto: 'Fingir que ainda está inconsciente', prox: 'cena2c', caderno: 'Estratégia de Sobrevivência', descricao: 'Você mantém os olhos fechados. Uma mulher entra - uniforme de segurança, cabelos pretos. "Ainda dormindo," ela murmura para um comunicador. "Os níveis neurais estão estabilizando. Em poucas horas acordará. Prepare a câmara de aclimatação."' },
+          { texto: 'Levantar imediatamente', prox: 'cena2d', sera: -10, caderno: 'Ação Impulsiva', descricao: 'Você se levanta abruptamente, ainda tonto. A mulher se assusta, sua mão vai para a arma. "Calma! Você está em NEXUS! É um refúgio!" Mas sua expressão diz que está pronta para defender-se. Você pode ter cometido um erro.' }
+        ],
+        echo: 'Lembranças do Colapso'
+      },
+      'cena2a': {
+        titulo: 'Encontro com Ivo',
+        imagem: 'game-engine/public/images/character_01_ivo_archive.png',
+        texto: 'O homem que se aproxima é grisalho, de uns sessenta anos, com olhos que parecem conter séculos de conhecimento. "Sou Ivo," ele diz, estendendo a mão. "Guardião de NEXUS há 30 anos. Meu avô foi um dos fundadores originais. Você foi trazido aqui porque NEXUS está morrendo, e você pode ser a chave para sua salvação... ou para seu fim final." Há peso nessas palavras. Ele não está aqui apenas para saudações.',
+        opcoes: [
+          { texto: 'Por que estou aqui especificamente?', prox: 'cena3a', ivo: 30, caderno: 'O Propósito Oculto', descricao: 'Ivo senta-se ao seu lado: "Você foi escolhido porque você existiu em um dos mundos paralelos. Sim, você ouviu certo. Existem múltiplas versões de você em múltiplas realidades. O Grande Colapso de 2150 afetou todas. Você é aqui porque em sua dimensão, você era alguém especial. Alguém que poderia mudar as coisas."' },
+          { texto: 'Mundos paralelos? Explique tudo', prox: 'cena3b', ivo: 25, caderno: 'A Revelação Multidimensional', descricao: 'Ivo leva você a uma sala repleta de máquinas antigas. "Em 1847, nossos fundadores descobriram a tecnologia multidimensional. Compreendemos que o universo se ramifica infinitamente. Cada escolha cria realidades novas. NEXUS foi construída na intersecção de várias dimensões. Mas em 2150, todas colapsaram simultaneamente. Um evento cósmico que ainda não compreendemos totalmente."' }
+        ],
+        echo: 'Ivo: O Guardião Ansioso'
+      },
+      'cena2b': {
+        titulo: 'A Cidade Impossível',
+        imagem: 'game-engine/public/images/scene-deepsea.png',
+        texto: 'Você caminha com Ivo pela câmara. A escala é impossível de compreender. Estruturas de metal verde-de-cobre se estendem para cima e para baixo. Você vê passarelas, estruturas habitacionais, o que parece ser uma biblioteca gigante esculpida na própria rocha. O ar é úmido mas respirável. A temperatura é agradável. "NEXUS é uma obra de engenharia que a superfície jamais conseguiria replicar," Ivo explica. "Temos 2.000 pessoas vivendo aqui. Tínhamos. Agora somos 487. Os cristais estão falhando. A cidade está morrendo lentamente."',
+        opcoes: [
+          { texto: 'O que está matando os cristais?', prox: 'cena3c', ivo: 20, caderno: 'O Declínio de NEXUS', descricao: 'Ivo leva você ao coração de NEXUS - a Câmara Cristalina. Os cristais aqui são gigantescos, mas alguns estão com um brilho fraco. "O Grande Colapso de 2150. As barreiras entre as dimensões se romperam. NEXUS foi construída para existir em uma lacuna dimensional. Quando as dimensões colapsaram, a energia que alimentava os cristais começou a dissipar. Temos talvez 5 anos antes do fim."' },
+          { texto: 'Há como salvar NEXUS?', prox: 'cena3d', ivo: 15, caderno: 'A Esperança Frágil', descricao: 'Ivo olha para você diretamente. "Pode haver. Descobrimos que em cada dimensão que colapsou, havia uma pessoa especial - alguém cuja consciência poderia, teoricamente, servir como ponte entre as realidades. Você pode ser essa pessoa. Mas o caminho será perigoso. Haverá aqueles em NEXUS que o verão como uma ameaça."' }
+        ],
+        echo: 'NEXUS: O Colapso Lento'
+      },
+      'cena2c': {
+        titulo: 'Observação Silenciosa',
+        imagem: 'game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você permanece com os olhos fechados enquanto a mulher trabalha. Ela verifica seus sinais vitais, injeta algo em seu braço - o "estabilizador neural" que mencionou. Sua voz pelo comunicador revela informações: "...sim, o códice diz que é ele... não, ainda não acordou... Ivo quer vê-lo quando acordar... entendido, aviso o Diretor."',
+        opcoes: [
+          { texto: 'Acordar gradualmente', prox: 'cena3e', sera: 10, caderno: 'Será: A Médica', descricao: 'Você abre os olhos lentamente. Será sorri. "Bem-vindo de volta. Sou Será, médica-chefe de NEXUS. Você passou por uma transição dimensional difícil. O corpo humano não foi feito para cruzar barreiras de realidade. Levará tempo para se ajustar."' },
+          { texto: 'Abrir os olhos dramaticamente', prox: 'cena3f', sera: -10, caderno: 'Revelação Impactante', descricao: 'Você abre os olhos subitamente. Será pula para trás, sua mão vai para uma arma que você agora nota estar em sua cintura. "Calma!" ela grita, mas há medo genuíno em seus olhos. "Você está seguro. NEXUS é um refúgio."' }
+        ],
+        echo: 'Será: A Mulher do Destino'
+      },
+      'cena2d': {
+        titulo: 'Confronto e Defesa',
+        imagem: 'game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você se levanta de repente, o quarto gira. Será recua, profissional, mas cautelosa. "Você não deveria se mover ainda," ela diz, sua voz mudando para um tom de autoridade militar que te surpreende. "Seu corpo passou por um trauma. O estabilizador que injetei está ajudando, mas você está fracamente. Deite-se."',
+        opcoes: [
+          { texto: 'Confiar nela e deitar', prox: 'cena3g', sera: 25, caderno: 'Capitulação Sábia', descricao: 'Você reconhece a voz da autoridade e obedece. Será relaxa visualmente. "Bom. Você tem bom julgamento. Vou chamar Ivo. Ele aguarda sua consciência há horas."' },
+          { texto: 'Testar os limites', prox: 'cena3h', sera: 5, caderno: 'Teste de Força', descricao: 'Você tenta caminhar. Será observa, permitindo. Você consegue alguns passos antes de cair de joelhos. Será te pega antes de bater no chão. "Como eu disse. Você é forte em espírito, mas o corpo precisa de tempo."' }
+        ],
+        echo: 'Primeiro Confronto'
+      },
+      'cena3a': {
+        titulo: 'A Verdade Multidimensional',
+        imagem: 'game-engine/public/images/character_07_monks_council.png',
+        texto: 'Ivo te leva a uma câmara repleta de máquinas antigas - computadores de épocas diferentes, alguns de 1847, alguns de 2050, todos ainda funcionando com a energia dos cristais. "Em 1847, nossos fundadores descobriram a física multidimensional acidentalmente. Eles estavam procurando por uma fonte de energia infinita e encontraram uma porta para outras realidades. NEXUS foi construída como um porto seguro em uma lacuna dimensional - um espaço que existia entre as realidades, protegido de todas elas. Mas em 2150, em TODAS as realidades simultaneamente, uma onda de colapso dimensional começou. É como se alguém, em algum lugar, tivesse quebrado algo fundamental da realidade."',
+        opcoes: [
+          { texto: 'Quem quebraria a realidade?', prox: 'cena4a', ivo: 40, caderno: 'A Grande Pergunta', descricao: 'Ivo responde com preocupação: "Isso é o que precisamos descobrir. Nossos registros indicam que em 2150, houve um experimento científico massivo coordenado simultaneamente em múltiplas dimensões. Um projeto chamado 'Unificação'. Seu objetivo era criar uma realidade singular, unificada. O experimento falhou cataclismicamente."' },
+          { texto: 'E se eu sou responsável?', prox: 'cena4b', ivo: 20, caderno: 'Culpa e Possibilidade', descricao: 'Ivo o olha intently: "É possível. Em algumas dimensões, você era um dos cientistas chefe de Unificação. Em outras, um opositor. Em outras ainda, nem existia. A consciência multidimensional é paradoxal. Mas sim... você pode ter um papel tanto na destruição quanto na salvação de NEXUS."' }
+        ],
+        echo: 'O Colapso Dimensional'
+      },
+      'cena3b': {
+        titulo: 'A Ciência Impossível',
+        imagem: 'game-engine/public/images/character_03_thomas_dimensions.png',
+        texto: 'Ivo abre uma porta em uma parede que parecia ser apenas pedra sólida. Dentro, há uma sala que definitivamente não deveria caber dentro da estrutura da câmara. Dimensões maiores. Thomas, um jovem científico, está trabalhando em um dispositivo que emite luzes espectrais. "Thomas, este é nosso novo hóspede. Thomas é um dos últimos físicos dimensionais de NEXUS. Ele mantém os calibradores funcionando." Thomas olha para você com esperança nos olhos. "Você é aquele? Aquele do códice?"',
+        opcoes: [
+          { texto: 'Qual códice?', prox: 'cena4c', thomas: 20, caderno: 'O Códice Profético', descricao: 'Thomas pega um livro de pedra, literalmente entalhado em rocha: "Os fundadores deixaram profecias. Elas falam de um Ponte - alguém que reuniria múltiplas consciências e salvaria NEXUS. O códice descreve você. Exatamente como você é."' },
+          { texto: 'Thomas parece otimista. Por quê?', prox: 'cena4d', thomas: 15, caderno: 'A Esperança do Jovem', descricao: 'Thomas sorri levemente: "Porque você chegou. O Códice disse que você chegaria quando os cristais começassem a falhar. E aqui está você. Ainda há esperança para NEXUS. Ainda há uma chance de salvarmos nossa casa."' }
+        ],
+        echo: 'Thomas: O Jovem Cientista'
+      },
+      'cena3c': {
+        titulo: 'No Coração dos Cristais',
+        imagem: 'game-engine/public/images/scene-archive.png',
+        texto: 'A Câmara Cristalina é o lugar mais bonito e mais terrível que você já viu. Cristais com quilômetros de altura se elevam como edifícios. Alguns brilham em cores vivas. Outros estão acinzentados, seu brilho fraco como uma vela agonizante. Você pode sentir a energia deles - uma sensação que formiga na pele, como estar perto de um raio. "Esses cristais foram criados através de um processo que perdemos quando a maioria dos engenheiros morreram," Ivo explica. "Sem poder criar novos, estamos apenas observando os antigos desaparecerem. É um relógio termina para NEXUS."',
+        opcoes: [
+          { texto: 'Posso fazer algo pelos cristais?', prox: 'cena4e', ivo: 35, caderno: 'O Toque do Ponte', descricao: 'Ivo respira fundo: "Talvez. Se você é realmente o Ponte, você pode ter uma conexão dimensão com os cristais. Eles foram criados na intersecção de realidades. Se você pudesse sincronizar sua consciência com eles, talvez pudesse estabilizá-los. Mas é uma teoria. Pode ser mortal."' },
+          { texto: 'Quanto tempo temos realmente?', prox: 'cena4f', ivo: 25, caderno: 'O Tempo se Esgota', descricao: '"Não é exatamente anos," Ivo confessa com pesadume. "A deterioração está acelerando. Talvez meses. Talvez semanas. Os cristais não apenas falham - eles desaparecem, como se o tecido dimensional que os sustenta está rasgando ainda mais. Quando o último cristal apagar, NEXUS entrará em colapso."' }
+        ],
+        echo: 'A Câmara Moribunda'
+      },
+      'cena3d': {
+        titulo: 'O Caminho Perigoso',
+        imagem: 'game-engine/public/images/character_06_director_dilemma.png',
+        texto: 'Ivo nota sua preocupação. "Nem todos em NEXUS concordam que você deve existir. O Diretor acredita que você é um risco. Ele acha que você pode ser um agente de colapso enviado de outra dimensão. Há fações, você vê. Alguns querem experimento com você - usá-lo como ponte. Outros querem isolá-lo. E alguns querem... resolvê-lo para sempre, para garantir que você não cause mais dano."',
+        opcoes: [
+          { texto: 'Devo me esconder?', prox: 'cena4g', ivo: 20, caderno: 'Segurança Primeiro', descricao: 'Ivo nega: "Esconder não funcionará. Você será descoberto. Não, você precisa ganhar apoio. Você precisa se tornar valioso demais para ser eliminado. Precisa conquistar os corações de NEXUS."' },
+          { texto: 'E o Diretor?', prox: 'cena4h', director: -5, caderno: 'O Antagonista', descricao: 'Ivo considera: "O Diretor é um homem que acredita em ordem acima de tudo. Ele perdeu sua família no colapso. Seu nome é [Nomes Reservado], e ele foi eleito para manter NEXUS funcionando enquanto era possível. Ele pode ser razoável... ou pode ser seu maior inimigo."' }
+        ],
+        echo: 'A Fação Dividida'
+      },
+      'cena3e': {
+        titulo: 'Será Revela Sua Verdade',
+        imagem: 'game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você acorda em uma câmara de recuperação. Será está lá, sorridendo levemente. "Bem-vindo à vida," ela diz. "Você foi a primeira pessoa a fazer a travessia dimensional com sucesso. Os outros... não sobreviveram bem." Há profundidade de dor naquelas palavras. "Eu tentei salvá-los. Mas a fisiologia multidimensional é complicada."',
+        opcoes: [
+          { texto: 'Outros tentaram?', prox: 'cena4i', sera: 25, caderno: 'Os Primeiros', descricao: 'Será assente, com tristeza: "Três antes de você. Cientistas voluntários que acreditavam que o sacrifício poderia salvar NEXUS. Eles chegaram aqui, mas seus corpos não conseguiram se estabilizar. Definharam em dias. Você... você é diferente. Seu corpo aceitou a mudança. Como?"' },
+          { texto: 'Você acredita que posso salvar NEXUS?', prox: 'cena4j', sera: 40, caderno: 'Fé de Será', descricao: '"Acredito. Porque você está vivo quando outros não estão. Porque há algo especial em você - posso sentir. Você é a Ponte que o Códice previu. Não é coincidência que chegou agora, quando tudo está se desintegrando."' }
+        ],
+        echo: 'Será: A Médica Esperançosa'
+      },
+      'cena3f': {
+        titulo: 'Confronto Armado',
+        imagem: 'game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você abre os olhos como um assustado. Será pula para trás, sua arma já em mãos. "Não faça movimentos bruscos!" ela grita, profissional mas preocupada. "Você não sabe seu próprio estado. Seu corpo passou por um trauma além da compreensão."',
+        opcoes: [
+          { texto: 'Abaixar-se e acalmar', prox: 'cena4k', sera: 20, caderno: 'Desescalação', descricao: 'Você se abaixa lentamente, respirando profundamente. Será vê que você não é uma ameaça e baixa a arma. "Bom. Ivo estava certo. Você tem bom julgamento para alguém que acabou de despertar."' },
+          { texto: 'Perguntar por água', prox: 'cena4l', sera: 15, caderno: 'Necessidade Humana', descricao: 'Você sussurra um pedido por água. Será relaxa imediatamente. Humanidade é desarmante. Ela oferece uma taça e sua postura muda de hostil para cuidadosa. Um primeiro passo para confiança.'  }
+        ],
+        echo: 'Será: Guardiã Desconfiada'
+      },
+      'cena3g': {
+        titulo: 'Recuperação Sob Supervisão',
+        imagem: 'game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você deita-se como instruído. Será traz uma câmara de recuperação - uma máquina que brilha levemente com o mesmo tom dos cristais. "Sente-se melhor em uma hora," ela promete. "O corpo está sob trauma multidimensional. A câmara ajuda a sincronizar suas moléculas com esta realidade." Enquanto você repousa, Será compartilha histórias. De como veio para NEXUS, de como perdeu sua família no colapso, de como encontrou propósito em curar os feridos aqui.',
+        opcoes: [
+          { texto: 'Conhecer a verdadeira Será', prox: 'cena4m', sera: 35, caderno: 'Vulnerabilidade Compartilhada', descricao: '"Minha filha tinha 8 anos," Será confessa. "Quando o colapso começou, ela estava na superfície. Eu estava aqui. Não consegui chegar a tempo. Todos nós perdemos alguém. NEXUS é feita de luto compartilhado. Mas é também nossa última esperança."' },
+          { texto: 'Oferecer companhia silenciosa', prox: 'cena4n', sera: 30, caderno: 'Presença Reconfortante', descricao: 'Você pega na mão dela. Nenhuma palavra é necessária. O contato humano é suficiente. Será aperta sua mão de volta, grata. Há conexões que transcendem palavras.' }
+        ],
+        echo: 'Será: A Mulher do Luto'
+      },
+      'cena3h': {
+        titulo: 'Teste Físico e Mental',
+        imagem: 'game-engine/public/images/character_02_sera_commanding.png',
+        texto: 'Você tenta caminhar. Seus pés encontram o chão mas as pernas não obedecem totalmente. Será te apoia. "Sua mente está mais forte que seu corpo agora," ela observa profissionalmente. "Isso é anormal. Normalmente é o oposto - o corpo se recupera mais rápido que a psique. Você é realmente diferente." Ela te ajuda a uma cadeira. "Deixe-me informar Ivo que você acordou. Ele tem estado esperando há horas."',
+        opcoes: [
+          { texto: 'Permitir que ela o informe', prox: 'cena4o', sera: 15, ivo: 10, caderno: 'Comunicação', descricao: 'Você concorda. Será sai brevemente. Você ouve sua voz pelo comunicador: "Ele acordou. Sim, é aquele do Códice. Sim, estou segura disso. Estou mandando-o para você agora." Há esperança em sua voz.' },
+          { texto: 'Fazer perguntas a ela primeiro', prox: 'cena4p', sera: 25, caderno: 'Aprendizado', descricao: 'Você pede que fale mais sobre NEXUS. Será senta-se e conta histórias de antes do colapso - quando havia 2000 pessoas aqui, quando havia esperança. "Você está vendo NEXUS em seu crepúsculo. Posso mostrar fotos de como era. De como poderia ser novamente."' }
+        ],
+        echo: 'Teste de Vontade'
+      },
+      'fim_bom': {
+        titulo: 'O Novo Começo',
+        imagem: 'game-engine/public/images/scene-2050.png',
+        texto: 'Você agora é parte de NEXUS. Você compreende sua natureza - um Ponte entre realidades, um ponto focal de consciência multidimensional. O caminho à frente é incerto. O Diretor ainda o vê como ameaça. Alguns cidadãos o veem como salvador. Você não é nem um nem outro - apenas uma pessoa tentando compreender um mundo que não compreende nem a si mesmo. Mas você tem Ivo, que oferece sabedoria. Tem Será, que oferece cuidado. Tem Thomas, que oferece esperança científica. E tem NEXUS - uma cidade agonizante que talvez, apenas talvez, possa ser salva. A verdadeira jornada está apenas começando.',
+        opcoes: [
+          { texto: 'Jogar Novamente', prox: 'inicio' }
+        ]
+      },
+      'final_bad': {
+        titulo: 'O Fim de NEXUS',
+        imagem: 'game-engine/public/images/character_06_director_dilemma.png',
+        texto: 'Suas escolhas levaram NEXUS ao colapso final. Os cristais explodiram. A câmara dimensional se rasgou. Milhões de anos de história foram varridos em segundos. Você se vê preso entre realidades, existindo em nenhuma delas. É agonia e vazio simultaneamente. O último pensamento que passa por sua mente é que você falhou não apenas NEXUS, mas a todos em todas as dimensões. O jogo termina não em morte, mas em não-existência.',
+        opcoes: [
+          { texto: 'Jogar Novamente', prox: 'inicio' }
+        ]
+      }
+    };
+
+    let gameState = {
+      cenaAtual: 'inicio',
+      relacionamentos: { ivo: 0, sera: 0, thomas: 0, reva: 0, director: 0, monks: 0 },
+      ecos: [],
+      caderno: [],
+      cenas: 0,
+      tempo: 0
+    };
+
+    function playClick() {
+      try {
+        const audio = document.getElementById('clickSound');
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function playTransition() {
+      try {
+        const audio = document.getElementById('transitionSound');
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function playEcho() {
+      try {
+        const audio = document.getElementById('echoSound');
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function render(id) {
+      if (!gameData[id]) return;
+      const cena = gameData[id];
+
+      if (cena.init) {
+        gameState.relacionamentos = { ivo: 0, sera: 0, thomas: 0, reva: 0, director: 0, monks: 0 };
+        gameState.ecos = [];
+        gameState.caderno = [];
+        gameState.cenas = 0;
+      }
+
+      document.getElementById('sceneTitle').textContent = cena.titulo;
+      document.getElementById('sceneImage').src = cena.imagem;
+      document.getElementById('narrative').textContent = cena.texto;
+
+      let html = '';
+      cena.opcoes.forEach(opt => {
+        html += '<button onclick="ir(\'' + opt.prox + '\')">' + opt.texto + '</button>';
+      });
+      document.getElementById('choices').innerHTML = html;
+
+      cena.opcoes.forEach(opt => {
+        if (opt.ivo) gameState.relacionamentos.ivo += opt.ivo;
+        if (opt.sera) gameState.relacionamentos.sera += opt.sera;
+        if (opt.thomas) gameState.relacionamentos.thomas += opt.thomas;
+        if (opt.director) gameState.relacionamentos.director += opt.director;
+        if (opt.caderno && !gameState.caderno.find(c => c.titulo === opt.caderno)) {
+          gameState.caderno.push({ titulo: opt.caderno, descricao: opt.descricao || 'Entrada do caderno.' });
+        }
+      });
+
+      if (cena.echo && !gameState.ecos.includes(cena.echo)) {
+        gameState.ecos.push(cena.echo);
+      }
+
+      gameState.cenas++;
+
+      let relsHtml = '';
+      for (const [nome, valor] of Object.entries(gameState.relacionamentos)) {
+        let cor = valor < -50 ? '#ff3333' : valor < 0 ? '#ff9800' : valor < 50 ? '#2196F3' : '#4CAF50';
+        relsHtml += '<div class="panel-item" onclick="openRelsModal()" style="color:' + cor + ';">' + nome + ': ' + (valor > 0 ? '+' : '') + valor + '</div>';
+      }
+      document.getElementById('relationships').innerHTML = relsHtml;
+
+      let notebookHtml = gameState.caderno.map((n, idx) => '<div class="panel-item" onclick="openCaderno(' + idx + ')" style="cursor:pointer;">📝 ' + n.titulo + '</div>').join('');
+      document.getElementById('notebook').innerHTML = notebookHtml || '<div style="color:#999;">Nenhuma entrada</div>';
+
+      let echosHtml = gameState.ecos.map((e, idx) => '<div class="panel-item" onclick="openEco(' + idx + ')" style="cursor:pointer;">🔷 ' + e + '</div>').join('');
+      document.getElementById('echoes').innerHTML = echosHtml || '<div style="color:#999;">Nenhum eco</div>';
+      document.getElementById('echoCount').textContent = gameState.ecos.length;
+
+      document.getElementById('scenesCount').textContent = gameState.cenas;
+    }
+
+    function ir(id) {
+      playTransition();
+      gameState.cenaAtual = id;
+      render(id);
+      window.scrollTo(0, 0);
+    }
+
+    function openCaderno(idx) {
+      playClick();
+      const item = gameState.caderno[idx];
+      document.getElementById('cadernoTitle').textContent = '📝 ' + item.titulo;
+      document.getElementById('cadernoContent').innerHTML = '<div class="entry-box"><h4>' + item.titulo + '</h4><p>' + item.descricao + '</p></div>';
+      document.getElementById('cadernoModal').classList.add('show');
+    }
+
+    function closeCaderno() {
+      document.getElementById('cadernoModal').classList.remove('show');
+    }
+
+    function openEco(idx) {
+      playEcho();
+      const item = gameState.ecos[idx];
+      document.getElementById('ecoTitle').textContent = '🔷 ' + item;
+      document.getElementById('ecoContent').innerHTML = '<div class="entry-box"><h4>🔷 ' + item + '</h4><p>Um eco que marca profundamente sua jornada em NEXUS. Esse momento mudará você para sempre.</p></div>';
+      document.getElementById('ecoModal').classList.add('show');
+    }
+
+    function closeEco() {
+      document.getElementById('ecoModal').classList.remove('show');
+    }
+
+    function openRelsModal() {
+      playClick();
+      let html = '';
+      for (const [nome, valor] of Object.entries(gameState.relacionamentos)) {
+        let cor = valor < -50 ? '#ff3333' : valor < 0 ? '#ff9800' : valor < 50 ? '#2196F3' : '#4CAF50';
+        html += '<div class="entry-box" style="border-left-color:' + cor + '"><h4 style="color:' + cor + '">' + nome.toUpperCase() + '</h4><p style="color:' + cor + '">Relacionamento: ' + (valor > 0 ? '+' : '') + valor + '/100</p></div>';
+      }
+      document.getElementById('relsContent').innerHTML = html;
+      document.getElementById('relsModal').classList.add('show');
+    }
+
+    function closeRels() {
+      document.getElementById('relsModal').classList.remove('show');
+    }
+
+    window.onclick = function(e) {
+      if (e.target.id === 'cadernoModal') closeCaderno();
+      if (e.target.id === 'ecoModal') closeEco();
+      if (e.target.id === 'relsModal') closeRels();
+    }
+
+    setInterval(() => {
+      gameState.tempo++;
+      let m = Math.floor(gameState.tempo / 60);
+      let s = (gameState.tempo % 60).toString().padStart(2, '0');
+      document.getElementById('playtime').textContent = m + ':' + s;
+    }, 1000);
+
+    render('inicio');
+  </script>
+</body>
+</html>
