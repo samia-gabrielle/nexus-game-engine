@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS - Jogo Narrativo Multidimensional</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+            color: #e8e8e8;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 2px solid #00d4ff;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #00d4ff;
+            text-shadow: 0 0 20px #00d4ff;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #a066ff;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #00d4ff, #a066ff);
+            color: #000;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #00d4ff;
+        }
+
+        .btn-github {
+            background: rgba(255,255,255,0.1);
+            color: #e8e8e8;
+            border: 2px solid #00d4ff;
+        }
+
+        .btn-github:hover {
+            background: rgba(0,212,255,0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .feature {
+            background: rgba(50,50,80,0.5);
+            border-left: 4px solid #a066ff;
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        .feature h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .stat {
+            background: rgba(160,102,255,0.1);
+            border: 1px solid #a066ff;
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #a066ff;
+            margin-top: 10px;
+        }
+
+        .story {
+            background: rgba(50,50,80,0.7);
+            border: 2px solid #a066ff;
+            padding: 40px;
+            margin: 60px 0;
+            border-radius: 4px;
+        }
+
+        .story h2 {
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .story p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 2px solid #00d4ff;
+            margin-top: 80px;
+            color: #a066ff;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #a066ff;
+            margin: 40px 0;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .tagline { font-size: 1.2rem; }
+            .cta-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>NEXUS</h1>
+            <p class="tagline">Uma jornada através de realidades paralelas onde suas escolhas ecoam para sempre</p>
+            <div class="cta-buttons">
+                <button class="btn btn-play" onclick="window.location.href='nexus-complete.html'">▶️ JOGAR AGORA (GRÁTIS)</button>
+                <button class="btn btn-github" onclick="window.location.href='https://github.com/samia-gabrielle/nexus-game-engine'">⭐ GitHub</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="quote">
+                "No espaço entre dimensões, todas as escolhas ecoam para sempre."
+            </div>
+
+            <div class="story">
+                <h2>A História</h2>
+                <p>
+                    Você acorda em NEXUS, uma cidade subterrânea que existe entre as dimensões.
+                    Sem memória. Sem identidade. Apenas uma verdade: você é <strong>A PONTE</strong> —
+                    uma consciência que existe simultaneamente em múltiplas realidades.
+                </p>
+                <p>
+                    2150: NEXUS está colapsando. A superfície está devastada. Realidades paralelas estão morrendo.
+                    Você descobre que foi trazido aqui para salvar ou destruir tudo.
+                </p>
+                <p>
+                    Cada escolha que você faz molda o destino de civilizações inteiras.
+                    Cada relacionamento que você constrói abre novos caminhos.
+                    Cada verdade que você descobre muda tudo.
+                </p>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Cenas Interativas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Finais Distintos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Personagens</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Entradas no Caderno</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2-4h</div>
+                    <div class="stat-label">1ª Jogada</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Replayability</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <h3>📖 Narrativa Profunda</h3>
+                    <p>200+ cenas com ramificação real. Não é ilusão de escolha — suas decisões verdadeiramente mudam o caminho.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>👥 Relacionamentos Dinâmicos</h3>
+                    <p>7 personagens principais cujos sentimentos sobre você mudam com base em suas escolhas. Cada relacionamento abre novos caminhos.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>📚 Caderno Expansivo</h3>
+                    <p>150+ entradas que expandem a história. Lore profundo sobre o mundo, personagens, e a verdade por trás da Unificação.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>🔷 Ecos Narrativos</h3>
+                    <p>50+ marcos narrativos que ressoam através das realidades. Momentos significativos que definem sua jornada.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>🎨 Design Profissional</h3>
+                    <p>UI sci-fi com glassmorphismo, animações suaves, e design responsivo. Funciona perfeitamente em desktop, tablet e mobile.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>🔌 Sem Dependências</h3>
+                    <p>Arquivo HTML único de 46KB. Nenhum servidor necessário. Funciona completamente offline em qualquer navegador.</p>
+                </div>
+            </div>
+
+            <div class="story">
+                <h2>Personagens Principais</h2>
+                <p>
+                    <strong>Ivo</strong> — Um guardião cansado que observou sua civilização morrer lentamente.
+                    Acredita que você é a chave para salvação.
+                </p>
+                <p>
+                    <strong>Será</strong> — Médica-chefe que perdeu sua filha no colapso.
+                    Vulnerável, mas incrivelmente capaz. Forma a conexão mais profunda com você.
+                </p>
+                <p>
+                    <strong>Thomas</strong> — Jovem cientista otimista que acredita em antigas profecias.
+                    Vê em você a esperança que NEXUS precisa.
+                </p>
+                <p>
+                    <strong>Reva</strong> — Líder pragmática dos sobreviventes na superfície devastada.
+                    Desconfiada de NEXUS, mas disposta a cooperar.
+                </p>
+                <p>
+                    <strong>O Diretor</strong> — Antagonista moldado pelo trauma.
+                    Acredita que controle absoluto é a única forma de proteger o que resta.
+                </p>
+                <p>
+                    <strong>Echo</strong> — Uma versão alternativa de você de uma timeline que falhou.
+                    Avisa sobre perigos que você ainda enfrentará.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin: 60px 0;">
+                <h2 style="color: #00d4ff; margin-bottom: 30px;">Como Jogar</h2>
+                <p style="margin-bottom: 20px;">Abra o arquivo HTML em seu navegador. Clique para fazer escolhas.</p>
+                <button class="btn btn-play" style="font-size: 1.3rem; padding: 20px 50px;" onclick="window.location.href='nexus-complete.html'">
+                    ▶️ COMEÇAR JOGO
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>NEXUS © 2026</p>
+            <p style="margin-top: 20px; font-size: 0.9rem;">
+                Desenvolvido com paixão. Gratuito para jogar. Pague o que quiser se amar.
+            </p>
+            <p style="margin-top: 15px;">
+                <a href="https://github.com/samia-gabrielle/nexus-game-engine" style="color: #00d4ff; text-decoration: none;">GitHub</a> •
+                <a href="https://samia-gabrielle.itch.io/nexus-game" style="color: #00d4ff; text-decoration: none;">itch.io</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

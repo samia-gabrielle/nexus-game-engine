@@ -1,0 +1,375 @@
+================================================================================
+                         NEXUS - QUICK START GUIDE
+================================================================================
+
+🎮 HOW TO PLAY IN 30 SECONDS:
+
+1. Open nexus-complete.html in your web browser
+2. Click buttons to make choices
+3. Enjoy 2-4 hours of immersive narrative gameplay
+
+That's it!
+
+================================================================================
+                            BEFORE YOU PLAY
+================================================================================
+
+What You Need:
+  ✅ A web browser (Chrome, Firefox, Safari, or Edge)
+  ✅ The file: nexus-complete.html
+  ✅ That's all! No installation, no internet needed.
+
+Where to Find the File:
+  → C:\Users\54547130159\nexus\nexus-complete.html
+
+How to Open It:
+  → Double-click the file to open in your default browser
+  OR
+  → Right-click → "Open with..." → Choose your browser
+
+================================================================================
+                           GAME BASICS
+================================================================================
+
+The Story:
+  You wake in NEXUS, an underground city in 2150. The dimensional barriers
+  protecting civilization are failing. You discover you're a "Bridge"—a
+  consciousness existing across multiple dimensions.
+
+  Your choices will determine the fate of billions across parallel realities.
+
+How to Play:
+  • Read the scene description
+  • Look at the scene image
+  • Click a button to make a choice
+  • Watch the story unfold based on your decisions
+
+What to Track:
+  • Relationships panel (left sidebar) - shows how characters feel about you
+  • Caderno - collects story entries and lore
+  • Ecos - marks important narrative moments
+  • Playtime - shows how long you've been playing
+
+Controls:
+  • Mouse: Click buttons to advance
+  • Touch: Tap buttons on mobile/tablet
+  • Audio: Toggle music and sound effects in settings
+
+================================================================================
+                          YOUR FIRST PLAYTHROUGH
+================================================================================
+
+Don't Worry About:
+  ❌ Getting the "best" ending - there's no best, just different
+  ❌ Optimizing relationships - play naturally
+  ❌ Finding all content - that takes multiple playthroughs
+  ❌ Speed - take your time and enjoy the story
+
+Do Focus On:
+  ✅ Making choices that feel right for your character
+  ✅ Reading the narrative carefully
+  ✅ Building relationships organically
+  ✅ Enjoying the philosophical questions
+
+Game Features:
+  ✅ Auto-save - your progress is saved automatically
+  ✅ Sidebar panels - explore relationships, caderno, ecos
+  ✅ Audio controls - adjust volume, toggle music/SFX
+  ✅ Settings - customize gameplay preferences
+  ✅ Statistics - track playtime, scenes, echoes, entries
+
+================================================================================
+                          WHAT TO EXPECT
+================================================================================
+
+Story Length: 2-4 hours for first playthrough
+
+Replayability: 5+ different endings to discover
+
+Characters: 7 main characters with evolving relationships
+
+Content: 200+ scenes across 4 narrative acts:
+  • ACT 1: Awakening in NEXUS 2150
+  • ACT 2: Surface Exploration
+  • ACT 3: Historical Flashbacks (1847)
+  • ACT 4: Parallel Realities
+
+Multiple Endings:
+  1. The Sacrifice - Transcend individuality, save all
+  2. The Utopian Path - Preserve freedom
+  3. The Dystopian Path - Choose absolute order
+  4. The Rejection - Refuse your destiny
+  5. The Balance - Attempt synthesis
+
+Hidden Content:
+  • Secret scenes unlock at relationship thresholds
+  • Caderno entries expand lore understanding
+  • Ecos mark significant story moments
+  • Multiple ways to reach certain scenes
+
+================================================================================
+                        SIDEBAR PANEL GUIDE
+================================================================================
+
+👥 RELATIONSHIPS Panel:
+  Shows how characters feel about you (-100 to +100)
+  • Green (75+): Deep trust, special options
+  • Blue (25-74): Cooperative support
+  • Gray (-25 to 24): Neutral
+  • Orange (-25 to -74): Distrustful
+  • Red (-100 to -75): Hostile
+
+Characters: Ivo, Será, Thomas, Reva, Director, Architect, Echo
+
+Click to open detailed relationships modal.
+
+📝 CADERNO Panel:
+  Journal entries you've collected
+  150+ entries build deep world-lore
+  Click any entry to read full description
+  Entries unlock as you make choices
+
+🔷 ECOS Panel:
+  Milestone moments marking your journey
+  50+ ecos across all dimensions
+  Click to see full list of discovered ecos
+  Count shows how many you've found
+
+⚙️ SETTINGS Panel:
+  Audio controls:
+    • Volume slider (0-100%)
+    • Toggle music on/off
+    • Toggle sound effects on/off
+  Game management:
+    • Save current game
+    • Load previous save
+    • Reset game to start
+  Settings persist across sessions
+
+================================================================================
+                         AUDIO & SETTINGS
+================================================================================
+
+Audio Options:
+  🎵 Music Toggle - Enable/disable background atmosphere
+  🔊 SFX Toggle - Enable/disable sound effects
+  Volume Slider - Adjust master volume 0-100%
+
+Sound Types:
+  • Click: When you choose an option
+  • Transition: When moving to new scene
+  • Echo: When discovering milestone moment
+
+Audio Settings:
+  ✅ Settings save automatically
+  ✅ Work even with speaker muted
+  ✅ Can be toggled anytime
+  ✅ No external files needed
+
+Recommendation: Start with music/SFX enabled for best experience
+
+================================================================================
+                            SAVE SYSTEM
+================================================================================
+
+Auto-Save:
+  ✅ Progress saved automatically after each scene
+  ✅ Saves your position, relationships, entries, ecos
+  ✅ Survives browser restart (stored in localStorage)
+
+Manual Save:
+  • Click "Salvar Jogo" in settings to create explicit save
+  • Useful before making difficult choice
+  • Can have one active save at a time
+
+Load Game:
+  • Click "Carregar Jogo" to resume from last save
+  • Picks up exactly where you left off
+  • All progress preserved
+
+Reset Game:
+  • Click "Reiniciar Jogo" to start completely fresh
+  • WARNING: Deletes all progress
+  • Useful if you want to try different choices
+
+Pro Tip:
+  Try different choices, use manual save before key decisions,
+  then load to explore alternate paths.
+
+================================================================================
+                         GAMEPLAY TIPS
+================================================================================
+
+For Maximum Enjoyment:
+
+1. First Playthrough:
+   • Don't worry about optimization
+   • Make choices that feel right
+   • Take your time reading narrative
+   • Accept consequences of choices
+   • Enjoy discovering the story
+
+2. Character Interactions:
+   • Pay attention to dialogue tone
+   • Different choices affect relationships differently
+   • Some characters have multiple sides
+   • Explore different paths to same character
+
+3. Story Exploration:
+   • Visit all accessible areas
+   • Click through all dialogue
+   • Read caderno entries carefully
+   • Note the ecos you collect
+   • Ask yourself why each choice matters
+
+4. For Second Playthroughs:
+   • Load save before major decisions
+   • Try opposite choices
+   • Focus on different character relationships
+   • Collect all caderno entries
+   • Chase different ending
+
+5. Hidden Content:
+   • Some scenes only unlock at high relationships
+   • Others require low relationships to adversaries
+   • Reading caderno gives context
+   • Ecos mark turning points
+   • Multiple paths lead to same conclusion
+
+================================================================================
+                      EXPECTED PLAYTIME
+================================================================================
+
+Speed:
+  First Playthrough: 2-4 hours
+  Speedrun Route: 30-45 minutes
+  Completionist: 8+ hours
+
+Acts:
+  Act 1 (Awakening): 30-45 minutes
+  Act 2 (Surface): 40-60 minutes
+  Act 3 (1847): 30-50 minutes
+  Act 4 (Parallel): 20-40 minutes
+  Endings: 10-20 minutes
+
+Multiple Endings:
+  Each ending unique (5 major + variations)
+  Different relationship choices unlock different endings
+  Replay value substantial
+
+Collection Goals:
+  Caderno: 150+ entries to collect
+  Ecos: 50+ milestones to discover
+  Relationships: 7 characters to explore
+  Scenes: 200+ scenes across all paths
+  Endings: 5+ endings to experience
+
+================================================================================
+                        BROWSER COMPATIBILITY
+================================================================================
+
+Recommended Browsers:
+  ✅ Chrome (latest) - Best performance
+  ✅ Firefox (latest) - Excellent compatibility
+  ✅ Safari (latest) - Full support
+  ✅ Edge (latest) - Full support
+
+Mobile:
+  ✅ iOS Safari - Full support
+  ✅ Android Chrome - Full support
+  ✅ Tablets - Optimized layout
+
+Not Supported:
+  ❌ Internet Explorer - Too old
+  ❌ Very old browsers (pre-2020)
+
+If It Doesn't Work:
+  1. Try different browser
+  2. Clear browser cache
+  3. Make sure JavaScript is enabled
+  4. Check your internet connection (actually not needed!)
+  5. Disable browser extensions temporarily
+
+================================================================================
+                      FREQUENTLY ASKED QUESTIONS
+================================================================================
+
+Q: Do I need an internet connection?
+A: No! Game is 100% offline. Works without internet.
+
+Q: Will my game save if I close the browser?
+A: Yes! Game saves automatically to browser storage.
+
+Q: What happens if I delete cookies?
+A: Your save will be lost. Back it up before deleting!
+
+Q: Can I play on mobile?
+A: Yes! Full responsive design for phones and tablets.
+
+Q: Is there a time limit?
+A: No! Play at your own pace.
+
+Q: Can I change my choices?
+A: Yes! Use manual save before key decisions, then load to try other paths.
+
+Q: What if I get stuck?
+A: No dead ends - all choices lead somewhere. Keep playing!
+
+Q: How do I get a specific ending?
+A: See GAMEPLAY.md for detailed ending guides.
+
+Q: Can I modify the game?
+A: Yes! See TECHNICAL.md for how to customize.
+
+Q: Is it free?
+A: Yes! Completely free, no ads, no paywalls.
+
+Q: Can I share it with friends?
+A: Yes! Send them the nexus-complete.html file.
+
+================================================================================
+                          SUPPORT & HELP
+================================================================================
+
+For More Information:
+  📖 README.md - Project overview and features
+  🎮 GAMEPLAY.md - Story guide and strategy
+  🔧 TECHNICAL.md - How game works and customization
+  📋 INSTALLATION.md - Detailed setup guide
+
+For Troubleshooting:
+  → See INSTALLATION.md troubleshooting section
+  → Clear browser cache and reload
+  → Try different browser
+  → Disable browser extensions
+  → Check JavaScript is enabled
+
+For Feedback:
+  → Share your experience
+  → Tell friends about the game
+  → Leave a review if hosted online
+  → Suggest improvements
+
+================================================================================
+                           GET STARTED NOW!
+================================================================================
+
+Step 1: Open nexus-complete.html
+Step 2: Click to make your first choice
+Step 3: Experience the story
+
+That's all you need to do!
+
+The game will guide you through everything else.
+
+Make your choices. Shape reality. Discover your story.
+
+Welcome to NEXUS.
+
+================================================================================
+
+Version: 1.0
+Date: June 7, 2026
+Status: Production Ready
+
+"In the space between dimensions, all choices echo forever."

@@ -48,7 +48,12 @@
       "Bash(git init *)",
       "Bash(git config *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'NEXUS Game Engine v1.0 - 200+ scenes with ACT 1-4 expansion *)"
+      "Bash(git commit -m 'NEXUS Game Engine v1.0 - 200+ scenes with ACT 1-4 expansion *)",
+      "Bash(git commit -m 'Add comprehensive README documentation *)",
+      "Bash(grep -o \",'[^']*':{t:\" c:\\\\Users\\\\54547130159\\\\nexus\\\\twine-project\\\\play.html)",
+      "Bash(grep -o \",'[^']*':{t:\" '/c/Users/54547130159/nexus/twine-project/play.html')",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\54547130159\\\\nexus\" -Recurse)",
+      "Bash(Select-Object Name, FullName)"
     ]
   }
 }
