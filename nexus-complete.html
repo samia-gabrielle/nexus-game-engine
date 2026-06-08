@@ -722,6 +722,16 @@
                 ],
                 e: 'Despertar em 2150'
             },
+            's1b': {
+                t: 'Memória Obscura',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-archive.png',
+                txt: 'Fragmentos de memória surgem como sombras. Você vê: uma cidade subterrânea brilhando em azul. Vozes antigas. Um rosto de mulher - talvez Será? Um número: 2150. Máquinas colapsando. Cristais se apagando. E uma sensação estranha: como se você já tivesse vivido isso antes. Em tempos diferentes. Dimensões diferentes.',
+                o: [
+                    { t: 'Despertar Completamente', p: 's1a', rels: { ivo: 15 }, n: 'Cristais Vistos' },
+                    { t: 'Tentar Lembrar Mais', p: 's2b', rels: { ivo: 10 }, n: 'Memória Profunda' }
+                ],
+                e: 'Fragmentos de Realidade'
+            },
             's1a': {
                 t: 'Cristais',
                 i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-nexus.png',
@@ -834,9 +844,557 @@
                 i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_06_director_dilemma.png',
                 txt: 'Você questiona: "Por que acreditar em profecias? Por que acreditar que sou especial?" Será sorri. "Porque às vezes acreditar é um ato de fé maior que qualquer prova. E fé é exatamente o que NEXUS precisa agora."',
                 o: [
-                    { t: 'Tentar', p: 'fim', rels: { sera: 35, ivo: 25 }, n: 'Tentativa Conjunta' }
+                    { t: 'Tentar', p: 'ato3_gateway', rels: { sera: 35, ivo: 25 }, n: 'Tentativa Conjunta' }
                 ],
                 e: 'Fé Conquistada'
+            },
+            'ato3_gateway': {
+                t: 'Viagem Temporal - 1847',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-archive.png',
+                txt: 'Os cristais começam a vibrar intensamente. O Arquiteta aparece diante de você - mas de forma diferente. Mais antiga. Mais sábia. "Você entrou no círculo. Agora vem a verdade: você não acordou em 2150 pela primeira vez. Acordou mil vezes. E cada vez, você tenta salvar NEXUS. Vem comigo. Vamos retornar a 1847. Ao COMEÇO."',
+                o: [
+                    { t: 'Saltar para 1847', p: 'h1a_temporal_rupture', rels: { architect: 50 }, n: 'Viagem ao Passado' },
+                    { t: 'Recusar', p: 'fim', rels: { ivo: -10 }, n: 'Manter o Presente' }
+                ],
+                e: 'Portal Temporal Aberto'
+            },
+            'h1a_temporal_rupture': {
+                t: 'Ruptura Temporal',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-2150.png',
+                txt: 'O tempo racha. Você está caindo através de camadas de realidade. Sons de sinos vitorianos ecoam enquanto o ar gelado de 1847 envolve você. A gravidade muda. As cores se desaceleram. Você acorda em um bosque nevado perto de uma cidade que ainda não existe. Este é o PASSADO. Este é quando tudo começou.',
+                o: [
+                    { t: 'Explorar a paisagem', p: 'h1b_victorian_landscape', rels: { architect: 10 }, n: 'Paisagem Vitoriana' },
+                    { t: 'Procurar sinais de vida', p: 'h1c_find_shelter', rels: { architect: 5 }, n: 'Buscar Refúgio' }
+                ],
+                e: 'Despertar em 1847'
+            },
+            'h1b_victorian_landscape': {
+                t: 'O Alvorecer Industrial',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_04_temporal_nexus_hub.png',
+                txt: 'Você vê estruturas de ferro e cobre erguendo-se da terra em padrões que não parecem naturais. Cristais brilham sob a neve. Máquinas a vapor trabalham sem operadores. Este não é o século XIX que você conhece. Isto é algo diferente. Algo experimental. Algo que ESTÁ SENDO CONSTRUÍDO.',
+                o: [
+                    { t: 'Aproximar-se dos cristais', p: 'h2a_first_crystal', rels: { architect: 15 }, n: 'Descoberta Cristalina' },
+                    { t: 'Evitar e seguir adiante', p: 'h1c_find_shelter', rels: { architect: 5 }, n: 'Caminho Seguro' }
+                ],
+                e: 'O Innatural em 1847'
+            },
+            'h1c_find_shelter': {
+                t: 'A Cabana do Arquivo',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-archive.png',
+                txt: 'Você encontra uma pequena cabana com luz de vela piscando. Dentro, manuscritos estão por toda parte. Equações que parecem descrever dimensões. Gravuras de estruturas impossíveis. Alguém vive aqui. Alguém que SABE. Você sente uma presença antiga. Conhecimento carregado.',
+                o: [
+                    { t: 'Entrar na cabana', p: 'h2b_meet_architect', rels: { architect: 30 }, n: 'Encontro com o Arquiteto' },
+                    { t: 'Observar pela janela', p: 'h2c_observe', rels: { architect: 10 }, n: 'Observação Silenciosa' }
+                ],
+                e: 'Primeiro Refúgio em 1847'
+            },
+            'h2a_first_crystal': {
+                t: 'O Cristal Dimensional',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_01_restoration_engine_complete.png',
+                txt: 'Os cristais são quentes ao toque. Você sente uma vibração que ecoa através de seu ser. Imagens piscam - você vê vidas alternadas, escolhas não feitas, realidades colaterais. O cristal é uma JANELA entre dimensões. Alguém deixou isto aqui propositalmente. Isto foi PLANEJADO.',
+                o: [
+                    { t: 'Seguir os cristais', p: 'h2d_crystal_source', rels: { architect: 20 }, n: 'Seguir a Fonte' },
+                    { t: 'Retornar à cabana', p: 'h2b_meet_architect', rels: { architect: 25 }, n: 'Buscar Respostas' }
+                ],
+                e: 'Física Dimensional Descoberta'
+            },
+            'h2b_meet_architect': {
+                t: 'O Arquiteto - Fundador de NEXUS',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_01_ivo_archive.png',
+                txt: 'Um homem de 40 anos, olhos que brilham com gênio e loucura. Ele se apresenta como o Arquiteta. "Você veio do futuro, não é? Não é a primeira vez. Sempre vem alguém como você quando o Nexus colapsa." Ele oferece chá quente e sorri cansado. Você reconhece algo nele. Algo conectado a você através do tempo.',
+                o: [
+                    { t: 'Perguntar sobre NEXUS', p: 'h3a_nexus_story', rels: { architect: 30 }, n: 'História de NEXUS' },
+                    { t: 'Perguntar por que você está aqui', p: 'h3b_prophecy', rels: { architect: 25 }, n: 'Profecia da Ponte' },
+                    { t: 'Confiar nele imediatamente', p: 'h3c_trust', rels: { architect: 50 }, n: 'Confiança Imediata' }
+                ],
+                e: 'O Arquiteto Revelado'
+            },
+            'h2c_observe': {
+                t: 'O Trabalho Secreto',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_02_sera_commanding.png',
+                txt: 'Através da janela, você vê o Arquiteto trabalhando obsessivamente. Ele desenha padrões, murmura fórmulas, olha para um artefato antigo que brilha com luz própria. Ele parece estar tentando CONSERTAR algo. Algo quebrado em realidades profundas.',
+                o: [
+                    { t: 'Bater na porta', p: 'h2b_meet_architect', rels: { architect: 35 }, n: 'Revelar-se' },
+                    { t: 'Observar mais', p: 'h2d_crystal_source', rels: { architect: 15 }, n: 'Investigar Mais' }
+                ],
+                e: 'Obra Oculta do Arquiteto'
+            },
+            'h2d_crystal_source': {
+                t: 'O Coração do Colapso',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-deepsea.png',
+                txt: 'Os cristais levam você a uma caverna subterrânea. No centro: uma estrutura impossível. Não é máquina, não é natural. É VIVA. O ar vibra com trilhões de frequências simultâneas. Você sente cálculos acontecendo em realidades adjacentes. Isto é o coração de NEXUS. Isto é o que o Arquiteto está tentando consertar.',
+                o: [
+                    { t: 'Retornar imediatamente', p: 'h2b_meet_architect', rels: { architect: 20 }, n: 'Buscar Explicação' },
+                    { t: 'Tocar na estrutura', p: 'h4a_resonance', rels: { architect: 70 }, n: 'Contato Dimensional' }
+                ],
+                e: 'Coração Dimensional Encontrado'
+            },
+            'h3a_nexus_story': {
+                t: 'A História de NEXUS',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_03_deep_city_levels.png',
+                txt: 'O Arquiteto fala por horas. NEXUS não é uma cidade. É um EXPERIMENTO. Uma tentativa de criar um espaço que existe entre dimensões - uma realidade que pode abraçar múltiplas versões de si mesma. Ele fundou isto porque "a história sempre se repete. Cada realidade sofre o mesmo destino. Talvez entre elas, possamos escapar."',
+                o: [
+                    { t: 'Perguntar se funcionou', p: 'h3d_failure', rels: { architect: 20 }, n: 'O Fracasso Inerente' },
+                    { t: 'Qual é meu papel?', p: 'h3b_prophecy', rels: { architect: 35 }, n: 'O Propósito' }
+                ],
+                e: 'NEXUS Explicada'
+            },
+            'h3b_prophecy': {
+                t: 'A Profecia da Ponte',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-nexus.png',
+                txt: '"Você é uma Ponte," o Arquiteta diz, mostrando um manuscrito antigo. "Alguém cuja consciência existe entre múltiplas realidades. Quando o Nexus colapsa, ela desperta. Há 300 anos que escrevemos isto. Sempre volta. Sempre tenta salvar." Você reconhece sua própria caligrafia em alguns trechos.',
+                o: [
+                    { t: 'Aceitar o destino', p: 'h4b_design', rels: { architect: 50 }, n: 'Aceitar Profecia' },
+                    { t: 'Negar - você NÃO é especial', p: 'h3f_reject', rels: { architect: -20 }, n: 'Rejeitar Destino' }
+                ],
+                e: 'Profecia da Ponte'
+            },
+            'h3c_trust': {
+                t: 'Entendimento Imediato',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_01_ivo_archive.png',
+                txt: 'Você sente uma conexão instantânea com o Arquiteta. Não é racional - é como reconhecer a si mesmo em um espelho temporal. Ele sorri, aliviado. "Bom. Este é o caminho mais rápido. Temos muito a fazer e pouco tempo antes do colapso começar."',
+                o: [
+                    { t: 'Pergunta o que fazer', p: 'h4b_design', rels: { architect: 60 }, n: 'O Grande Plano' }
+                ],
+                e: 'Ligação com o Arquiteto'
+            },
+            'h3d_failure': {
+                t: 'O Colapso é Inevitável',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_04_temporal_nexus_hub.png',
+                txt: '"Não funcionou perfeitamente," o Arquiteta admite. "A primeira versão durou 500 anos. A segunda durou 300. Agora esta terceira está chegando ao fim. Você foi enviada para quebrar este ciclo."',
+                o: [
+                    { t: 'Como quebrar o ciclo?', p: 'h4b_design', rels: { architect: 40 }, n: 'Quebrar o Ciclo' }
+                ],
+                e: 'Mortalidade de NEXUS'
+            },
+            'h3f_reject': {
+                t: 'Afirmação do Livre Arbítrio',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-nexus.png',
+                txt: 'Você recusa veementemente. Você NÃO é escolhida. Você é apenas uma pessoa que acordou em um mundo estranho. O Arquiteta não fica chateado. "Tudo bem. Livre arbítrio ainda existe. Mas você ainda precisa escolher um caminho."',
+                o: [
+                    { t: 'Ajudar mesmo assim', p: 'h4b_design', rels: { architect: 30 }, n: 'Livre Arbítrio' }
+                ],
+                e: 'Profecia Rejeitada'
+            },
+            'h4a_resonance': {
+                t: 'A Ressonância',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_01_restoration_engine_complete.png',
+                txt: 'Ao tocar a estrutura, você SENTE. Trilhões de mentes existindo simultaneamente. Versões de você em infinitas realidades. Você grita. Você adora. Você morre e renasce. O Arquiteta puxa você para trás. "Isto é por que precisamos de você. Apenas a Ponte pode tocar isto e permanecer inteira."',
+                o: [
+                    { t: 'Retornar', p: 'h4b_design', rels: { architect: 70 }, n: 'Entender o Propósito' }
+                ],
+                e: 'Contato Dimensional'
+            },
+            'h4b_design': {
+                t: 'O Grande Plano',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_03_deep_city_levels.png',
+                txt: 'O Arquiteta desdobra um projeto impossível. NEXUS será um SISTEMA. Múltiplas realidades vibrando juntas. Você agora escolhe: ajudar a construir, ou buscar outra via?',
+                o: [
+                    { t: 'Voltar a 2150 com conhecimento', p: 'temporal_bridge_choice', rels: { architect: 50 }, n: 'Retorno Iluminado' }
+                ],
+                e: 'Grande Design Revelado'
+            },
+            'temporal_bridge_choice': {
+                t: 'Encruzilhada Temporal - Qual Era Explorar?',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_04_temporal_nexus_hub.png',
+                txt: 'Antes de retornar a 2150, o Arquiteta oferece uma escolha. "NEXUS existe em múltiplas tempos. Você poderia visitar outras versões. 1920 - quando começamos experimentar. 1970 - quando tentamos libertação. 2050 - quando tentamos perfeição. Ou 2150 - onde você acordou. Qual visitará?"',
+                o: [
+                    { t: 'Explorar 1920 (Início Secreto)', p: 'y1920_secret_beginning', rels: { architect: 40 }, n: 'Era de 1920' },
+                    { t: 'Explorar 1970 (Revolução)', p: 'y1970_revolution', rels: { architect: 40 }, n: 'Era de 1970' },
+                    { t: 'Explorar 2050 (Perfeição)', p: 'y2050_perfection', rels: { architect: 40 }, n: 'Era de 2050' },
+                    { t: 'Retornar direto a 2150', p: 'return_2150_novo', rels: { architect: 30 }, n: 'Retorno Direto' }
+                ],
+                e: 'Portal Temporal Aberto'
+            },
+            'y1920_secret_beginning': {
+                t: '1920 - O Começo Secreto',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_01_1920_archive_district.png',
+                txt: 'Você salta para 1920. Um mundo diferente - Art Deco, energia elétrica descoberta, primeiras rádios. Mas aqui, NEXUS existe em segredo. Escondida embaixo da terra. O Arquiteta estava certo - isto foi tentado ANTES de 1847. Uma primeira versão. Fracassada. Enterrada. Você vê arquivos antigos, documentos queimados, tentativas de apagar evidências.',
+                o: [
+                    { t: 'Explorar o Arquivo Subterrâneo', p: 'y1920_archive_exploration', rels: { architect: 30 }, n: 'Arquivo Subterrâneo' },
+                    { t: 'Explorar ruínas de NEXUS 1920', p: 'y1920_ruins_exploration', rels: { architect: 30 }, n: 'Ruínas de 1920' },
+                    { t: 'Procurar sobreviventes', p: 'y1920_survivors', rels: { architect: 20 }, n: 'Sobreviventes' },
+                    { t: 'Ir para 1970', p: 'y1970_revolution', rels: { architect: 15 }, n: 'Avançar para 1970' }
+                ],
+                e: 'NEXUS 1920 Descoberta'
+            },
+            'y1920_archive_exploration': {
+                t: 'O Arquivo Secreto de 1920',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_03b_1920_laboratory_wide.png',
+                txt: 'Você entra no Arquivo. Paredes de madeira, lâmpadas a gás, máquinas de escrever antigas. Documentos cobrem tudo: "PROJETO NEXUS - FASE I - FRACASSADO". "CRONOGRAMA DE EVACUAÇÃO". "DESTRUIÇÃO DE EVIDÊNCIAS". Você vê manuscritos do Arquiteta - mais jovem, mais desesperado. Isto NÃO foi um experimento tranquilo. Foi um colapso catastrófico.',
+                o: [
+                    { t: 'Estudar os documentos detalhadamente', p: 'y1920_read_documents', rels: { architect: 40 }, n: 'Verdade Revelada' },
+                    { t: 'Procurar o Arquiteta de 1920', p: 'y1920_find_architect', rels: { architect: 50 }, n: 'Encontrar Arquiteta' },
+                    { t: 'Explorar ruínas de NEXUS', p: 'y1920_ruins_exploration', rels: { architect: 25 }, n: 'Ruínas' }
+                ],
+                e: 'Arquivo de 1920 Acessado'
+            },
+            'y1920_read_documents': {
+                t: 'A Verdade Documentada',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-archive.png',
+                txt: 'Você lê os documentos. A primeira NEXUS foi tentada em 1847... não, em 1847 foi a SEGUNDA. A PRIMEIRA foi em 1920. E colapsou em 3 meses. Matou 5000 pessoas. O Arquiteta sobreviveu, desapareceu, retornou em 1847 com nova abordagem. Isto significa: o Arquiteta não apenas existe entre realidades - ele vive ATRAVÉS dos tempos. Saltando de falha em falha, aprendendo, reconstruindo.',
+                o: [
+                    { t: 'Procurar o Arquiteta de 1920', p: 'y1920_find_architect', rels: { architect: 50 }, n: 'Confronto' },
+                    { t: 'Explorar ruínas', p: 'y1920_ruins_exploration', rels: { architect: 30 }, n: 'Ruínas' }
+                ],
+                e: 'Verdade de 1920 Aprendida'
+            },
+            'y1920_find_architect': {
+                t: 'O Arquiteta Fracassado',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/mara-portrait.png',
+                txt: 'Você encontra o Arquiteta de 1920. Não é o mesmo que você conheceu em 1847. É mais velho. Quebrado. Atormentado. "Você veio de outra realidade. Isto significa que em OUTRA realidade, 1920 sucedeu? Ou também falhou?" Seus olhos imploram por esperança. Você vê que ele carrega o peso de cada fracasso através do tempo.',
+                o: [
+                    { t: 'Dar esperança', p: 'y1920_give_hope', rels: { architect: 70 }, n: 'Esperança' },
+                    { t: 'Dizer a verdade - isto também falha', p: 'y1920_harsh_truth', rels: { architect: 20 }, n: 'Verdade Amarga' }
+                ],
+                e: 'Arquiteta de 1920 Encontrado'
+            },
+            'y1920_give_hope': {
+                t: 'Esperança Através do Tempo',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Você conta que em 1847, a construção teve sucesso. Que aqui, em 1920, não foi o fim - foi apenas o começo de aprendizado. O Arquiteta chora. "Então meus erros... meus 5000 mortos... eles significaram algo? Levaram a algo melhor?" Você responde: "Sim. Cada fracasso ensina. Você está aprendendo através do tempo."',
+                o: [
+                    { t: 'Ir para 1970', p: 'y1970_revolution', rels: { architect: 70 }, n: 'Próxima Era' }
+                ],
+                e: '1920 Significado Encontrado'
+            },
+            'y1920_harsh_truth': {
+                t: 'O Ciclo Infinito',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_06b_image.png',
+                txt: 'Você diz: "Isto vai falhar novamente. Em 1847, vai falhar. Em 2150, vai falhar. NEXUS é ciclo de esperança e colapso." O Arquiteta fica silencioso. Depois: "Talvez. Mas enquanto estou aqui, tenho que tentar. Isto é tudo que um humano pode fazer."',
+                o: [
+                    { t: 'Ir para 1970', p: 'y1970_revolution', rels: { architect: 40 }, n: 'Próxima Era' }
+                ],
+                e: 'Ciclo Aceito'
+            },
+            'y1920_ruins_exploration': {
+                t: 'As Ruínas de NEXUS 1920',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-deepsea.png',
+                txt: 'Os cristais estão apagados. Estruturas parcialmente construídas. Máquinas enferrujadas. Isto é o COLAPSO original. A primeira tentativa falhou PORQUE o Arquiteta não tinha experiência suficiente. Não havia guardiões. Não havia monges. Isto era experimentação pura. E matou milhares.',
+                o: [
+                    { t: 'Estudar os fracassos', p: 'y1920_lesson_learned', rels: { architect: 35 }, n: 'Lições do Passado' },
+                    { t: 'Tentar reativar cristais', p: 'y1920_crystal_reactivation', rels: { architect: 50 }, n: 'Ressurreição' }
+                ],
+                e: 'Fracasso Original Entendido'
+            },
+            'y1920_survivors': {
+                t: '1920 - Os Últimos Guardiões',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Você encontra uma comunidade pequena que sobreviveu ao colapso de 1920. Eles veneraram o Arquiteta como deus. Esperam que você seja a próxima encarnação. Eles têm conhecimento antigo - conhecimento que alimentou todas as tentativas futuras.',
+                o: [
+                    { t: 'Aprender com eles', p: 'y1920_ancient_knowledge', rels: { architect: 40, monks: 50 }, n: 'Conhecimento Antigo' },
+                    { t: 'Contar verdade sobre o Arquiteta', p: 'y1920_truth_revealed', rels: { architect: 20, monks: 20 }, n: 'Verdade Amarga' }
+                ],
+                e: 'Comunidade de 1920 Encontrada'
+            },
+            'y1920_lesson_learned': {
+                t: 'O Preço do Conhecimento Inicial',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-2150.png',
+                txt: 'Você entende agora. O Arquiteta APRENDEU com 1920. Cada fracasso em cada era ensinou algo. 1920 ensinou que você precisa de estrutura espiritual (monges). 1847 ensinou que você precisa de lideranças múltiplas. 2150 aprenderá o que 1970 não soube.',
+                o: [
+                    { t: 'Ir para 1970', p: 'y1970_revolution', rels: { architect: 50 }, n: 'Próxima Era' }
+                ],
+                e: 'Ciclos de Conhecimento'
+            },
+            'y1920_crystal_reactivation': {
+                t: 'Ressurreição de 1920',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_01_restoration_engine_complete.png',
+                txt: 'Você toca os cristais. Eles despertam. NEXUS 1920 brilha novamente. Os sobreviventes choram. É temporário - você sabe - mas por alguns momentos, aquela era vive novamente. Você realmente É a Ponte, conectando tempos.',
+                o: [
+                    { t: 'Deixá-la apagada novamente', p: 'y1920_let_rest', rels: { architect: 30 }, n: 'Descanso Eterno' },
+                    { t: 'Ir para 1970', p: 'y1970_revolution', rels: { architect: 50 }, n: 'Próxima Missão' }
+                ],
+                e: '1920 Temporariamente Salva'
+            },
+            'y1920_ancient_knowledge': {
+                t: 'Sabedoria Através dos Tempos',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Os sobreviventes ensinam você técnicas que evoluíram por 100 anos. Meditação de frequências. Entendimento de cristais não como máquinas, mas como seres vivos. Proteção psíquica. Este é o conhecimento que alimentou todas as futuras gerações de NEXUS.',
+                o: [
+                    { t: 'Ir para 1970 iluminada', p: 'y1970_revolution', rels: { architect: 50, monks: 60 }, n: 'Conhecimento Integrado' }
+                ],
+                e: 'Sabedoria de 100 Anos'
+            },
+            'y1920_truth_revealed': {
+                t: 'O Arquiteta Não é Deus',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_01_ivo_archive.png',
+                txt: 'Você conta que o Arquiteta é apenas uma pessoa. Brilhante, sim. Mas falível. Os sobreviventes ficam desapontados. Mas depois, uma criança diz: "Isso o torna ainda mais incrível. Que um humano conseguiu isto." A fé muda de adoração para respeito.',
+                o: [
+                    { t: 'Ir para 1970', p: 'y1970_revolution', rels: { architect: 30 }, n: 'Próxima Era' }
+                ],
+                e: 'Arquiteta Humanizada'
+            },
+            'y1920_let_rest': {
+                t: 'Deixar o Passado Descansar',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-archive.png',
+                txt: 'Você apaga os cristais novamente. 1920 volta ao repouso. Os sobreviventes entendem - algumas coisas não devem ser ressuscitadas. Algumas mortes são finais. Isto é sabedoria também.',
+                o: [
+                    { t: 'Ir para 1970', p: 'y1970_revolution', rels: { architect: 40 }, n: 'Era da Revolução' }
+                ],
+                e: 'Aceitação do Fim'
+            },
+            'y1970_revolution': {
+                t: '1970 - A Era da Libertação',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_02b_uprising_city_chaos.png',
+                txt: 'Você salta para 1970. Um mundo diferente - movimentos sociais, rebelião, questões de liberdade. E aqui, NEXUS experimenta com LIBERTAÇÃO. Monges abandonam meditação. Guardas abandonam postos. Graffiti nas paredes. Bandeiras de rebelião. Todos são iguais, dizem. Sem hierarquia. Sem controle. Caos. Criatividade. Medo. Tudo ao mesmo tempo.',
+                o: [
+                    { t: 'Explorar a cidade revolucionária', p: 'y1970_city_streets', rels: { architect: 25 }, n: 'Ruas de 1970' },
+                    { t: 'Explorar NEXUS Libertária', p: 'y1970_anarchist_city', rels: { architect: 20 }, n: 'Caos Libertário' },
+                    { t: 'Procurar líderes que resistem', p: 'y1970_order_keepers', rels: { architect: 40 }, n: 'Guardiões da Ordem' },
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 10 }, n: 'Volta ao Presente' }
+                ],
+                e: 'NEXUS 1970 Libertária'
+            },
+            'y1970_city_streets': {
+                t: 'As Ruas de 1970',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_03_deep_city_levels.png',
+                txt: 'Você caminha pelas ruas. Pessoas estão criando - pintando murais, escrevendo poesia, tocando música. Sem permissão. Sem autoridade. É bonito. É também perigoso. Você vê que sem guardiões, sem estrutura, as pessoas começam a se organizar naturalmente. Alguns líderes emergem. Outros os desafiam. É democracia anárquica - e ela é frágil.',
+                o: [
+                    { t: 'Conhecer os artistas/ativistas', p: 'y1970_meet_activists', rels: { architect: 30 }, n: 'Encontro com Ativistas' },
+                    { t: 'Procurar os guardiões antigos', p: 'y1970_order_keepers', rels: { architect: 40 }, n: 'Guardiões' }
+                ],
+                e: 'Ruas de Liberdade Exploradas'
+            },
+            'y1970_meet_activists': {
+                t: 'Os Criadores de 1970',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_04c_monastery_sanctuary_wide.png',
+                txt: 'Você conhece jovens que abandonaram tudo - professores se tornando artistas, cientistas se tornando poetas, monges se tornando dançarinos. "Finalmente somos livres!" eles dizem. Mas você vê preocupação em seus olhos. "Os cristais estão falhando. E ninguém sabe como consertá-los. Estávamos contentes demais para aprender."',
+                o: [
+                    { t: 'Tentar ensinar sobre cristais', p: 'y1970_teach_restoration', rels: { architect: 50 }, n: 'Restauração' },
+                    { t: 'Acompanhá-los na criatividade', p: 'y1970_join_creation', rels: { architect: 20 }, n: 'Unir-se' }
+                ],
+                e: 'Ativistas de 1970 Encontrados'
+            },
+            'y1970_teach_restoration': {
+                t: 'Ensino de 1970',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Você ensina aos artistas como cuidar dos cristais. Como a estrutura técnica permite liberdade criativa. Lentamente, eles entendem. Começam a criar arte QUE RESSOA com os cristais. Poesia que vibra em frequências. Dança que sincroniza com pulsos de energia. NEXUS 1970 encontra equilíbrio: liberdade DENTRO de estrutura.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 70 }, n: 'Equilíbrio Alcançado' }
+                ],
+                e: 'Criatividade com Estrutura'
+            },
+            'y1970_join_creation': {
+                t: 'Criatividade de 1970',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_8c_image.png',
+                txt: 'Você se junta a eles. Pinta. Cria. Vive por um tempo em liberdade pura. É maravilhoso. Efêmero. Você sabe que vai desaparecer. Que os cristais vão falhar. Mas por agora - você vive.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 40 }, n: 'Memória Criativa' }
+                ],
+                e: '1970 Vivida Plenamente'
+            },
+            'y1970_anarchist_city': {
+                t: 'A Utopia Fracassada',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_03_deep_city_levels.png',
+                txt: 'Liberdade total. Sem regras. E é... bonito no começo. Pessoas criando livremente. Ninguém oprimindo. Mas cristais começam a falhar - sem guardiões para manutenção, sem monges para equilíbrio. NEXUS literalmente está morrendo pela falta de estrutura. Liberdade sem responsabilidade é colapso.',
+                o: [
+                    { t: 'Tentar restaurar ordem', p: 'y1970_restore_order', rels: { architect: 50 }, n: 'Restauração' },
+                    { t: 'Deixar falhar', p: 'y1970_let_collapse', rels: { architect: 10 }, n: 'Deixar Morrer' }
+                ],
+                e: 'Paradoxo da Liberdade'
+            },
+            'y1970_order_keepers': {
+                t: 'Os Resistentes da Ordem',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Um pequeno grupo ainda mantém estrutura. Alguns cientistas que entendem cristais. Alguns monges que recusam abandonar sua meditação. Eles estão tentando manter NEXUS funcionando enquanto o resto experimenta caos. Estão perdendo.',
+                o: [
+                    { t: 'Ajudar a fortalecer estrutura', p: 'y1970_strengthen_order', rels: { architect: 60, monks: 50 }, n: 'Fortalecer Estrutura' },
+                    { t: 'Tentar negociar equilíbrio', p: 'y1970_negotiate_balance', rels: { architect: 40 }, n: 'Negociar Equilíbrio' }
+                ],
+                e: 'Resistência de 1970'
+            },
+            'y1970_restore_order': {
+                t: 'Restauração da Estrutura',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_01_restoration_engine_complete.png',
+                txt: 'Você trabalha para restaurar ordem. Cristais são reparados. Monges retomam postos. Mas agora você entende - ordem SEM liberdade é prisão. Você tenta criar equilíbrio. Estrutura que permite liberdade. Isto é a verdadeira lição de 1970.',
+                o: [
+                    { t: 'Retornar a 2150 com esta sabedoria', p: 'return_2150_novo', rels: { architect: 60 }, n: 'Equilíbrio Aprendido' }
+                ],
+                e: 'Ordem Restaurada com Liberdade'
+            },
+            'y1970_strengthen_order': {
+                t: 'Fortalecer a Resistência',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Você trabalha com monges e cientistas para manter NEXUS funcionando. É trabalho árduo. As pessoas resistem. Mas gradualmente, entendem - sem estrutura, morre a liberdade junto. Você cria novo paradigma: ordem para permitir liberdade.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 70, monks: 60 }, n: 'Missão Cumprida' }
+                ],
+                e: 'Guardião de 1970'
+            },
+            'y1970_negotiate_balance': {
+                t: 'Negociar Equilíbrio Perfeito',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_04_temporal_nexus_hub.png',
+                txt: 'Você negocia entre libertários e guardiões. "Liberdade COM responsabilidade. Igualdade COM estrutura." É difícil. Ninguém fica 100% satisfeito. Mas NEXUS 1970 sobrevive. Não perfeita. Mas viva. E talvez isto seja melhor que perfeito.',
+                o: [
+                    { t: 'Retornar a 2150 iluminada', p: 'return_2150_novo', rels: { architect: 50 }, n: 'Sabedoria Conquistada' }
+                ],
+                e: 'Equilíbrio Negociado'
+            },
+            'y1970_let_collapse': {
+                t: 'A Queda de 1970',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-deepsea.png',
+                txt: 'NEXUS 1970 colapsa. Cristais se apagam. Pessoas morrem. Caos absoluto. E você aprende a maior lição: liberdade sem estrutura mata liberdade. 1970 será lembrada como a era que provou isto. Uma lição cara para todas as futuras versões.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 20 }, n: 'Lição Aprendida' }
+                ],
+                e: '1970 Colapsada'
+            },
+            'y2050_perfection': {
+                t: '2050 - A Era da Perfeição',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_03c_2050_institutional_wide.png',
+                txt: 'Você salta para 2050. Um mundo limpo. Branco. Minimalista. Perfeito. NEXUS aqui alcançou estabilidade através de controle absoluto. Arquitetura institucional. Tudo em ordem. Sem caos. Sem liberdade. Mas também sem sofrimento. Sem conflito. É como estar em um museu vivo. Bonito. Morto. Você sente uma frieza que penetra até os ossos.',
+                o: [
+                    { t: 'Explorar a Instituição Central', p: 'y2050_central_hub', rels: { architect: 35 }, n: 'Instituição' },
+                    { t: 'Explorar a perfeição das ruas', p: 'y2050_perfect_city', rels: { architect: 30 }, n: 'Cidade Perfeita' },
+                    { t: 'Procurar deficiências', p: 'y2050_find_cracks', rels: { architect: 20 }, n: 'Procurar Falhas' },
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 10 }, n: 'Volta ao Caos' }
+                ],
+                e: 'NEXUS 2050 Perfeita'
+            },
+            'y2050_central_hub': {
+                t: 'O Coração Institucional',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_02_2050_market_district.png',
+                txt: 'Você entra no centro da Instituição. Computadores antigos (para você) gerenciam tudo. Dados visuais em paredes. Você vê: POPULAÇÃO: 12,847. SATISFAÇÃO: 99.3%. PRODUTIVIDADE: 100%. CRIME: 0%. DISSIDÊNCIA: 0%. É perfeito. É perfeito porque todos foram programados para aceitar isto.',
+                o: [
+                    { t: 'Explorar a perfeição das ruas', p: 'y2050_perfect_city', rels: { architect: 30 }, n: 'Ruas' },
+                    { t: 'Encontrar o Diretor', p: 'y2050_director_2050', rels: { architect: 50 }, n: 'Diretor' }
+                ],
+                e: 'Centro de Controle 2050'
+            },
+            'y2050_perfect_city': {
+                t: 'A Cidade Branca',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-nexus.png',
+                txt: 'Você caminha pela NEXUS 2050. Tudo é branco, azul limpo, geometria perfeita. Pessoas se movem em padrões. Ninguém fala alto. Ninguém discorda. Ninguém inova. Tudo funciona. Perfeitamente. Você sente uma tristeza profunda - isto é eficiência sem alma.',
+                o: [
+                    { t: 'Falar com alguém', p: 'y2050_talk_citizen', rels: { architect: 25 }, n: 'Diálogo com Cidadão' },
+                    { t: 'Encontrar o Diretor de 2050', p: 'y2050_director_2050', rels: { architect: 40 }, n: 'O Diretor Perfeito' }
+                ],
+                e: 'Cidade Branca Explorada'
+            },
+            'y2050_find_cracks': {
+                t: 'As Fraturas na Perfeição',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-deepsea.png',
+                txt: 'Você procura pelo que está errado. E encontra: nos porões, pessoas estão prisioneiras. Nas paredes, há panos que cobrem inscrições apagadas. Nos rostos das pessoas, há uma tristeza meticulosamente controlada. A perfeição é construída sobre prisão. NEXUS 2050 é um show.',
+                o: [
+                    { t: 'Libertar os prisioneiros', p: 'y2050_liberate', rels: { architect: 50 }, n: 'Libertação' },
+                    { t: 'Expor a verdade', p: 'y2050_expose_truth', rels: { architect: 40 }, n: 'Verdade' }
+                ],
+                e: 'Perfeição Questionada'
+            },
+            'y2050_talk_citizen': {
+                t: 'Conversa com Cidadão Perfeito',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Você tenta conversar com uma pessoa. Ela responde em tom monótono: "Sou feliz. NEXUS me oferece tudo que necessito. Não há insatisfação. Não há tristeza. Por que você questiona isto?" Seus olhos estão vazios. Você percebe: ela foi modificada. Seu livre arbítrio foi removido.',
+                o: [
+                    { t: 'Despertar dela', p: 'y2050_awakening', rels: { architect: 60 }, n: 'Despertar' },
+                    { t: 'Deixá-la como está', p: 'y2050_let_sleep', rels: { architect: 20 }, n: 'Deixar Dormir' }
+                ],
+                e: 'Cidadão Sem Vontade'
+            },
+            'y2050_director_2050': {
+                t: 'O Diretor Finalizado',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_02_sera_commanding.png',
+                txt: 'O Diretor de 2050 é um ser perfeito - belo, calmo, absolutamente em controle. Ela te reconhece. "Você é a Ponte. Veio de uma realidade onde ainda há caos, não é? Aqui não. Aqui, a Ponte não é necessária. Tudo funciona." Ela sorri. É o sorriso mais triste que você já viu.',
+                o: [
+                    { t: 'Questionar ela', p: 'y2050_question_director', rels: { architect: 40 }, n: 'Questionar' },
+                    { t: 'Rejeitar sua visão', p: 'y2050_reject_perfection', rels: { architect: 50 }, n: 'Rejeição' }
+                ],
+                e: 'Diretor Perfeito Encontrado'
+            },
+            'y2050_liberate': {
+                t: 'Quebrando a Perfeição',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene_01_restoration_engine_complete.png',
+                txt: 'Você liberta os prisioneiros. A perfeição desaba. Caos volta. Pessoas choram. Gritam. Sofrem. Mas também - amam. Criam. Existem. NEXUS 2050 morre. Mas uma versão mais viva nasce. Imperfeita. Real.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 60 }, n: 'Salvação' }
+                ],
+                e: 'Libertação de 2050'
+            },
+            'y2050_expose_truth': {
+                t: 'A Verdade Revelada',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_04_temporal_nexus_hub.png',
+                txt: 'Você expõe para todos: a perfeição é prisão. Os cidadãos de 2050 finalmente veem. Alguns resistem à verdade. Outros a abraçam. NEXUS 2050 se divide entre aqueles que querem voltar à prisão-conforto e aqueles que querem caos-liberdade. Você aprendeu: perfeição sem liberdade é morte em câmera lenta.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 50 }, n: 'Verdade Integrada' }
+                ],
+                e: 'Verdade de 2050'
+            },
+            'y2050_awakening': {
+                t: 'Um Despertar',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'A pessoa acorda. Lembra de si mesma. Chora pela primeira vez em anos. Sua primeira emoção genuína é dor. Mas depois - esperança. "Obrigada," ela diz. "Não sabia que estava dormindo." Ela se torna ativista em sua realidade. Uma semente de rebelião plantada.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 70 }, n: 'Semente Plantada' }
+                ],
+                e: 'Um Ser Desperto'
+            },
+            'y2050_let_sleep': {
+                t: 'Respeitar o Sono',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_01_ivo_archive.png',
+                txt: 'Você deixa a pessoa como está. Talvez sua ignorância seja felicidade. Talvez a verdade seja crueldade. Você não sabe. Você retorna sem respostas. Apenas dúvidas. E talvez isto seja a sabedoria real.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 30 }, n: 'Incerteza Aceita' }
+                ],
+                e: 'Sono Respeitado'
+            },
+            'y2050_question_director': {
+                t: 'Questionador de Perfeição',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_02_sera_commanding.png',
+                txt: 'Você questiona: "Isto é vida ou morte maquiada? Estas pessoas escolhem isto ou foram programadas?" O Diretor fica silencioso. "Ambas. Nenhuma. A questão não tem sentido." Ela está certa. Você não tem resposta. Apenas a rejeição visceral de tanta morte bonita.',
+                o: [
+                    { t: 'Retornar a 2150', p: 'return_2150_novo', rels: { architect: 40 }, n: 'Paradoxo Entendido' }
+                ],
+                e: 'Paradoxo de 2050'
+            },
+            'y2050_reject_perfection': {
+                t: 'Rejeitar a Visão',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-2150.png',
+                txt: 'Você rejeita absolutamente a visão dela. "Isto não é vida. Isto é morte congelada." O Diretor não se importa. Ela está além de ofensa. Você retorna a 2150 com ódio da perfeição no coração. Talvez isto seja necessário para lutar.',
+                o: [
+                    { t: 'Retornar a 2150 Determinada', p: 'return_2150_novo', rels: { architect: 50, director: -50 }, n: 'Rejeição Total' }
+                ],
+                e: '2050 Rejeitada'
+            },
+            'return_2150_novo': {
+                t: 'Retorno a 2150 - Conhecimento Integrado',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/scene-2150.png',
+                txt: 'Você retorna a 2150 com memórias queimadas em sua consciência. Você SABE agora. Sabe de 1847. Do Arquiteta. Da profecia. Das escolhas que ecoam através do tempo. Você é mais que uma pessoa - você é a ponte entre ciclos. Agora, você pode ESCOLHER o final. Há múltiplos caminhos diante de você.',
+                o: [
+                    { t: 'Fim Harmonioso - Salvar NEXUS', p: 'ending_harmony', rels: { ivo: 50, sera: 50 }, n: 'Salvação' },
+                    { t: 'Fim Libertador - Destruir Controle', p: 'ending_liberation', rels: { architect: 50 }, n: 'Liberação' },
+                    { t: 'Fim Pacífico - Aceitar o Ciclo', p: 'ending_peace', rels: { monks: 50 }, n: 'Paz' }
+                ],
+                e: 'Conhecimento Integrado'
+            },
+            'ending_harmony': {
+                t: 'Final: Harmonia Eterna',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Com todo o conhecimento, você sincroniza os cristais. Ivo ajuda. Será lidera. Thomas compreende. NEXUS se estabiliza. Não é perfeito - mas é equilibrado. Cíclico, mas com esperança. Você se torna a Ponte permanente - conectando realidades, mas livres para evoluir. FIM.',
+                o: [
+                    { t: '🎮 Jogar Novamente', p: 'inicio', rels: {}, n: 'Nova Jornada' }
+                ],
+                e: 'Harmonia Alcançada',
+                isEnding: true
+            },
+            'ending_liberation': {
+                t: 'Final: Libertação Total',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/world_04_temporal_nexus_hub.png',
+                txt: 'Você destrói os cristais de controle. NEXUS se fragmenta. Realidades se separam. É caos - mas é LIBERDADE. Bilhões despertam para si mesmos. Sem profecia. Sem ponte. Sem ciclo. Apenas existência livre. O preço é o isolamento, mas o ganho é autenticidade. FIM.',
+                o: [
+                    { t: '🎮 Jogar Novamente', p: 'inicio', rels: {}, n: 'Nova Jornada' }
+                ],
+                e: 'Libertação Conquistada',
+                isEnding: true
+            },
+            'ending_peace': {
+                t: 'Final: Aceitação Pacífica',
+                i: 'file:///C:/Users/54547130159/nexus/game-engine/public/images/character_07_monks_council.png',
+                txt: 'Você aceita que tudo termina. Que ciclos são naturais. Você transforma NEXUS não em máquina eterna, mas em monumento. Um lugar onde as pessoas vivem, amam, criam - sabendo que é temporário. Significado está na transitoriedade, não na permanência. Você descansa pela primeira vez em séculos. FIM.',
+                o: [
+                    { t: '🎮 Jogar Novamente', p: 'inicio', rels: {}, n: 'Nova Jornada' }
+                ],
+                e: 'Paz Alcançada',
+                isEnding: true
             },
             'fim': {
                 t: 'A PONTE Permanente',
