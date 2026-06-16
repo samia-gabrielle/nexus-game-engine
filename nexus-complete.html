@@ -1405,6 +1405,277 @@
                 ],
                 e: 'Sacrifício da Ponte',
                 isEnding: true
+            },
+
+            // ==================== ACT 5: THE ETERNAL CYCLE ====================
+            'act5_gate': {
+                t: 'A Bridge Beyond Time',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/2150 - the present.png',
+                txt: 'The NEXUS hums with an ancient frequency.\n\nYour choice echoes through time itself.\n\n300 years have passed. A new world has emerged.\n\nBut before you see what your choice created, you must understand what came before.',
+                o: [
+                    { t: 'Explore the past (1650)', p: 's5_past_01', rels: {}, n: 'Ancient Knowledge' },
+                    { t: 'Skip to the future', p: 'act5_future_choice', rels: {}, n: 'The Aftermath' }
+                ],
+                e: 'Beyond Time'
+            },
+
+            // PAST TIMELINE (1650)
+            's5_past_01': {
+                t: 'The First Architect',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_01.png',
+                txt: 'An ancient laboratory. Stone walls glow with soft crystalline light.\n\nA figure stands before the first NEXUS crystal—not yet fully formed, pulsing with uncertain power.\n\nThis is the moment everything began. 500 years before your awakening.',
+                o: [
+                    { t: 'Continue', p: 's5_past_02', rels: {}, n: 'Council Gathering' }
+                ],
+                e: 'Architect\'s Vision'
+            },
+
+            's5_past_02': {
+                t: 'The First Council',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_02.png',
+                txt: 'Five guardians gather around the glowing crystal.\n\nThey argue passionately about NEXUS\'s true purpose.',
+                o: [
+                    { t: 'Continue', p: 's5_past_03', rels: {}, n: 'The Sealing' }
+                ],
+                e: 'Guardian Conflict'
+            },
+
+            's5_past_03': {
+                t: 'The Sealing',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_03.png',
+                txt: 'The crystal descends into the depths. Guardians chant as NEXUS is sealed away.',
+                o: [
+                    { t: 'Watch time unfold', p: 's5_past_04', rels: {}, n: 'Centuries Pass' }
+                ],
+                e: 'Cycle Sealed'
+            },
+
+            's5_past_04': {
+                t: 'Five Hundred Years',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_04.png',
+                txt: 'Time collapses. Civilizations rise and fall under NEXUS. The cycle repeats eternally.',
+                o: [
+                    { t: 'Return to 2450', p: 'act5_future_choice', rels: {}, n: 'Forward' }
+                ],
+                e: 'Eternal Cycle'
+            },
+
+            's5_past_05': {
+                t: 'Guardian\'s Warning',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_05.png',
+                txt: 'A final message carved in stone: "The cycle weakens. Someone must choose: save it or end it."',
+                o: [
+                    { t: 'Return to present', p: 'act5_future_choice', rels: {}, n: 'The Choice' }
+                ],
+                e: 'Prophecy'
+            },
+
+            // FUTURE GATEWAY
+            'act5_future_choice': {
+                t: 'The Temporal Convergence',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/2450 - the aftermath.png',
+                txt: 'You stand at a threshold. The world your choice created lies ahead.\n\nWhich path will you walk?',
+                o: [
+                    { t: 'Enter HARMONY', p: 's5_harmony_01', rels: {}, n: 'Harmony Awaits' },
+                    { t: 'Enter LIBERATION', p: 's5_liberation_01', rels: {}, n: 'Freedom Awaits' },
+                    { t: 'Enter PEACE', p: 's5_peace_01', rels: {}, n: 'Wisdom Awaits' }
+                ],
+                e: 'Three Futures'
+            },
+
+            // HARMONY TIMELINE
+            's5_harmony_01': {
+                t: 'The Awakening',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_01.png',
+                txt: 'You wake in crystalline light. A perfect city surrounds you—gleaming, peaceful, ordered. Everything works. Everything is beautiful.',
+                o: [
+                    { t: 'Explore', p: 's5_harmony_02', rels: {}, n: 'Perfect Society' }
+                ],
+                e: 'Harmony Born'
+            },
+
+            's5_harmony_02': {
+                t: 'Perfect Society',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_02.png',
+                txt: 'Citizens move with serene grace. No conflict. No suffering. But are they alive, or merely existing?',
+                o: [
+                    { t: 'Continue', p: 's5_harmony_03', rels: {}, n: 'Archives' }
+                ],
+                e: 'Harmony Achieved'
+            },
+
+            's5_harmony_03': {
+                t: 'The Archives',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_03.png',
+                txt: 'You find the memory of your choice. The price: Individual will, surrendered for collective peace.',
+                o: [
+                    { t: 'Accept', p: 's5_harmony_ending_1', rels: {}, n: 'Eternal Return' },
+                    { t: 'Reject', p: 's5_harmony_ending_2', rels: {}, n: 'The Breaking' }
+                ],
+                e: 'Cost Revealed'
+            },
+
+            's5_harmony_ending_1': {
+                t: 'HARMONY ENDING: Eternal Return',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_14.png',
+                txt: 'The cycle continues. Perfect. Eternal. Endless. In 300 more years, another will wake and face the same questions.',
+                o: [
+                    { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
+                ],
+                e: 'Harmony Eternal',
+                isEnding: true
+            },
+
+            's5_harmony_ending_2': {
+                t: 'HARMONY ENDING: The Breaking',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_11.png',
+                txt: 'NEXUS falls. Civilization stumbles into chaos. But genuine human choice emerges.',
+                o: [
+                    { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
+                ],
+                e: 'Harmony Broken',
+                isEnding: true
+            },
+
+            // LIBERATION TIMELINE
+            's5_liberation_01': {
+                t: 'The Ruins',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_01.png',
+                txt: 'You wake in broken sunlight. NEXUS is gone. Nature reclaims everything. Humans scatter into tribes.',
+                o: [
+                    { t: 'Explore', p: 's5_liberation_02', rels: {}, n: 'Tribes Emerge' }
+                ],
+                e: 'Liberation Born'
+            },
+
+            's5_liberation_02': {
+                t: 'The Scattered Tribes',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_02.png',
+                txt: 'Different settlements emerge. All different. All struggling. All free.',
+                o: [
+                    { t: 'Continue', p: 's5_liberation_03', rels: {}, n: 'Nexus Remains' }
+                ],
+                e: 'Tribes Scattered'
+            },
+
+            's5_liberation_03': {
+                t: 'Nexus Fragments',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_03.png',
+                txt: 'In ruins, NEXUS fragments glow faintly. They could be reassembled. Or left to fade.',
+                o: [
+                    { t: 'Destroy', p: 's5_liberation_ending_2', rels: {}, n: 'True Freedom' },
+                    { t: 'Rebuild', p: 's5_liberation_ending_1', rels: {}, n: 'Security Returns' }
+                ],
+                e: 'Choice Point'
+            },
+
+            's5_liberation_ending_1': {
+                t: 'LIBERATION ENDING: Cyclic Return',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_14.png',
+                txt: 'NEXUS is restored. The tribes realize they chose wrong. The cycle restarts.',
+                o: [
+                    { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
+                ],
+                e: 'Liberation Lost',
+                isEnding: true
+            },
+
+            's5_liberation_ending_2': {
+                t: 'LIBERATION ENDING: The Chaos Path',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_11.png',
+                txt: 'The tribes reject NEXUS. Chaos. Progress unpredictable. But freedom is theirs.',
+                o: [
+                    { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
+                ],
+                e: 'Liberation Won',
+                isEnding: true
+            },
+
+            // PEACE TIMELINE
+            's5_peace_01': {
+                t: 'Cycle Balance',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_01.png',
+                txt: 'A world neither gleaming nor crumbling. NEXUS pulses gently. Civilization integrates with nature.',
+                o: [
+                    { t: 'Understand', p: 's5_peace_02', rels: {}, n: 'The Keepers' }
+                ],
+                e: 'Peace Born'
+            },
+
+            's5_peace_02': {
+                t: 'The Keepers',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_02.png',
+                txt: 'Robed figures tend NEXUS with reverence. Custodians, not masters.',
+                o: [
+                    { t: 'Learn', p: 's5_peace_03', rels: {}, n: 'Sacred Archives' }
+                ],
+                e: 'Keepers Found'
+            },
+
+            's5_peace_03': {
+                t: 'Sacred Archives',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_03.png',
+                txt: 'Scrolls document cycles. They are not failures. Natural patterns revealing truth about consciousness.',
+                o: [
+                    { t: 'Accept', p: 's5_peace_ending_1', rels: {}, n: 'Cycle Perfected' },
+                    { t: 'Reject', p: 's5_peace_ending_2', rels: {}, n: 'Divergence' }
+                ],
+                e: 'Wisdom Revealed'
+            },
+
+            's5_peace_ending_1': {
+                t: 'PEACE ENDING: The Cycle Perfected',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_14.png',
+                txt: 'Understanding spreads. Civilization learns to maintain NEXUS from wisdom, not fear. The cycle continues. But now it is chosen.',
+                o: [
+                    { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
+                ],
+                e: 'Peace Eternal',
+                isEnding: true
+            },
+
+            's5_peace_ending_2': {
+                t: 'PEACE ENDING: The Divergence',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_05.png',
+                txt: 'A rebel leaves to seek a different path. The keepers do not stop them. Some must walk alone.',
+                o: [
+                    { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
+                ],
+                e: 'Peace Questioned',
+                isEnding: true
+            },
+
+            // ENDINGS MENU
+            'act5_endings_menu': {
+                t: 'Nine Paths Converge',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/2450 - the aftermath.png',
+                txt: 'Nine endings. One truth: what you choose echoes forever. Your journey through NEXUS is complete.',
+                o: [
+                    { t: 'Return to 2150', p: 'return_2150_novo', rels: {}, n: 'Back Home' },
+                    { t: 'Reflect', p: 'ending_reflection', rels: {}, n: 'Understanding' }
+                ],
+                e: 'Convergence'
+            },
+
+            'ending_reflection': {
+                t: 'The Mirror',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/2150 - the present.png',
+                txt: 'NEXUS was never about the future. It was about choice. Every choice ripples forward. They become cycles. Cycles become worlds.',
+                o: [
+                    { t: 'Understand', p: 'meaning_final', rels: {}, n: 'Ultimate Truth' }
+                ],
+                e: 'Reflection'
+            },
+
+            'meaning_final': {
+                t: 'The Eternal Bridge',
+                i: 'file:///C:/Users/54547130159/nexus/act5-images/2150 - the present.png',
+                txt: 'You are THE BRIDGE. Not savior. Not destroyer. Bridge. You connect past to future. Choice to consequence. Possibility to reality. Somewhere, another will awaken and choose. The cycle continues. Forever.',
+                o: [
+                    { t: 'Begin Again', p: 'inicio', rels: {}, n: 'New Cycle' }
+                ],
+                e: 'Eternal Bridge',
+                isEnding: true
             }
         };
 
