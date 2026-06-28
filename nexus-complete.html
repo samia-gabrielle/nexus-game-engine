@@ -587,13 +587,19 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>⧳ NEXUS</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1>⧳ NEXUS</h1>
+                <div style="display: flex; gap: 10px;">
+                    <button class="choice-button" style="padding: 6px 12px; font-size: 0.9rem;" onclick="setLanguage('en')" id="langEnBtn">🇺🇸 English</button>
+                    <button class="choice-button" style="padding: 6px 12px; font-size: 0.9rem;" onclick="setLanguage('pt')" id="langPtBtn">🇧🇷 Português</button>
+                </div>
+            </div>
             <p class="subtitle">A MULTIDIMENSIONAL NARRATIVE EXPERIENCE</p>
             <div class="stats-bar">
-                <div class="stat-item">📖 Cenas: <span id="sceneCount">0</span>/200+</div>
-                <div class="stat-item">⏱️ Tempo: <span id="playtime">0:00</span></div>
-                <div class="stat-item">🔷 Ecos: <span id="echoCount">0</span></div>
-                <div class="stat-item">📝 Entradas: <span id="entryCount">0</span></div>
+                <div class="stat-item">📖 <span id="labelScenes">Cenas</span>: <span id="sceneCount">0</span>/200+</div>
+                <div class="stat-item">⏱️ <span id="labelTime">Tempo</span>: <span id="playtime">0:00</span></div>
+                <div class="stat-item">🔷 <span id="labelEcos">Ecos</span>: <span id="echoCount">0</span></div>
+                <div class="stat-item">📝 <span id="labelEntries">Entradas</span>: <span id="entryCount">0</span></div>
             </div>
         </div>
 
@@ -1410,7 +1416,7 @@
             // ==================== ACT 5: THE ETERNAL CYCLE ====================
             'act5_gate': {
                 t: 'A Bridge Beyond Time',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/2150 - the present.png',
+                i: 'act5-images/2150 - the present.png',
                 txt: 'The NEXUS hums with an ancient frequency.\n\nYour choice echoes through time itself.\n\n300 years have passed. A new world has emerged.\n\nBut before you see what your choice created, you must understand what came before.',
                 o: [
                     { t: 'Explore the past (1650)', p: 's5_past_01', rels: {}, n: 'Ancient Knowledge' },
@@ -1422,7 +1428,7 @@
             // PAST TIMELINE (1650)
             's5_past_01': {
                 t: 'The First Architect',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_01.png',
+                i: 'act5-images/past/s5_past_01.png',
                 txt: 'An ancient laboratory. Stone walls glow with soft crystalline light.\n\nA figure stands before the first NEXUS crystal—not yet fully formed, pulsing with uncertain power.\n\nThis is the moment everything began. 500 years before your awakening.',
                 o: [
                     { t: 'Continue', p: 's5_past_02', rels: {}, n: 'Council Gathering' }
@@ -1432,7 +1438,7 @@
 
             's5_past_02': {
                 t: 'The First Council',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_02.png',
+                i: 'act5-images/past/s5_past_02.png',
                 txt: 'Five guardians gather around the glowing crystal.\n\nThey argue passionately about NEXUS\'s true purpose.',
                 o: [
                     { t: 'Continue', p: 's5_past_03', rels: {}, n: 'The Sealing' }
@@ -1442,7 +1448,7 @@
 
             's5_past_03': {
                 t: 'The Sealing',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_03.png',
+                i: 'act5-images/past/s5_past_03.png',
                 txt: 'The crystal descends into the depths. Guardians chant as NEXUS is sealed away.',
                 o: [
                     { t: 'Watch time unfold', p: 's5_past_04', rels: {}, n: 'Centuries Pass' }
@@ -1452,7 +1458,7 @@
 
             's5_past_04': {
                 t: 'Five Hundred Years',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_04.png',
+                i: 'act5-images/past/s5_past_04.png',
                 txt: 'Time collapses. Civilizations rise and fall under NEXUS. The cycle repeats eternally.',
                 o: [
                     { t: 'Return to 2450', p: 'act5_future_choice', rels: {}, n: 'Forward' }
@@ -1462,7 +1468,7 @@
 
             's5_past_05': {
                 t: 'Guardian\'s Warning',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/past/s5_past_05.png',
+                i: 'act5-images/past/s5_past_05.png',
                 txt: 'A final message carved in stone: "The cycle weakens. Someone must choose: save it or end it."',
                 o: [
                     { t: 'Return to present', p: 'act5_future_choice', rels: {}, n: 'The Choice' }
@@ -1473,7 +1479,7 @@
             // FUTURE GATEWAY
             'act5_future_choice': {
                 t: 'The Temporal Convergence',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/2450 - the aftermath.png',
+                i: 'act5-images/2450 - the aftermath.png',
                 txt: 'You stand at a threshold. The world your choice created lies ahead.\n\nWhich path will you walk?',
                 o: [
                     { t: 'Enter HARMONY', p: 's5_harmony_01', rels: {}, n: 'Harmony Awaits' },
@@ -1486,7 +1492,7 @@
             // HARMONY TIMELINE
             's5_harmony_01': {
                 t: 'The Awakening',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_01.png',
+                i: 'act5-images/harmony/s5_harmony_01.png',
                 txt: 'You wake in crystalline light. A perfect city surrounds you—gleaming, peaceful, ordered. Everything works. Everything is beautiful.',
                 o: [
                     { t: 'Explore', p: 's5_harmony_02', rels: {}, n: 'Perfect Society' }
@@ -1496,7 +1502,7 @@
 
             's5_harmony_02': {
                 t: 'Perfect Society',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_02.png',
+                i: 'act5-images/harmony/s5_harmony_02.png',
                 txt: 'Citizens move with serene grace. No conflict. No suffering. But are they alive, or merely existing?',
                 o: [
                     { t: 'Continue', p: 's5_harmony_03', rels: {}, n: 'Archives' }
@@ -1506,7 +1512,7 @@
 
             's5_harmony_03': {
                 t: 'The Archives',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_03.png',
+                i: 'act5-images/harmony/s5_harmony_03.png',
                 txt: 'You find the memory of your choice. The price: Individual will, surrendered for collective peace.',
                 o: [
                     { t: 'Accept', p: 's5_harmony_ending_1', rels: {}, n: 'Eternal Return' },
@@ -1517,7 +1523,7 @@
 
             's5_harmony_ending_1': {
                 t: 'HARMONY ENDING: Eternal Return',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_14.png',
+                i: 'act5-images/harmony/s5_harmony_14.png',
                 txt: 'The cycle continues. Perfect. Eternal. Endless. In 300 more years, another will wake and face the same questions.',
                 o: [
                     { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
@@ -1528,7 +1534,7 @@
 
             's5_harmony_ending_2': {
                 t: 'HARMONY ENDING: The Breaking',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/harmony/s5_harmony_11.png',
+                i: 'act5-images/harmony/s5_harmony_11.png',
                 txt: 'NEXUS falls. Civilization stumbles into chaos. But genuine human choice emerges.',
                 o: [
                     { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
@@ -1540,7 +1546,7 @@
             // LIBERATION TIMELINE
             's5_liberation_01': {
                 t: 'The Ruins',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_01.png',
+                i: 'act5-images/liberation/s5_liberation_01.png',
                 txt: 'You wake in broken sunlight. NEXUS is gone. Nature reclaims everything. Humans scatter into tribes.',
                 o: [
                     { t: 'Explore', p: 's5_liberation_02', rels: {}, n: 'Tribes Emerge' }
@@ -1550,7 +1556,7 @@
 
             's5_liberation_02': {
                 t: 'The Scattered Tribes',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_02.png',
+                i: 'act5-images/liberation/s5_liberation_02.png',
                 txt: 'Different settlements emerge. All different. All struggling. All free.',
                 o: [
                     { t: 'Continue', p: 's5_liberation_03', rels: {}, n: 'Nexus Remains' }
@@ -1560,7 +1566,7 @@
 
             's5_liberation_03': {
                 t: 'Nexus Fragments',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_03.png',
+                i: 'act5-images/liberation/s5_liberation_03.png',
                 txt: 'In ruins, NEXUS fragments glow faintly. They could be reassembled. Or left to fade.',
                 o: [
                     { t: 'Destroy', p: 's5_liberation_ending_2', rels: {}, n: 'True Freedom' },
@@ -1571,7 +1577,7 @@
 
             's5_liberation_ending_1': {
                 t: 'LIBERATION ENDING: Cyclic Return',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_14.png',
+                i: 'act5-images/liberation/s5_liberation_14.png',
                 txt: 'NEXUS is restored. The tribes realize they chose wrong. The cycle restarts.',
                 o: [
                     { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
@@ -1582,7 +1588,7 @@
 
             's5_liberation_ending_2': {
                 t: 'LIBERATION ENDING: The Chaos Path',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/liberation/s5_liberation_11.png',
+                i: 'act5-images/liberation/s5_liberation_11.png',
                 txt: 'The tribes reject NEXUS. Chaos. Progress unpredictable. But freedom is theirs.',
                 o: [
                     { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
@@ -1594,7 +1600,7 @@
             // PEACE TIMELINE
             's5_peace_01': {
                 t: 'Cycle Balance',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_01.png',
+                i: 'act5-images/peace/s5_peace_01.png',
                 txt: 'A world neither gleaming nor crumbling. NEXUS pulses gently. Civilization integrates with nature.',
                 o: [
                     { t: 'Understand', p: 's5_peace_02', rels: {}, n: 'The Keepers' }
@@ -1604,7 +1610,7 @@
 
             's5_peace_02': {
                 t: 'The Keepers',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_02.png',
+                i: 'act5-images/peace/s5_peace_02.png',
                 txt: 'Robed figures tend NEXUS with reverence. Custodians, not masters.',
                 o: [
                     { t: 'Learn', p: 's5_peace_03', rels: {}, n: 'Sacred Archives' }
@@ -1614,7 +1620,7 @@
 
             's5_peace_03': {
                 t: 'Sacred Archives',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_03.png',
+                i: 'act5-images/peace/s5_peace_03.png',
                 txt: 'Scrolls document cycles. They are not failures. Natural patterns revealing truth about consciousness.',
                 o: [
                     { t: 'Accept', p: 's5_peace_ending_1', rels: {}, n: 'Cycle Perfected' },
@@ -1625,7 +1631,7 @@
 
             's5_peace_ending_1': {
                 t: 'PEACE ENDING: The Cycle Perfected',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_14.png',
+                i: 'act5-images/peace/s5_peace_14.png',
                 txt: 'Understanding spreads. Civilization learns to maintain NEXUS from wisdom, not fear. The cycle continues. But now it is chosen.',
                 o: [
                     { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
@@ -1636,7 +1642,7 @@
 
             's5_peace_ending_2': {
                 t: 'PEACE ENDING: The Divergence',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/peace/s5_peace_05.png',
+                i: 'act5-images/peace/s5_peace_05.png',
                 txt: 'A rebel leaves to seek a different path. The keepers do not stop them. Some must walk alone.',
                 o: [
                     { t: 'See Other Endings', p: 'act5_endings_menu', rels: {}, n: 'Convergence' }
@@ -1648,7 +1654,7 @@
             // ENDINGS MENU
             'act5_endings_menu': {
                 t: 'Nine Paths Converge',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/2450 - the aftermath.png',
+                i: 'act5-images/2450 - the aftermath.png',
                 txt: 'Nine endings. One truth: what you choose echoes forever. Your journey through NEXUS is complete.',
                 o: [
                     { t: 'Return to 2150', p: 'return_2150_novo', rels: {}, n: 'Back Home' },
@@ -1659,7 +1665,7 @@
 
             'ending_reflection': {
                 t: 'The Mirror',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/2150 - the present.png',
+                i: 'act5-images/2150 - the present.png',
                 txt: 'NEXUS was never about the future. It was about choice. Every choice ripples forward. They become cycles. Cycles become worlds.',
                 o: [
                     { t: 'Understand', p: 'meaning_final', rels: {}, n: 'Ultimate Truth' }
@@ -1669,7 +1675,7 @@
 
             'meaning_final': {
                 t: 'The Eternal Bridge',
-                i: 'file:///C:/Users/54547130159/nexus/act5-images/2150 - the present.png',
+                i: 'act5-images/2150 - the present.png',
                 txt: 'You are THE BRIDGE. Not savior. Not destroyer. Bridge. You connect past to future. Choice to consequence. Possibility to reality. Somewhere, another will awaken and choose. The cycle continues. Forever.',
                 o: [
                     { t: 'Begin Again', p: 'inicio', rels: {}, n: 'New Cycle' }
@@ -1709,6 +1715,128 @@
             'Sacrifício da Ponte'
         ];
 
+        // Language system
+        const LANG = {
+            pt: {
+                title: 'NEXUS',
+                language: 'Idioma',
+                portuguese: 'Português',
+                english: 'English',
+                explore: 'Explorar',
+                continue_game: 'Continuar',
+                accept: 'Aceitar',
+                reject: 'Rejeitar',
+                understand: 'Entender',
+                learn: 'Aprender',
+                destroy: 'Destruir',
+                rebuild: 'Reconstruir',
+                see_other_endings: 'Ver Outros Finais',
+                return: 'Retornar',
+                reflect: 'Refletir',
+                begin_again: 'Começar Novamente',
+                stats: 'Estatísticas',
+                time: 'Tempo',
+                choices: 'Escolhas',
+                relationships: 'Relacionamentos',
+                volume: 'Volume'
+            },
+            en: {
+                title: 'NEXUS',
+                language: 'Language',
+                portuguese: 'Português',
+                english: 'English',
+                explore: 'Explore',
+                continue_game: 'Continue',
+                accept: 'Accept',
+                reject: 'Reject',
+                understand: 'Understand',
+                learn: 'Learn',
+                destroy: 'Destroy',
+                rebuild: 'Rebuild',
+                see_other_endings: 'See Other Endings',
+                return: 'Return',
+                reflect: 'Reflect',
+                begin_again: 'Begin Again',
+                stats: 'Stats',
+                time: 'Time',
+                choices: 'Choices',
+                relationships: 'Relationships',
+                volume: 'Volume'
+            }
+        };
+
+        // Current language state
+        let currentLanguage = localStorage.getItem('NEXUS_LANG') || 'en';
+
+        function t(key) {
+            return LANG[currentLanguage]?.[key] || key;
+        }
+
+        // Translate scene content
+        const TRANSLATIONS = {
+            pt: {
+                'Despertar em 2150': 'Despertar em 2150',
+                'A escuridão envolve tudo. Você acorda com dor pulsante. Máquinas zumbindo. Estruturas metálicas. Cristais azuis brilham ao longe. Onde está? Memória nevoenta. Vozes ao seu lado. "Padrões neurais normalizando," alguém diz. Você respira. Você existe.': 'A escuridão envolve tudo. Você acorda com dor pulsante. Máquinas zumbindo. Estruturas metálicas. Cristais azuis brilham ao longe. Onde está? Memória nevoenta. Vozes ao seu lado. "Padrões neurais normalizando," alguém diz. Você respira. Você existe.',
+                'Abrir os olhos': 'Abrir os olhos',
+                'Lembrar': 'Lembrar',
+                'The Awakening': 'O Despertar',
+                'You wake in crystalline light. A perfect city surrounds you—gleaming, peaceful, ordered. Everything works. Everything is beautiful.': 'Você acorda em luz cristalina. Uma cidade perfeita a rodeia—brilhante, pacífica, ordenada. Tudo funciona. Tudo é belo.',
+                'Explore': 'Explorar',
+                'Perfect Society': 'Sociedade Perfeita',
+                'Citizens move with serene grace. No conflict. No suffering. But are they alive, or merely existing?': 'Cidadãos se movem com graça serena. Sem conflito. Sem sofrimento. Mas estão vivos, ou apenas existindo?',
+                'Continue': 'Continuar',
+                'The Archives': 'Os Arquivos',
+                'You find the memory of your choice. The price: Individual will, surrendered for collective peace.': 'Você encontra a memória de sua escolha. O preço: vontade individual, entregue pela paz coletiva.',
+                'Accept': 'Aceitar',
+                'Reject': 'Rejeitar',
+                'HARMONY ENDING: Eternal Return': 'FINAL HARMONIA: Retorno Eterno',
+                'The cycle continues. Perfect. Eternal. Endless. In 300 more years, another will wake and face the same questions.': 'O ciclo continua. Perfeito. Eterno. Sem fim. Em 300 anos, outro acordará e enfrentará as mesmas questões.',
+                'See Other Endings': 'Ver Outros Finais',
+                'HARMONY ENDING: The Breaking': 'FINAL HARMONIA: O Rompimento',
+                'NEXUS falls. Civilization stumbles into chaos. But genuine human choice emerges.': 'NEXUS cai. A civilização tropeça no caos. Mas escolha humana genuína emerge.',
+                'The Ruins': 'As Ruínas',
+                'You wake in broken sunlight. NEXUS is gone. Nature reclaims everything. Humans scatter into tribes.': 'Você acorda em luz do sol partida. NEXUS se foi. A natureza reclama tudo. Humanos se dispersam em tribos.',
+                'The Scattered Tribes': 'As Tribos Espalhadas',
+                'Different settlements emerge. All different. All struggling. All free.': 'Diferentes assentamentos emergem. Todos diferentes. Todos lutando. Todos livres.',
+                'Nexus Fragments': 'Fragmentos de Nexus',
+                'In ruins, NEXUS fragments glow faintly. They could be reassembled. Or left to fade.': 'Nas ruínas, fragmentos de NEXUS brilham fracamente. Poderiam ser remontados. Ou deixados desaparecer.',
+                'Destroy': 'Destruir',
+                'Rebuild': 'Reconstruir',
+                'LIBERATION ENDING: Cyclic Return': 'FINAL LIBERTAÇÃO: Retorno Cíclico',
+                'LIBERATION ENDING: The Chaos Path': 'FINAL LIBERTAÇÃO: O Caminho do Caos',
+                'The tribes reject NEXUS. Chaos. Progress unpredictable. But freedom is theirs.': 'As tribos rejeitam NEXUS. Caos. Progresso imprevisível. Mas a liberdade é deles.',
+                'Cycle Balance': 'Equilíbrio do Ciclo',
+                'A world neither gleaming nor crumbling. NEXUS pulses gently. Civilization integrates with nature.': 'Um mundo nem brilhante nem desmoronando. NEXUS pulsa suavemente. Civilização se integra com a natureza.',
+                'Understand': 'Entender',
+                'The Keepers': 'Os Guardiões',
+                'Robed figures tend NEXUS with reverence. Custodians, not masters.': 'Figuras enrobadas cuidam de NEXUS com reverência. Custodiadores, não mestres.',
+                'Learn': 'Aprender',
+                'Sacred Archives': 'Arquivos Sagrados',
+                'Scrolls document cycles. They are not failures. Natural patterns revealing truth about consciousness.': 'Pergaminhos documentam ciclos. Não são falhas. Padrões naturais revelando verdades sobre consciência.',
+                'PEACE ENDING: The Cycle Perfected': 'FINAL PAZ: O Ciclo Perfeito',
+                'Understanding spreads. Civilization learns to maintain NEXUS from wisdom, not fear. The cycle continues. But now it is chosen.': 'Compreensão se espalha. Civilização aprende a manter NEXUS pela sabedoria, não pelo medo. O ciclo continua. Mas agora é escolhido.',
+                'PEACE ENDING: The Divergence': 'FINAL PAZ: A Divergência',
+                'A rebel leaves to seek a different path. The keepers do not stop them. Some must walk alone.': 'Um rebelde parte em busca de um caminho diferente. Os guardiões não o detêm. Alguns devem caminhar sozinhos.',
+                'Nine Paths Converge': 'Nove Caminhos Convergem',
+                'Nine endings. One truth: what you choose echoes forever. Your journey through NEXUS is complete.': 'Nove finais. Uma verdade: o que você escolhe ecoa para sempre. Sua jornada através de NEXUS está completa.',
+                'Return to 2150': 'Retornar para 2150',
+                'Reflect': 'Refletir',
+                'The Mirror': 'O Espelho',
+                'NEXUS was never about the future. It was about choice. Every choice ripples forward. They become cycles. Cycles become worlds.': 'NEXUS nunca foi sobre o futuro. Foi sobre escolha. Cada escolha se propaga para frente. Elas se tornam ciclos. Ciclos se tornam mundos.',
+                'The Eternal Bridge': 'A Ponte Eterna',
+                'You are THE BRIDGE. Not savior. Not destroyer. Bridge. You connect past to future. Choice to consequence. Possibility to reality. Somewhere, another will awaken and choose. The cycle continues. Forever.': 'Você é A PONTE. Não salvador. Não destruidor. Ponte. Você conecta passado ao futuro. Escolha à consequência. Possibilidade à realidade. Em algum lugar, outro acordará e escolherá. O ciclo continua. Para sempre.',
+                'Begin Again': 'Começar Novamente'
+            },
+            en: {}  // English stays as is (already in original texts)
+        };
+
+        function getTranslation(text) {
+            if (currentLanguage === 'pt' && TRANSLATIONS.pt[text]) {
+                return TRANSLATIONS.pt[text];
+            }
+            return text;
+        }
+
         // Audio system
         const AudioSystem = {
             backgroundMusic: null,
@@ -1739,10 +1867,44 @@
             }
         };
 
+        // Change language
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('NEXUS_LANG', lang);
+
+            // Update button states
+            document.getElementById('langEnBtn').style.borderColor = lang === 'en' ? 'var(--secondary)' : 'var(--accent-dark)';
+            document.getElementById('langPtBtn').style.borderColor = lang === 'pt' ? 'var(--secondary)' : 'var(--accent-dark)';
+
+            // Refresh UI labels
+            updateLanguageLabels();
+
+            // Re-render current scene
+            render(gameState.currentScene);
+        }
+
+        function updateLanguageLabels() {
+            const labels = {
+                pt: { scenes: 'Cenas', time: 'Tempo', ecos: 'Ecos', entries: 'Entradas', music: '🎵 Música', sfx: '🔊 SFX', volume: 'Volume' },
+                en: { scenes: 'Scenes', time: 'Time', ecos: 'Echos', entries: 'Entries', music: '🎵 Music', sfx: '🔊 SFX', volume: 'Volume' }
+            };
+            const lang = currentLanguage;
+            document.getElementById('labelScenes').textContent = labels[lang].scenes;
+            document.getElementById('labelTime').textContent = labels[lang].time;
+            document.getElementById('labelEcos').textContent = labels[lang].ecos;
+            document.getElementById('labelEntries').textContent = labels[lang].entries;
+        }
+
         // Initialize game
         function initGame() {
             AudioSystem.init();
             loadGame();
+
+            // Set language button states
+            document.getElementById('langEnBtn').style.borderColor = currentLanguage === 'en' ? 'var(--secondary)' : 'var(--accent-dark)';
+            document.getElementById('langPtBtn').style.borderColor = currentLanguage === 'pt' ? 'var(--secondary)' : 'var(--accent-dark)';
+
+            updateLanguageLabels();
             render(gameState.currentScene);
             startTimer();
         }
@@ -1755,14 +1917,14 @@
             gameState.currentScene = sceneId;
             gameState.sceneCount++;
 
-            // Update scene display
-            document.getElementById('sceneTitle').textContent = scene.t;
+            // Update scene display with translations
+            document.getElementById('sceneTitle').textContent = getTranslation(scene.t);
             document.getElementById('sceneImage').src = scene.i;
-            document.getElementById('sceneText').textContent = scene.txt;
+            document.getElementById('sceneText').textContent = getTranslation(scene.txt);
 
-            // Render choices
+            // Render choices with translations
             const choicesHtml = scene.o.map(choice =>
-                `<button class="choice-button" onclick="goToScene('${choice.p}')">${choice.t}</button>`
+                `<button class="choice-button" onclick="goToScene('${choice.p}')">${getTranslation(choice.t)}</button>`
             ).join('');
             document.getElementById('choicesContainer').innerHTML = choicesHtml;
 
@@ -1934,7 +2096,12 @@
                     gameState.startTime = Date.now() - (data.state.sceneCount * 5000); // Estimate time
                 } catch (e) {
                     console.log('Could not load save data');
+                    // START ACT 5 DIRECTLY FOR TESTING
+                    gameState.currentScene = 'act5_gate';
                 }
+            } else {
+                // START ACT 5 DIRECTLY FOR TESTING
+                gameState.currentScene = 'act5_gate';
             }
         }
 
