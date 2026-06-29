@@ -1,0 +1,481 @@
+/* ============================================================================
+   FILOSOFIA DESVENDADA - STYLING
+   ============================================================================ */
+
+/* MODAL GERAL */
+.filosofia-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 8, 16, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 300ms ease-out;
+}
+
+.filosofia-container {
+    background: linear-gradient(135deg, rgba(0, 26, 77, 0.8), rgba(10, 46, 127, 0.8));
+    border: 2px solid #00d4ff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 0 60px rgba(0, 212, 255, 0.3);
+    animation: slideUp 400ms ease-out;
+}
+
+.filosofia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #00d4ff;
+    padding-bottom: 20px;
+}
+
+.filosofia-header h2 {
+    font-size: 2.5rem;
+    color: #00d4ff;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.fechar-btn {
+    background: none;
+    border: 2px solid #d946ff;
+    color: #d946ff;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.fechar-btn:hover {
+    background: #d946ff;
+    color: #050810;
+    transform: scale(1.1);
+}
+
+/* TABS */
+.filosofia-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #00d4ff;
+    padding-bottom: 15px;
+}
+
+.aba-btn {
+    background: rgba(13, 42, 74, 0.6);
+    border: 1px solid #00d4ff;
+    color: #e8e8e8;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 200ms ease;
+    font-weight: 600;
+}
+
+.aba-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.aba-ativo {
+    background: linear-gradient(135deg, #00d4ff, #0088cc);
+    color: #050810;
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+/* CONTEÚDO ABAS */
+.aba-conteudo {
+    min-height: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+/* SCROLL PERSONALIZADO */
+.aba-conteudo::-webkit-scrollbar {
+    width: 8px;
+}
+
+.aba-conteudo::-webkit-scrollbar-track {
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 10px;
+}
+
+.aba-conteudo::-webkit-scrollbar-thumb {
+    background: #00d4ff;
+    border-radius: 10px;
+}
+
+.aba-conteudo::-webkit-scrollbar-thumb:hover {
+    background: #d946ff;
+}
+
+/* FILÓSOFOS LISTA */
+.filosofos-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.filosofo-card {
+    background: rgba(15, 25, 50, 0.6);
+    border: 1px solid #a066ff;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 300ms ease;
+    cursor: pointer;
+}
+
+.filosofo-card:hover {
+    transform: translateY(-5px);
+    border-color: #00d4ff;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.filosofo-card.bloqueado {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.filosofo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.filosofo-header h3 {
+    color: #00d4ff;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.status {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.filosofo-info p {
+    margin: 8px 0;
+    color: #e8e8e8;
+    font-size: 0.95rem;
+}
+
+.expandir-btn {
+    background: linear-gradient(135deg, #d946ff, #a066ff);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 200ms ease;
+    font-weight: 600;
+}
+
+.expandir-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(217, 70, 255, 0.5);
+}
+
+/* FILÓSOFO EXPANDIDO */
+.filosofo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 8, 16, 0.98);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    animation: fadeIn 300ms ease-out;
+    overflow: auto;
+}
+
+.filosofo-expand {
+    background: linear-gradient(135deg, rgba(0, 26, 77, 0.9), rgba(10, 46, 127, 0.9));
+    border: 2px solid #00d4ff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 800px;
+    margin: 40px 20px;
+    box-shadow: 0 0 60px rgba(0, 212, 255, 0.4);
+    animation: slideUp 400ms ease-out;
+}
+
+.filosofo-expand h2 {
+    color: #00d4ff;
+    font-size: 2rem;
+    margin-top: 0;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.subtitulo {
+    color: #d946ff;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.expandido-conteudo {
+    color: #e8e8e8;
+    line-height: 1.8;
+}
+
+.expandido-conteudo h3 {
+    color: #00d4ff;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.expandido-conteudo p {
+    margin: 10px 0;
+}
+
+.expandido-conteudo ul {
+    margin: 15px 0;
+    padding-left: 20px;
+}
+
+.expandido-conteudo li {
+    margin: 8px 0;
+    padding-left: 10px;
+    border-left: 2px solid #d946ff;
+    padding-left: 15px;
+}
+
+/* CORRENTES */
+.correntes-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.corrente-card {
+    background: rgba(15, 25, 50, 0.6);
+    border: 2px solid #d946ff;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 300ms ease;
+}
+
+.corrente-card:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 10px 30px rgba(217, 70, 255, 0.2);
+}
+
+.corrente-card h3 {
+    color: #d946ff;
+    font-size: 1.3rem;
+    margin-top: 0;
+}
+
+.corrente-card p {
+    color: #e8e8e8;
+}
+
+.corrente-card .conceitos {
+    background: rgba(0, 212, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.conceitos strong {
+    color: #00d4ff;
+}
+
+.conceitos ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.conceitos li {
+    color: #e8e8e8;
+    margin: 5px 0;
+}
+
+/* MITOLOGIA */
+.mitologia-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.mito-card {
+    background: rgba(15, 25, 50, 0.6);
+    border: 2px solid #a066ff;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 300ms ease;
+}
+
+.mito-card:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 10px 30px rgba(160, 102, 255, 0.2);
+}
+
+.mito-card.bloqueado {
+    opacity: 0.5;
+}
+
+.mito-card h3 {
+    color: #a066ff;
+    font-size: 1.3rem;
+    margin-top: 0;
+}
+
+.mito-card p {
+    color: #e8e8e8;
+    margin: 10px 0;
+}
+
+/* MÚSICA */
+.musica-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.musica-card {
+    background: rgba(15, 25, 50, 0.6);
+    border: 2px solid #4CAF50;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 300ms ease;
+}
+
+.musica-card:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+}
+
+.musica-card.bloqueado {
+    opacity: 0.5;
+}
+
+.musica-card h3 {
+    color: #4CAF50;
+    font-size: 1.3rem;
+    margin-top: 0;
+}
+
+.musica-card p {
+    color: #e8e8e8;
+    margin: 8px 0;
+}
+
+/* MINHA JORNADA */
+.minha-jornada {
+    color: #e8e8e8;
+}
+
+.minha-jornada h3 {
+    color: #00d4ff;
+    font-size: 1.3rem;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.jornada-stats {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid #00d4ff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.jornada-stats p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.escolhas-filosoficas,
+.proximas-descobertas {
+    background: rgba(217, 70, 255, 0.05);
+    border-left: 3px solid #d946ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.escolhas-filosoficas p,
+.proximas-descobertas p {
+    margin: 10px 0;
+    padding-left: 10px;
+}
+
+/* ANIMAÇÕES */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .filosofia-container {
+        padding: 20px;
+        max-width: 95vw;
+    }
+
+    .filosofia-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .filosofo-expand {
+        padding: 20px;
+        max-width: 95vw;
+    }
+
+    .filosofo-expand h2 {
+        font-size: 1.5rem;
+    }
+
+    .filosofia-tabs {
+        flex-direction: column;
+    }
+
+    .aba-btn {
+        width: 100%;
+    }
+
+    .filosofos-lista,
+    .correntes-lista,
+    .mitologia-lista,
+    .musica-lista {
+        grid-template-columns: 1fr;
+    }
+}

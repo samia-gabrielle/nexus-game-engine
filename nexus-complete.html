@@ -4,6 +4,294 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXUS - The Complete Game</title>
+
+    <!-- FILOSOFIA DESVENDADA CSS -->
+    <style>
+        /* ============================================================================
+           FILOSOFIA DESVENDADA - STYLING
+           ============================================================================ */
+
+        /* MODAL GERAL */
+        .filosofia-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 16, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeIn 300ms ease-out;
+        }
+
+        .filosofia-container {
+            background: linear-gradient(135deg, rgba(0, 26, 77, 0.8), rgba(10, 46, 127, 0.8));
+            border: 2px solid #00d4ff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: auto;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.3);
+            animation: slideUp 400ms ease-out;
+        }
+
+        .filosofia-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00d4ff;
+            padding-bottom: 20px;
+        }
+
+        .filosofia-header h2 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .filosofia-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #00d4ff;
+            padding-bottom: 15px;
+        }
+
+        .aba-btn {
+            background: rgba(13, 42, 74, 0.6);
+            border: 1px solid #00d4ff;
+            color: #e8e8e8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            font-weight: 600;
+        }
+
+        .aba-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .aba-ativo {
+            background: linear-gradient(135deg, #00d4ff, #0088cc);
+            color: #050810;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .aba-conteudo {
+            min-height: 400px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .aba-conteudo::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .aba-conteudo::-webkit-scrollbar-track {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .aba-conteudo::-webkit-scrollbar-thumb {
+            background: #00d4ff;
+            border-radius: 10px;
+        }
+
+        .filosofos-lista, .correntes-lista, .mitologia-lista, .musica-lista {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .filosofo-card, .corrente-card, .mito-card, .musica-card {
+            background: rgba(15, 25, 50, 0.6);
+            border: 1px solid #a066ff;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 300ms ease;
+        }
+
+        .filosofo-card:hover, .corrente-card:hover, .mito-card:hover, .musica-card:hover {
+            transform: translateY(-5px);
+            border-color: #00d4ff;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .filosofo-card.bloqueado, .mito-card.bloqueado, .musica-card.bloqueado {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .filosofo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .filosofo-header h3 {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .status {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .filosofo-info p, .corrente-card p, .mito-card p, .musica-card p {
+            margin: 8px 0;
+            color: #e8e8e8;
+            font-size: 0.95rem;
+        }
+
+        .expandir-btn {
+            background: linear-gradient(135deg, #d946ff, #a066ff);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 200ms ease;
+            font-weight: 600;
+        }
+
+        .expandir-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(217, 70, 255, 0.5);
+        }
+
+        .filosofo-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 16, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            animation: fadeIn 300ms ease-out;
+            overflow: auto;
+        }
+
+        .filosofo-expand {
+            background: linear-gradient(135deg, rgba(0, 26, 77, 0.9), rgba(10, 46, 127, 0.9));
+            border: 2px solid #00d4ff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 40px 20px;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.4);
+            animation: slideUp 400ms ease-out;
+        }
+
+        .filosofo-expand h2 {
+            color: #00d4ff;
+            font-size: 2rem;
+            margin-top: 0;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .subtitulo {
+            color: #d946ff;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .expandido-conteudo {
+            color: #e8e8e8;
+            line-height: 1.8;
+        }
+
+        .expandido-conteudo h3 {
+            color: #00d4ff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .expandido-conteudo ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .expandido-conteudo li {
+            margin: 8px 0;
+            border-left: 2px solid #d946ff;
+            padding-left: 15px;
+        }
+
+        .minha-jornada {
+            color: #e8e8e8;
+        }
+
+        .minha-jornada h3 {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .jornada-stats {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filosofia-container {
+                padding: 20px;
+                max-width: 95vw;
+            }
+
+            .filosofia-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .filosofia-tabs {
+                flex-direction: column;
+            }
+
+            .aba-btn {
+                width: 100%;
+            }
+
+            .filosofos-lista, .correntes-lista, .mitologia-lista, .musica-lista {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
     <style>
         :root {
             --primary: #001a4d;
@@ -590,6 +878,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h1>⧳ NEXUS</h1>
                 <div style="display: flex; gap: 10px;">
+                    <button class="choice-button" style="padding: 6px 12px; font-size: 0.9rem;" onclick="FILOSOFIA_DESVENDADA.abrirFilosofiaDesvendada()" id="filosofiaBtn">📚 Filosofia Desvendada</button>
                     <button class="choice-button" style="padding: 6px 12px; font-size: 0.9rem;" onclick="setLanguage('en')" id="langEnBtn">🇺🇸 English</button>
                     <button class="choice-button" style="padding: 6px 12px; font-size: 0.9rem;" onclick="setLanguage('pt')" id="langPtBtn">🇧🇷 Português</button>
                 </div>
@@ -2196,6 +2485,236 @@
 
         // Initialize on load
         window.addEventListener('load', initGame);
+    </script>
+
+    <!-- FILOSOFIA DESVENDADA SYSTEM -->
+    <script>
+        // ============================================================================
+        // FILOSOFIA DATABASE
+        // ============================================================================
+
+        const FILOSOFOS = {
+            'sartre': {
+                nome: 'Jean-Paul Sartre',
+                anos: '1905-1980',
+                pais: 'França',
+                corrente: 'Existencialismo',
+                status: 'desbloqueado',
+                epocaAprendizagem: 'Cena 1 - Ivo',
+                resumo: 'O filósofo mais importante do século XX. Criador da frase "A existência precede a essência."',
+                ideiacentral: 'Você não nasce com propósito. Você É responsável por criá-lo.',
+                conceito: 'MÁ-FÉ (Bad Faith)',
+                concetoDefinicao: 'Quando você finge que não é livre para escapar da responsabilidade.',
+                obraPrincipal: 'Being and Nothingness',
+                anoObra: 1943,
+                paginas: 726,
+                frases: [
+                    '"O homem é condenado a ser livre" - Sua liberdade é sua prisão. Você DEVE escolher.',
+                    '"Existence precedes essence" - Você não é definido. Você se define.',
+                    '"We are our choices" - Você É literalmente o somatório de tudo que escolheu.'
+                ],
+                criticaAoFilosofo: 'Ele diz que até ser vítima é escolher. Mas nem sempre. Às vezes você é apenas consumido.',
+                relevanciaaNexus: 'Você realmente escolhe seu final? Ou apenas acredita que escolhe?',
+                leituraRecomendada: [
+                    'Existentialism is a Humanism (1945) - 50 páginas, mais acessível',
+                    'Being and Nothingness (1943) - 726 páginas, para profundidade completa'
+                ]
+            },
+            'camus': {
+                nome: 'Albert Camus',
+                anos: '1913-1960',
+                pais: 'Argélia/França',
+                corrente: 'Absurdismo',
+                status: 'desbloqueado',
+                epocaAprendizagem: 'Cena 1 - Ivo',
+                resumo: 'O filósofo do "absurdo". Aquela sensação quando você percebe que existência não faz sentido... mas você tem que viver mesmo assim.',
+                ideiacentral: 'A desconexão entre nossa busca por significado e o universo indiferente.',
+                conceito: 'O ABSURDO',
+                concetoDefinicao: 'Você nasce sem escolher, morre sem escolher, mas precisa dar significado enquanto está aqui.',
+                obraPrincipal: 'The Myth of Sisyphus',
+                anoObra: 1942,
+                paginas: 100,
+                frases: [
+                    '"The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion."',
+                    '"One must imagine Sisyphus happy" - Se você abraça a futilidade, ela para de ser futilidade.',
+                    '"Life is either a daring adventure or nothing at all" - Ou você vive radicalmente, ou está apenas morrendo lentamente.'
+                ],
+                criticaAoFilosofo: 'Se NEXUS sempre falha... você continua tentando por quê? Porque o significado não vem da vitória. Vem de você escolher viver, sabendo que vai falhar.',
+                relevanciaaNexus: 'Sísifo é redenção, não salvação.',
+                leituraRecomendada: [
+                    'The Myth of Sisyphus (1942) - Obra-prima sobre viver no absurdo',
+                    'The Plague (1947) - Romance que explora filosofia através de ficção'
+                ]
+            }
+        };
+
+        const MITOLOGIA = {
+            'sissifo': {
+                nome: 'Sísifo',
+                origem: 'Mitologia Grega',
+                historia: 'Rei da Corinto. Enganou até a morte. Foi punido: eternamente empurrando pedra para o topo da montanha.',
+                significado: 'A metáfora perfeita para vida sem significado. Mas Camus diz: "One must imagine Sisyphus happy"',
+                relevanciaaNexus: 'Cada tentativa de salvar NEXUS é um Sísifo. Falha. Mas você recomeça.',
+                status: 'desbloqueado'
+            },
+            'prometeu': {
+                nome: 'Prometeu',
+                origem: 'Mitologia Grega',
+                historia: 'Titã que roubou fogo dos deuses. Zeus o puniu: acorrentado a rocha, águia comia seu fígado eternamente.',
+                significado: 'Conhecimento sempre tem preço. Rebelião custa eternamente.',
+                relevanciaaNexus: 'Ivo é Prometeu. Tentou descobrir a verdade. E foi punido com conhecimento que não pode esquecer.',
+                status: 'desbloqueado'
+            }
+        };
+
+        const DESBLOQUEIO = {
+            'sartre': { desbloqueado: true },
+            'camus': { desbloqueado: true },
+            'sissifo': { desbloqueado: true },
+            'prometeu': { desbloqueado: true }
+        };
+
+        function abrirFilosofiaDesvendada() {
+            const modal = document.createElement('div');
+            modal.id = 'filosofia-modal';
+            modal.className = 'filosofia-modal';
+            modal.innerHTML = `
+                <div class="filosofia-container">
+                    <div class="filosofia-header">
+                        <h2>📚 FILOSOFIA DESVENDADA</h2>
+                        <button onclick="fecharFilosofia()" class="fechar-btn">×</button>
+                    </div>
+
+                    <div class="filosofia-tabs">
+                        <button onclick="abaMuda('filosofos')" class="aba-btn aba-ativo">FILÓSOFOS</button>
+                        <button onclick="abaMuda('mitologia')" class="aba-btn">MITOLOGIA</button>
+                        <button onclick="abaMuda('minha-jornada')" class="aba-btn">MINHA JORNADA</button>
+                    </div>
+
+                    <div id="aba-conteudo" class="aba-conteudo">
+                        <!-- Conteúdo muda dinamicamente -->
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            abaMuda('filosofos');
+        }
+
+        function abaMuda(aba) {
+            document.querySelectorAll('.aba-btn').forEach(btn => btn.classList.remove('aba-ativo'));
+            event.target.classList.add('aba-ativo');
+
+            const conteudo = document.getElementById('aba-conteudo');
+
+            switch(aba) {
+                case 'filosofos':
+                    mostrarFilosofos(conteudo);
+                    break;
+                case 'mitologia':
+                    mostrarMitologia(conteudo);
+                    break;
+                case 'minha-jornada':
+                    mostrarMinhaJornada(conteudo);
+                    break;
+            }
+        }
+
+        function mostrarFilosofos(container) {
+            let html = '<div class="filosofos-lista">';
+            Object.entries(FILOSOFOS).forEach(([key, filosofo]) => {
+                const desbloqueado = DESBLOQUEIO[key]?.desbloqueado || false;
+                const status = desbloqueado ? '🟢 DESBLOQUEADO' : '🔴 BLOQUEADO';
+
+                html += `
+                    <div class="filosofo-card ${desbloqueado ? '' : 'bloqueado'}">
+                        <div class="filosofo-header">
+                            <h3>${filosofo.nome}</h3>
+                            <span class="status">${status}</span>
+                        </div>
+                        <div class="filosofo-info">
+                            <p><strong>País:</strong> ${filosofo.pais}</p>
+                            <p><strong>Corrente:</strong> ${filosofo.corrente}</p>
+                            <p><strong>Anos:</strong> ${filosofo.anos}</p>
+                            ${desbloqueado ? `<button onclick="expandirFilosofo('${key}')" class="expandir-btn">Ver Completo →</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function mostrarMitologia(container) {
+            let html = '<div class="mitologia-lista">';
+            Object.entries(MITOLOGIA).forEach(([key, mito]) => {
+                const desbloqueado = DESBLOQUEIO[key]?.desbloqueado || false;
+                html += `
+                    <div class="mito-card ${desbloqueado ? '' : 'bloqueado'}">
+                        <h3>${mito.nome}</h3>
+                        <p><strong>Origem:</strong> ${mito.origem}</p>
+                        ${desbloqueado ? `<p>${mito.historia}</p><p><em>${mito.relevanciaaNexus}</em></p>` : '<p><em>Bloqueado</em></p>'}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function mostrarMinhaJornada(container) {
+            const jornada = gameState.filosofia || {};
+            let html = `
+                <div class="minha-jornada">
+                    <h3>Seus Filósofos Encontrados</h3>
+                    <div class="jornada-stats">
+                        <p>Total Desbloqueados: <strong>${Object.values(DESBLOQUEIO).filter(d => d.desbloqueado).length}</strong>/2</p>
+                    </div>
+                    <h3>Próximas Descobertas</h3>
+                    <div class="jornada-stats">
+                        <p>→ Mais filósofos serão desbloqueados conforme você avança na história</p>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function expandirFilosofo(key) {
+            const filosofo = FILOSOFOS[key];
+            const modal = document.createElement('div');
+            modal.className = 'filosofo-modal';
+            modal.innerHTML = `
+                <div class="filosofo-expand">
+                    <button onclick="this.parentElement.parentElement.remove()" class="fechar-btn">×</button>
+                    <h2>${filosofo.nome}</h2>
+                    <p class="subtitulo">${filosofo.pais} • ${filosofo.corrente}</p>
+                    <div class="expandido-conteudo">
+                        <h3>Resumo</h3>
+                        <p>${filosofo.resumo}</p>
+                        <h3>Ideia Central</h3>
+                        <p>${filosofo.ideiacentral}</p>
+                        <h3>Conceito: ${filosofo.conceito}</h3>
+                        <p>${filosofo.concetoDefinicao}</p>
+                        <h3>Frases-Chave</h3>
+                        <ul>${filosofo.frases.map(f => `<li>${f}</li>`).join('')}</ul>
+                        <h3>Relevância a NEXUS</h3>
+                        <p>${filosofo.relevanciaaNexus}</p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function fecharFilosofia() {
+            const modal = document.getElementById('filosofia-modal');
+            if (modal) modal.remove();
+        }
+
+        window.FILOSOFIA_DESVENDADA = {
+            abrirFilosofiaDesvendada,
+            FILOSOFOS,
+            MITOLOGIA,
+            DESBLOQUEIO
+        };
     </script>
 </body>
 </html>
