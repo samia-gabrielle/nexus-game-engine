@@ -1836,6 +1836,7 @@
             backgroundMusic: null,
             sfx: {},
             currentTheme: null,
+            currentTrack: null,
 
             init() {
                 this.preloadSounds();
@@ -1847,6 +1848,72 @@
                     transition: 'game-engine/public/audio/sfx/transition.mp3',
                     echo: 'game-engine/public/audio/sfx/fourth-line.mp3'
                 };
+            },
+
+            // Music genre mapping for scenes
+            sceneMusic: {
+                // ACT 5 HARMONY - Ambient & Cinematic
+                's5_harmony_01': 'ambient',
+                's5_harmony_02': 'ambient',
+                's5_harmony_03': 'ambient',
+                's5_harmony_ending_1': 'cinematic',
+                's5_harmony_ending_2': 'cinematic',
+
+                // ACT 5 LIBERATION - Electronic & Mysterious
+                's5_liberation_01': 'mysterious',
+                's5_liberation_02': 'electronic',
+                's5_liberation_03': 'mysterious',
+                's5_liberation_ending_1': 'cinematic',
+                's5_liberation_ending_2': 'electronic',
+
+                // ACT 5 PEACE - Ambient & Sci-Fi
+                's5_peace_01': 'ambient',
+                's5_peace_02': 'scifi',
+                's5_peace_03': 'ambient',
+                's5_peace_ending_1': 'cinematic',
+                's5_peace_ending_2': 'ambient',
+
+                // ACT 5 FUTURE GATEWAY - Cinematic
+                'act5_future_choice': 'cinematic',
+                'act5_gate': 'scifi',
+
+                // ACT 5 PAST - Mysterious & Sci-Fi
+                's5_past_01': 'mysterious',
+                's5_past_02': 'scifi',
+                's5_past_03': 'cinematic',
+                's5_past_04': 'cinematic',
+                's5_past_05': 'mysterious',
+
+                // ENDINGS - Cinematic
+                'act5_endings_menu': 'cinematic',
+                'ending_reflection': 'ambient',
+                'meaning_final': 'cinematic'
+            },
+
+            playMusicForScene(sceneId) {
+                if (!gameState.musicEnabled) return;
+
+                const genre = this.sceneMusic[sceneId] || 'ambient';
+                const musicPath = `game-engine/public/audio/${genre}/`;
+
+                // Stop current music
+                if (this.backgroundMusic) {
+                    this.backgroundMusic.fade = true;
+                    setTimeout(() => {
+                        if (this.backgroundMusic) this.backgroundMusic.pause();
+                    }, 500);
+                }
+
+                // Play new music (you'll need to add actual track names)
+                try {
+                    this.backgroundMusic = new Audio(musicPath + 'track-01.mp3');
+                    this.backgroundMusic.loop = true;
+                    this.backgroundMusic.volume = gameState.volume * 0.6; // Background music lower than SFX
+                    this.backgroundMusic.play().catch(e => console.log('Music play error:', e));
+                    this.currentTrack = genre;
+                } catch (e) {
+                    console.log('Music error:', e);
+                }
             },
 
             play(soundType) {
@@ -1939,6 +2006,9 @@
                 gameState.ecos.push(scene.e);
                 AudioSystem.play('echo');
             }
+
+            // Play background music for scene
+            AudioSystem.playMusicForScene(sceneId);
 
             // Update UI
             updateUI();
