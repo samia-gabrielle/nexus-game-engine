@@ -1895,25 +1895,25 @@
 
                 const musicPath = this.sceneMusic[sceneId] || this.sceneMusic['act5_gate'];
 
-                // Stop current music with fade
-                if (this.backgroundMusic && this.backgroundMusic !== musicPath) {
-                    this.backgroundMusic.volume = 0;
-                    setTimeout(() => {
-                        if (this.backgroundMusic) this.backgroundMusic.pause();
-                    }, 300);
+                // Only change if different track
+                if (this.currentTrack === musicPath) return;
+
+                // Stop current music
+                if (this.backgroundMusic) {
+                    this.backgroundMusic.pause();
+                    this.backgroundMusic.currentTime = 0;
                 }
 
-                // Play new music if different
-                if (this.currentTrack !== musicPath) {
-                    try {
-                        this.backgroundMusic = new Audio(musicPath);
-                        this.backgroundMusic.loop = true;
-                        this.backgroundMusic.volume = gameState.volume * 0.5; // Background music lower than SFX
-                        this.backgroundMusic.play().catch(e => console.log('Music play error:', e));
-                        this.currentTrack = musicPath;
-                    } catch (e) {
-                        console.log('Music error:', e);
-                    }
+                // Play new music
+                try {
+                    this.backgroundMusic = new Audio(musicPath);
+                    this.backgroundMusic.loop = true;
+                    this.backgroundMusic.volume = gameState.volume * 0.5;
+                    this.backgroundMusic.play().catch(e => console.log('Music error - track may not exist:', musicPath, e));
+                    this.currentTrack = musicPath;
+                    console.log('🎵 Now playing:', musicPath.split('/').pop());
+                } catch (e) {
+                    console.log('Error loading music:', e);
                 }
             },
 
