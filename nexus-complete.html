@@ -1850,69 +1850,70 @@
                 };
             },
 
-            // Music genre mapping for scenes
+            // Music file mapping for scenes
             sceneMusic: {
                 // ACT 5 HARMONY - Ambient & Cinematic
-                's5_harmony_01': 'ambient',
-                's5_harmony_02': 'ambient',
-                's5_harmony_03': 'ambient',
-                's5_harmony_ending_1': 'cinematic',
-                's5_harmony_ending_2': 'cinematic',
+                's5_harmony_01': 'game-engine/public/audio/ES_Ambience, Designed, Ambient Horror, Loop - Epidemic Sound.mp3',
+                's5_harmony_02': 'game-engine/public/audio/ES_Ambience, Designed, Ambient Horror, Loop - Epidemic Sound.mp3',
+                's5_harmony_03': 'game-engine/public/audio/ES_Musical, Instrument, Tibet Bowl, Drone, Thrilling, Slow Attack, Odd Harmonic 01 - Epidemic Sound.mp3',
+                's5_harmony_ending_1': 'game-engine/public/audio/ES_Like a Hurricane - Basixx.mp3',
+                's5_harmony_ending_2': 'game-engine/public/audio/ES_Like a Hurricane - Basixx.mp3',
 
                 // ACT 5 LIBERATION - Electronic & Mysterious
-                's5_liberation_01': 'mysterious',
-                's5_liberation_02': 'electronic',
-                's5_liberation_03': 'mysterious',
-                's5_liberation_ending_1': 'cinematic',
-                's5_liberation_ending_2': 'electronic',
+                's5_liberation_01': 'game-engine/public/audio/ES_Ambience, Scifi, Brooding Ambience Space - Epidemic Sound.mp3',
+                's5_liberation_02': 'game-engine/public/audio/ES_Designed, Synthetic, Delay, Synths, Harmonics, Chord, Tone, Vintage - Epidemic Sound.mp3',
+                's5_liberation_03': 'game-engine/public/audio/ES_Ambience, Scifi, Brooding Ambience Space - Epidemic Sound.mp3',
+                's5_liberation_ending_1': 'game-engine/public/audio/ES_Midnight Fire - Hallman.mp3',
+                's5_liberation_ending_2': 'game-engine/public/audio/ES_Like a Hurricane - Basixx.mp3',
 
                 // ACT 5 PEACE - Ambient & Sci-Fi
-                's5_peace_01': 'ambient',
-                's5_peace_02': 'scifi',
-                's5_peace_03': 'ambient',
-                's5_peace_ending_1': 'cinematic',
-                's5_peace_ending_2': 'ambient',
+                's5_peace_01': 'game-engine/public/audio/ES_Ambience, Designed, Ambient Horror, Loop - Epidemic Sound.mp3',
+                's5_peace_02': 'game-engine/public/audio/ES_Ambience, Scifi, Otherworldly, Space Station, Room Tone - Epidemic Sound.mp3',
+                's5_peace_03': 'game-engine/public/audio/ES_Musical, Instrument, Tibet Bowl, Drone, Thrilling, Slow Attack, Odd Harmonic 01 - Epidemic Sound.mp3',
+                's5_peace_ending_1': 'game-engine/public/audio/ES_Efterklang - Hampus Naeselius.mp3',
+                's5_peace_ending_2': 'game-engine/public/audio/ES_Ambience, Designed, Ambient Horror, Loop - Epidemic Sound.mp3',
 
                 // ACT 5 FUTURE GATEWAY - Cinematic
-                'act5_future_choice': 'cinematic',
-                'act5_gate': 'scifi',
+                'act5_future_choice': 'game-engine/public/audio/ES_Designed, Riser, Swell, Bright x2 - Epidemic Sound.mp3',
+                'act5_gate': 'game-engine/public/audio/ES_Ambience, Scifi, Futuristic Area, Synthetic Hum, Calm, Eerie, Mysterious - Epidemic Sound.mp3',
 
                 // ACT 5 PAST - Mysterious & Sci-Fi
-                's5_past_01': 'mysterious',
-                's5_past_02': 'scifi',
-                's5_past_03': 'cinematic',
-                's5_past_04': 'cinematic',
-                's5_past_05': 'mysterious',
+                's5_past_01': 'game-engine/public/audio/ES_Musical, Instrument, Tibet Bowl, Drone, Thrilling, Distorting Harmonic - Epidemic Sound.mp3',
+                's5_past_02': 'game-engine/public/audio/ES_Ambience, Scifi, Futuristic Area, Synthetic Hum, Calm, Eerie, Mysterious - Epidemic Sound.mp3',
+                's5_past_03': 'game-engine/public/audio/ES_Designed, Riser, Swell, Bright x2 - Epidemic Sound.mp3',
+                's5_past_04': 'game-engine/public/audio/ES_Like a Hurricane - Basixx.mp3',
+                's5_past_05': 'game-engine/public/audio/ES_Ambience, Scifi, Brooding Ambience Space - Epidemic Sound.mp3',
 
                 // ENDINGS - Cinematic
-                'act5_endings_menu': 'cinematic',
-                'ending_reflection': 'ambient',
-                'meaning_final': 'cinematic'
+                'act5_endings_menu': 'game-engine/public/audio/ES_Efterklang - Hampus Naeselius.mp3',
+                'ending_reflection': 'game-engine/public/audio/ES_At First We Felt - Christian Andersen.mp3',
+                'meaning_final': 'game-engine/public/audio/ES_Like a Hurricane - Basixx.mp3'
             },
 
             playMusicForScene(sceneId) {
                 if (!gameState.musicEnabled) return;
 
-                const genre = this.sceneMusic[sceneId] || 'ambient';
-                const musicPath = `game-engine/public/audio/${genre}/`;
+                const musicPath = this.sceneMusic[sceneId] || this.sceneMusic['act5_gate'];
 
-                // Stop current music
-                if (this.backgroundMusic) {
-                    this.backgroundMusic.fade = true;
+                // Stop current music with fade
+                if (this.backgroundMusic && this.backgroundMusic !== musicPath) {
+                    this.backgroundMusic.volume = 0;
                     setTimeout(() => {
                         if (this.backgroundMusic) this.backgroundMusic.pause();
-                    }, 500);
+                    }, 300);
                 }
 
-                // Play new music (you'll need to add actual track names)
-                try {
-                    this.backgroundMusic = new Audio(musicPath + 'track-01.mp3');
-                    this.backgroundMusic.loop = true;
-                    this.backgroundMusic.volume = gameState.volume * 0.6; // Background music lower than SFX
-                    this.backgroundMusic.play().catch(e => console.log('Music play error:', e));
-                    this.currentTrack = genre;
-                } catch (e) {
-                    console.log('Music error:', e);
+                // Play new music if different
+                if (this.currentTrack !== musicPath) {
+                    try {
+                        this.backgroundMusic = new Audio(musicPath);
+                        this.backgroundMusic.loop = true;
+                        this.backgroundMusic.volume = gameState.volume * 0.5; // Background music lower than SFX
+                        this.backgroundMusic.play().catch(e => console.log('Music play error:', e));
+                        this.currentTrack = musicPath;
+                    } catch (e) {
+                        console.log('Music error:', e);
+                    }
                 }
             },
 
